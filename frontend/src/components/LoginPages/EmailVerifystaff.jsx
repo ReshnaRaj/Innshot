@@ -1,0 +1,57 @@
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
+import { staffverify } from '../../services/Staffapi';
+
+const EmailVerifystaff = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true)
+   
+  useEffect(() => {
+   
+    const verifyStaff = async () => {
+        console.log("verify staff working")
+      try {
+        console.log(id,"iiiiiiiii")
+        // I dont know how the id is getting
+        // const response = await axios.post(`http://localhost:4001/staff/verifystaffemail/${id}`);
+        const response=await staffverify(id)
+        console.log(response,"after working ")
+        const { success, error } = response.data;
+
+        if (success) {
+          // User verified successfully
+          navigate('/stafflogin');
+        } else {
+          // Error occurred during verification
+          console.log(error);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    verifyStaff();
+  }, [id, navigate]);
+
+  return (
+    <div>
+      {isLoading ? (
+        <h1>Verifying Email...</h1>
+      ) : (
+        <div>
+          <h1>Email Verified!</h1>
+          <p>Your email has been successfully verified.</p>
+          <p>
+            You can now proceed to the <Link to="/stafflogin">Login</Link> page.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default EmailVerifystaff;
