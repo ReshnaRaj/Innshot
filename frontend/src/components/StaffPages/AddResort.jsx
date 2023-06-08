@@ -4,7 +4,7 @@ import Headerr from "./layout/Headerr";
 import { staffresort } from "../../services/Staffapi";
 import { ToastContainer, toast } from "react-toastify";
 const AddResort = () => {
-  const [resortData, setResortData] = useState({
+  const [resortData,setResortData] = useState({
     resortname: "",
     number_room: "",
     address: "",
