@@ -8,7 +8,7 @@ const {verifyLink,verifystaffLink}=require('../Middleware/authuser')
 
 const maxtime= 3*24*60*60
 const createtoken=(id)=>{
-    return jwt.sign({id},'secret key',{
+    return jwt.sign({id},process.env.SECRET,{
         expiresIn:maxtime,
     })
 
@@ -134,8 +134,11 @@ module.exports.stafflogin=async (req,res,next)=>{
             if(staff.verified){
                 console.log("staff verified working")
                 const auth=await bcrypt.compare(password,staff.password)
+                console.log(auth,'authentication working')
                 if(auth){
+                    console.log(staff._id,"staff id")
                    const token=createtoken(staff._id)
+                //    i getting doubt
                    
             
               res
@@ -180,6 +183,7 @@ module.exports.verifystaff=async(req,res)=>{
         throw new Error('cannot verify the user')
         }
         res.json({success:{status:true}})
+        // res.json({result,status:true})
         
 
     } catch (error) {

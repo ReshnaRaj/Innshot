@@ -1,5 +1,11 @@
 const mongoose=require('mongoose')
 const resortSchema=new mongoose.Schema({
+    
+    resortowner:{
+        type: mongoose.Schema.Types.ObjectId,
+        require:true,
+        ref: "Staff"
+      },
     resortname:{
         type:String,
         required:[true,'resort name is required']
@@ -23,7 +29,7 @@ const resortSchema=new mongoose.Schema({
     },
    
     image:{
-        type:String,
+        type:[String],
         required:[true,'image is required']
 
     },
@@ -41,6 +47,10 @@ const resortSchema=new mongoose.Schema({
     },
     phone:{
         type:Number
+    },
+    status:{
+        type:String,
+        default:'Enable',   
     }
    
 

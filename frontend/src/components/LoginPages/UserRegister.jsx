@@ -25,6 +25,8 @@ const UserRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(user,"userrrr")
+      // const data=await userregister(user)
       const data=await userregister({...user})
       if (data) {
         console.log(data,"data of user")

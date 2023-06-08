@@ -42,8 +42,10 @@ const UserLogin = () => {
       return;
     }
     try {
+      console.log(user,"login user dataaaa")
      const data =await userlogin({...user})
-      if (data.data) {
+      // if (data.data){
+      if(data) {
         // console.log(data);
         console.log(data.data,"data coming")
         if (data.data.errors) {

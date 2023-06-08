@@ -33,7 +33,7 @@ const StaffLogin = () => {
  
 
   const handleSubmit = async(e) => {
-    console.log("in")
+    // console.log("in")
     e.preventDefault();
     if(!staffuser.email){
       generateError('email is required')
@@ -45,10 +45,11 @@ const StaffLogin = () => {
     }
     try {
       console.log(staffuser,"staff before login")
-      const data=await stafflogin({...staffuser})
+      // const data=await stafflogin({...staffuser})
+      const data=await stafflogin(staffuser)
       console.log("staff login working",data)
-      if(data.data){
-        console.log("in",data)
+      if(data){
+        console.log("in",data.data)
         if(data.data.errors){
           const {email,password}=data.data.errors;
           if(email) generateError (email)
@@ -62,8 +63,10 @@ const StaffLogin = () => {
             phone:data.data.staff.phone,
             token:data.data.staff.token
           }))
+          console.log(data.data.token,"token of staff")
           if(data.data.staff.verified){
             console.log("stafffff")
+            
             localStorage.setItem('stafftoken',data.data.token)
             navigate('/staffhome')
 

@@ -16,6 +16,11 @@ import Adminhome from './pages/Admin/Dashboard'
 import 'react-toastify/dist/ReactToastify.css'
 import EmailVerify from './components/LoginPages/EmailVerify';
 import EmailVerifystaff from './components/LoginPages/EmailVerifystaff';
+import EditResort from './pages/staff/EditResort';
+import ResortList from './pages/Admin/ResortList';
+import PendingRequest from './components/AdminPages/PendingRequest';
+import ViewResort from './components/AdminPages/ViewResort';
+
 function App() {
   return (
     
@@ -29,13 +34,16 @@ function App() {
   <Route exact path='/staffhome' element={<StaffHome/>}/>
   <Route exact path='/staffresorts' element={<StaffResort/>}/>
   <Route exact path='/add-resort' element={<AdResort/>}/>
+  <Route exact path='/editresort' element={<EditResort/>}/>
   <Route exact path='/staffadventure' element={<StafAdventure/>}/>
   <Route exact path='/adlogin' element={<AdminLogin/>}/>
   <Route exact path="/verifyemail/:id" element={<EmailVerify/>} />
   <Route exact path="/verifystaffemail/:id" element={<EmailVerifystaff/>} />
   <Route exact path='/adminhome' element={<Adminhome/>}/>
-  {/* <Route exact path='/adresort' element={<AdminResort/>}/> */}
-  {/* <Route exact path='/adstaff' element={<AdminStaff/>}/> */}
+  <Route exact path='/adminallresort' element={<ResortList/>}/>
+  <Route exact path='/pendingrequest' element={<PendingRequest/>}/>
+  <Route exact path='/viewresort' element={<ViewResort/>}/>
+
  </Routes>
  </BrowserRouter>
   );

@@ -18,6 +18,7 @@ const EmailVerifystaff = () => {
         // const response = await axios.post(`http://localhost:4001/staff/verifystaffemail/${id}`);
         const response=await staffverify(id)
         console.log(response,"after working ")
+        // it response  getting onlt success and status true
         const { success, error } = response.data;
 
         if (success) {

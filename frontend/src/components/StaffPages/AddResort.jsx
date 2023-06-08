@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import Navbar from "./layout/Navbar";
 import Headerr from "./layout/Headerr";
-import axios from "axios";
 import { staffresort } from "../../services/Staffapi";
-
+import { ToastContainer, toast } from "react-toastify";
 const AddResort = () => {
   const [resortData, setResortData] = useState({
     resortname: "",
@@ -13,14 +12,16 @@ const AddResort = () => {
     // latitude:'',
     // longitude: '',
     description: "",
-    image:'',
+    image:[],
     file: "",
     price: "",
     phone: "",
+
   });
-console.log(resortData,"jjjjjjjjj");
+// console.log(resortData,"jjjjjjjjj");
   const handleSubmit = async (e) => {
-    console.log("submitting",resortData.image);
+    // console.log("submitting",resortData.image);
+    // console.log('documen',resortData.document)
     e.preventDefault();
     const formData=new FormData();
     formData.append('resortname',resortData.resortname)
@@ -29,16 +30,35 @@ console.log(resortData,"jjjjjjjjj");
     formData.append('description',resortData.description)
     formData.append('price',resortData.price)
     formData.append('phone',resortData.phone)
-    formData.append('image',resortData.image)
+    // formData.append('image',resortData.image)
+
+    for(let i=0;i<resortData.image.length;i++){
+      const file=resortData.image[i]
+      // console.log(file,"ddddddddddddd")
+      formData.append('image',file)
+    }
     formData.append('number_room',resortData.number_room)
     formData.append('document',resortData.document)
+    // console.log(resortData.document,"sssssssssssss")
+   
     
     // Add logic to handle the form submission (e.g., sending data to the server)
     try {
-      console.log("resort data submitting");
+      console.log("resort data submitting from formData");
 
       const response = await staffresort( formData);
+      if(response.data.created)
+      {
+        console.log("inside toast")
+       console.log(response.data.message,"message")
+        toast.success(response.data.message,{
+          position: "top-center",
+        })
+      
+      }
+      console.log("toastify working...")
       console.log(response, "response of data of resort");
+     
     } catch (error) {
       console.log(error);
     }
@@ -64,7 +84,7 @@ console.log(resortData,"jjjjjjjjj");
                     setResortData({ ...resortData, resortname: e.target.value })
                   }
                   placeholder="Type here"
-                  className="input input-bordered input-md w-96 max-w-xs"
+                  className="input input-bordered input-md w-96 max-w-xs" required
                 />
               </div>
               <div className="w-full max-w-xs mr-4">
@@ -77,7 +97,7 @@ console.log(resortData,"jjjjjjjjj");
                     setResortData({ ...resortData, place: e.target.value })
                   }
                   placeholder="Type here"
-                  className="input input-bordered input-md w-full max-w-xs"
+                  className="input input-bordered input-md w-full max-w-xs" required
                 />
               </div>
             </div>
@@ -91,7 +111,7 @@ console.log(resortData,"jjjjjjjjj");
                     setResortData({ ...resortData, address: e.target.value })
                   }
                   className="textarea textarea-bordered h-24 w-80"
-                  placeholder="Bio"
+                  placeholder="Bio" required
                 ></textarea>
               </div>
               <div className="form-control">
@@ -106,7 +126,7 @@ console.log(resortData,"jjjjjjjjj");
                     })
                   }
                   className="textarea textarea-bordered h-24 w-80"
-                  placeholder="Bio"
+                  placeholder="Bio" required
                 ></textarea>
               </div>
             </div>
@@ -121,7 +141,7 @@ console.log(resortData,"jjjjjjjjj");
                     setResortData({ ...resortData, phone: e.target.value })
                   }
                   placeholder="Type here"
-                  className="input input-bordered input-md w-96 max-w-xs"
+                  className="input input-bordered input-md w-96 max-w-xs" required
                 />
               </div>
               <div className="w-full max-w-xs mr-4">
@@ -134,7 +154,7 @@ console.log(resortData,"jjjjjjjjj");
                     setResortData({ ...resortData, price: e.target.value })
                   }
                   placeholder="Type here"
-                  className="input input-bordered input-md w-full max-w-xs"
+                  className="input input-bordered input-md w-full max-w-xs" required
                 />
               </div>
             </div>
@@ -149,7 +169,7 @@ console.log(resortData,"jjjjjjjjj");
                   onChange={(e) =>
                     setResortData({ ...resortData,document: e.target.files[0] })
                   }
-                  className="file-input w-full max-w-xs"
+                  className="file-input w-full max-w-xs" required
                 />
               </div>
               <div className="w-full max-w-xs mr-4">
@@ -158,15 +178,18 @@ console.log(resortData,"jjjjjjjjj");
                 </label>
                 <input
                   type="file"
-                  // name='image'
-                  onChange={(e) =>
-                    // console.log( e.target.files[0])
-                    setResortData({ ...resortData, image: e.target.files[0] })
-                  }
+                  onChange={(e) =>{
+                    setResortData({...resortData,image:e.target.files})
+                  }}
                   className="file-input w-full max-w-xs"
                   multiple
-                
+                   required
                 />
+                {/* {
+                  files.map((img)=>(
+                    <img src={URL.createObjectURL(img)}  width='200px' height='200px'/>
+                  ))
+                } */}
               </div>
             </div> 
             <div>
@@ -179,7 +202,7 @@ console.log(resortData,"jjjjjjjjj");
                   setResortData({ ...resortData, number_room: e.target.value })
                 }
                 placeholder="Type here"
-                className="input input-bordered w-full max-w-xs"
+                className="input input-bordered w-full max-w-xs" required
               />
             </div>
             <button
@@ -187,11 +210,17 @@ console.log(resortData,"jjjjjjjjj");
               className="bg-blue-500 text-white rounded px-4 py-2"
             >
               Add Resort
+              
             </button>
+            
           </form>
+          
         </div>
+        <ToastContainer />
       </div>
+      
     </div>
+    
   );
 };
 

@@ -28,7 +28,7 @@ const StaffReg = () => {
     e.preventDefault();
     try {
       const data =await staffregister(staffuser)
-      // console.log(data,"data staff")
+      console.log(data,"data staff")
       if (data) {
         console.log(data,"data of staff")
         if (data.errors) {

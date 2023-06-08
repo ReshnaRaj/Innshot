@@ -10,4 +10,6 @@ const userlogin=(data)=>{
 const userverify=(data)=>{
     return userAxiosInstance.post(`/verifyemail/${data}`)
 }
+
+
 export {userregister,userlogin,userverify}
