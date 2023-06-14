@@ -27,25 +27,25 @@ const EditResort = () => {
   const [place,setplace]=useState('')
   const [description,setdescription]=useState('')
   const [image,setimage]=useState([])
-  const [file,setfile]=useState('')
+  const [document,setdocument]=useState('')
   const [price,setprice]=useState('')
   const [phone,setphone]=useState('')
   const [id,setid]=useState('')
   const location=useLocation()
   const items=location.state?.item
   console.log(items,"resorrrrrrrrrrr")
-  const [images,setimages]=useState([])
-  const [doc,setdoc]=useState('')
+  // const [images,setimages]=useState([])
+  // const [doc,setdoc]=useState('')
 
   useEffect(() => {
-      // setresortt(items)
+      // setresortt(items)this code is used to show the details of resort of one resort
       setresortname(items.resortname);
       setnum(items.number_room)
       setaddress(items.address)
       setplace(items.place)
       setdescription(items.description)
       setimage(items.image)
-      setfile(items.document)
+      setdocument(items.document)
       setprice(items.price)
       setphone(items.phone)
       setid(items._id)
@@ -57,23 +57,26 @@ const EditResort = () => {
   const handleEditSubmit=async (e)=>{
     e.preventDefault();
     const formData=new FormData()
-    formData.append('resortname',items.resortname)
-    formData.append('place',items.place)
-    formData.append('address',items.address)
-    formData.append('description',items.description)
-    formData.append('price',items.price)
-    formData.append('phone',items.phone)
+    formData.append('resortname',resortname)
+    formData.append('place',place)
+    formData.append('address',address)
+    formData.append('description',description)
+    formData.append('price',price)
+    formData.append('phone',phone)
+    formData.append('number_rooms',number_room)
     for(let i=0;i<image.length;i++){
       const file=image[i]
       // console.log(file,"ddddddddddddd")
       formData.append('image',file)
+      
     }
+    formData.append('document',document)
     
-    // console.log(image,"image success")
+    // console.log(items.document,"doc success")
     // console.log(file,"file success")
   
     console.log("edit submitting working")
-    let data =await editpostresortdatas({resortname,number_room,address,place,description,price,phone,id,image,file})
+    let data =await editpostresortdatas(formData,id)
     console.log(data,"resort coming...")
     if(data.data.success)
       {
@@ -191,11 +194,11 @@ const EditResort = () => {
                   className="file-input w-full max-w-xs" required  
                   // value={file}
                   onChange={(e) =>
-                    setfile(e.target.files[0] )
+                    setdocument(e.target.files[0] )
                   }
                 />
                 
-               <iframe src={`${baseUrl}${file}`} title="PDF Viewer" width="100%" height="100px" />
+               {/* <iframe src={`${baseUrl}${file}`} title="PDF Viewer" width="100%" height="100px" /> */}
 
               </div>
               <div className="w-full max-w-xs mr-4">
@@ -213,14 +216,14 @@ const EditResort = () => {
                   
                 
                 />
-                {image.map((img, index) => (
+                {/* {image.map((img, index) => (
                   <img
                     key={index} 
                     src={`${baseUrl}/${img}`}
                     alt={`Image ${index + 1}`}
                     className="w-40 h-20 object-cover"
                   />
-                  ))} 
+                  ))}  */}
                 
               </div>
             </div> 

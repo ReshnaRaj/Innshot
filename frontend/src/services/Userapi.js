@@ -10,6 +10,10 @@ const userlogin=(data)=>{
 const userverify=(data)=>{
     return userAxiosInstance.post(`/verifyemail/${data}`)
 }
+const getuserresort=()=>{
+    console.log("user resort page working...")
+    return userAxiosInstance.get('/resortlist')
+}
 
 
-export {userregister,userlogin,userverify}
+export {userregister,userlogin,userverify,getuserresort}

@@ -12,4 +12,8 @@ const approveresort=(id)=>{
     console.log("approve or reject")
     return adminAxiosInstance.post(`/approveresort/${id}`)
 }
-export {adminlogin,getAllData,approveresort}
+const getuniqueresort=(id)=>{
+    console.log('resort view page working')
+    return adminAxiosInstance.get(`/getuniqueresort/${id}`)
+}
+export {adminlogin,getAllData,approveresort,getuniqueresort}

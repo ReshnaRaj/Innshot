@@ -23,7 +23,7 @@ const EmailVerifystaff = () => {
 
         if (success) {
           // User verified successfully
-          navigate('/stafflogin');
+          navigate('/staff/stafflogin');
         } else {
           // Error occurred during verification
           console.log(error);
@@ -47,7 +47,7 @@ const EmailVerifystaff = () => {
           <h1>Email Verified!</h1>
           <p>Your email has been successfully verified.</p>
           <p>
-            You can now proceed to the <Link to="/stafflogin">Login</Link> page.
+            You can now proceed to the <Link to="/staff/stafflogin">Login</Link> page.
           </p>
         </div>
       )}

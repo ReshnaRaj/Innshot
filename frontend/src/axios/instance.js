@@ -7,7 +7,7 @@ import {baseUrl,staffUrl,adminUrl} from '../files/file'
 const createAxiosClient = (baseURL) => {
     const client = axios.create({
       baseURL,
-      timeout: 4000,
+      timeout: 5000,
       timeoutErrorMessage: "Request timeout... Please Try Again!!!"
     })
     return client
@@ -15,7 +15,10 @@ const createAxiosClient = (baseURL) => {
   const attachToken = (req, tokenName = "token") => {
     let authToken = localStorage.getItem(tokenName)
     if (authToken) {
+      // console.log(authToken,"authentication working...")
       req.headers.Authorization = `Bearer ${authToken}`
+      // console.log(req.headers.Authorization,"ttttttt")
+
     }
     return req
   }

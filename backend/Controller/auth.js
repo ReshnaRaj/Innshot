@@ -22,6 +22,7 @@ if(err.code===11000){
     return errors
 }
 if(err.message.includes('users validation failed')){
+    console.log(err.message,"error messageconsoling....")
     Object.values(err.errors).forEach(({properties})=>{
         errors[properties.path]=properties.message
     })
@@ -36,7 +37,7 @@ module.exports.register=async(req,res,next)=>{
         sendmail(email,'please Activate your account',`http://localhost:3000/verifyemail/${user._id}`)
         
 
-        res.status(201).json({user:{created:true}})
+        res.status(201).json({user,created:true})
         console.log(user,"user response going to front end")
 
     } catch (error) {
@@ -55,7 +56,7 @@ module.exports.login=async (req,res,next)=>{
 
         if(user){
             if(user.verifiyd){
-                console.log("user verified working")
+                // console.log("user verified working")
                 const auth=await bcrypt.compare(password,user.password)
                 if(auth){
                    const token=createtoken(user._id)
@@ -112,7 +113,7 @@ module.exports.staffreg=async(req,res,next)=>{
         console.log("staff register page is working..");
         const {name,email,phone,password}=req.body
         const staffuser=await StaffModel.create({name,email,phone,password})
-        sendmail(email,'please Activate your account As a resort owner',`http://localhost:3000/verifystaffemail/${staffuser._id}`)
+        sendmail(email,'please Activate your account As a resort owner',`http://localhost:3000/staff/verifystaffemail/${staffuser._id}`)
         console.log(staffuser,"staffff")
         res.status(201).json({staffuser,created:true})
 
@@ -192,7 +193,7 @@ module.exports.verifystaff=async(req,res)=>{
     }
 }
 module.exports.adminlogin=async(req,res)=>{
-    console.log("admin login page working")
+    // console.log("admin login page working")
     try {
         const {email,password}=req.body
         const admin=await AdminModel.findOne({email})

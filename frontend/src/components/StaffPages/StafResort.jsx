@@ -17,21 +17,23 @@ const StafResort = () => {
   }, []);
   const getresortData = async () => {
     try {
-      let data = await getResortData();
-      console.log(data, "data of resort ");
+      let {data} = await getResortData();
+      // console.log(data, "data of resort ");
 
-      if (data) {
-        setresort(data.data);
+      if (data.success) {
+        console.log(data.result,"result consoling...")
+        setresort(data.result);
       }
     } catch (error) {
       console.log(error);
     }
   };
+  // console.log(resort,"settinhhh")
   const handleEdit = async (item) => {
     try {
-      console.log(item, "resortid coming...");
+      console.log(item, "resort full coming...");
 
-      navigate("/editresort", { state: { item } });
+      navigate("/staff/editresort", { state: { item } });
     } catch (error) {}
   };
   const handledisable = async (resortId) => {
@@ -55,7 +57,7 @@ const StafResort = () => {
         <Headerr name={"List of Resorts"} />
         <div className="p-4 flex justify-between items-center">
           <h2 className="text-xl font-bold mb-4">Details of Booked Resort</h2>
-          <Link to="/add-resort" className="btn btn-ghost">
+          <Link to="/staff/add-resort" className="btn btn-ghost">
             Add Resort
           </Link>
         </div>
@@ -74,6 +76,7 @@ const StafResort = () => {
             </thead>
             <tbody>
               {resort.map((item, index) => (
+                
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item.resortname}</td>
@@ -82,7 +85,7 @@ const StafResort = () => {
                   <td>{item.price}</td>
                   <td>{item.status}</td>
                   <button
-                    className="btn btn-xs btn-success"
+                    className="btn btn-xs btn-info"
                     onClick={() => {
                       console.log(item, "item is coming....");
                       handleEdit(item);
@@ -96,7 +99,7 @@ const StafResort = () => {
                   {item.status==='Enable' ? (
   <button 
     onClick={() => handledisable(item._id)}
-    className="btn btn-error" 
+    className="btn btn-xs btn-error" 
     style={{ marginRight: "10px" }}
   >
     Disable
@@ -104,7 +107,7 @@ const StafResort = () => {
 ) : (
   <button 
     onClick={() => handledisable(item._id)}
-    className="btn btn-success"
+    className="btn btn-xs btn-success"
     style={{ marginRight: "10px" }}
   >
     Enable

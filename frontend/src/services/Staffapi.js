@@ -15,7 +15,7 @@ const staffverify=(data)=>{
     return staffAxiosInstance.post(`/verifystaffemail/${data}`)
 }
 const staffresort=(data)=>{
-    // console.log(data,"ggggggggggggggggggggggg")
+    console.log(data,"ggggggggggggggggggggggg")
     return staffAxiosInstance.post('/add-resort',data,{
         headers:{
             'Content-Type':'multipart/form-data'
@@ -26,16 +26,16 @@ const getResortData=()=>{
     console.log("resort details")
     return staffAxiosInstance.get('/getresortdata')
 }
-const editpostresortdatas=(data)=>{
-    console.log(data,"data editing working..")
-    return staffAxiosInstance.post(`/posteditresort/${data.id}`,data,{
+const editpostresortdatas=(data,id)=>{
+    console.log(data,id,"data editing working..")
+    return staffAxiosInstance.post(`/posteditresort/${id}`,data,{
         headers:{
             'Content-Type':'multipart/form-data'
         }
     })
 }
 const disableresort=(id)=>{
-    console.log(id,"deletion working...")
+    console.log(id,"disable working...")
     return staffAxiosInstance.post(`/disableresort/${id}`)  
 }
 

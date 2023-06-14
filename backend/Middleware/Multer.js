@@ -1,4 +1,19 @@
 const multer = require('multer');
+const path=require('path')
+function checkFileType(file, cb) {
+  const filetypes = /jpeg|jpg|png|pdf|doc|webp/;
+
+  const mimetype = filetypes.test(file.mimetype);
+
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+  if (mimetype && extname) {
+    return cb(null, true);
+  } else {
+    return cb(new Error("Invalid file type."));
+  }
+}
+
 
 const storage = multer.diskStorage({
     
@@ -13,8 +28,12 @@ const storage = multer.diskStorage({
   });
   
   
-  const uploadImage = multer({ storage: storage});
+  const uploadImage = multer({ storage: storage,
+    fileFilter: function (req, file, cb) {
+      checkFileType(file, cb);
+    }
+  });
 console.log("working of resort images")
-module.exports=uploadImage
+module.exports={uploadImage}
 
 

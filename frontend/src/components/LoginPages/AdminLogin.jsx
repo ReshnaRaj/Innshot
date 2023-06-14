@@ -24,7 +24,7 @@ const AdminLogin = () => {
   useEffect(()=>{
     const token=localStorage.getItem('admintoken')
     if(token){
-      navigate('/adminhome')
+      navigate('/admin/adminhome')
     }
   },[navigate])
  
@@ -52,7 +52,7 @@ const AdminLogin = () => {
 
           }))
           localStorage.setItem('admintoken',data.data.token)
-          navigate('/adminhome')
+          navigate('/admin/adminhome')
 
         }
       }
@@ -110,7 +110,7 @@ const AdminLogin = () => {
             Login
           </button>
         </form>
-        <p className="mt-4">Login As A staff ?<Link to="/stafflogin" className="text-blue-500"> SignIn</Link></p>
+        <p className="mt-4">Login As A staff ?<Link to="/staff/stafflogin" className="text-blue-500"> SignIn</Link></p>
       </div>
 <ToastContainer/>
     </div>

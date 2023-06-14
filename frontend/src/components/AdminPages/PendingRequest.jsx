@@ -3,6 +3,8 @@ import Navbars from "./layout/Navbars";
 import Headers from "./layout/Headers";
 import { getAllData,approveresort } from "../../services/Adminapi";
 import {  useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+
 
 const PendingRequest = () => {
   const [data, setdata] = useState([]);
@@ -13,15 +15,15 @@ const PendingRequest = () => {
   const getData = async () => {
     try {
       let dataa = await getAllData();
-      console.log(dataa, "data of all resorts");
+      // console.log(dataa, "data of all resorts");
 
-      if (dataa.data) {
+      if (dataa.data.resort) {
         console.log(dataa.data,"tttttttt")
         // const resortOwnerNames = dataa.data.map(
         //   (resort) => resort.resortowner.name
         // );
         // console.log("Resort Owner Names:", resortOwnerNames);
-        setdata(dataa.data);
+        setdata(dataa.data.resort);
       }
     } catch (error) {
       console.log(error, "error coming..");
@@ -29,8 +31,13 @@ const PendingRequest = () => {
   };
   const handleapprove=async(resortId)=>{
     try {
-      let data=await approveresort(resortId)
+      let {data}=await approveresort(resortId)
+      // console.log(data,"data from approve part of admin")
       if(data){
+        // console.log(data.message,"message came")
+        toast.success(data.message,{
+          position:'top-center'
+        })
         getData()
       }
       
@@ -40,10 +47,11 @@ const PendingRequest = () => {
     }
   }
   const handleView = async (item) => {
+    
     try {
-      console.log(item, "resortid coming...");
+      console.log(item, "resort full coming...");
 
-      navigate("/viewresort", { state: { item } });
+      navigate(`/admin/viewresort/${item}`, { state: { item } });
     } catch (error) {}
   };
   // console.log(data,"ffffff")
@@ -82,23 +90,40 @@ const PendingRequest = () => {
               {data.map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{item.resortname}</td>
-                  <td>{item.resortowner.name}</td>
-                  <td>{item.place}</td>
-                  <td></td>
+                  <td>{item?.resortname}</td>
+                  <td>{item?.resortowner?.name}</td>
+                  <td>{item?.place}</td>
+                  <td>{item?.verify?'approved':'rejected'}</td>
                  
                   
                   <button onClick={() => {
                       console.log(item, "item is coming....");
-                      handleView(item);
-                    }}className="btn btn-sm btn-info"  style={{ marginRight: "10px" }}>View</button>
-                  <button onClick={()=>handleapprove(item._id)} className="btn btn-sm btn-success">Approve</button>
+                      handleView(item._id);
+                    }}className="btn btn-xs btn-info"  style={{ marginRight: "10px" }}>View</button>
+                  {item.verify===false ? (
+  <button 
+    onClick={() => handleapprove(item._id)}
+    className="btn btn-xs btn-success" 
+    style={{ marginRight: "10px" }}
+  >
+    Approve
+  </button>
+) : (
+  <button 
+    onClick={() => handleapprove(item._id)}
+    className="btn btn-xs btn-error"
+    style={{ marginRight: "10px" }}
+  >
+    Reject
+  </button>
+)}
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

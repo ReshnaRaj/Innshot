@@ -19,23 +19,23 @@ const Navbars = () => {
         </div>
         {/* Navigation */}
         <nav className="flex flex-col p-4">
-          <Link to="/adminhome" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDashboard/></span>Dashboard</Link>
-          <Link to="/adminallresort" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdHomeWork /></span> Resort</Link>
-          <Link to="/pendingrequest" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdHomeWork /></span> Pending request</Link>
-          <Link to="/adminadventure" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDataThresholding/></span>Adventure</Link>
-          <Link to="/bookings" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdBookmarkAdded/></span>Booking</Link>
+          <Link to="/admin/adminhome" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDashboard/></span>Dashboard</Link>
+          {/* <Link to="/admin/adminallresort" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdHomeWork /></span> Resort</Link> */}
+          <Link to="/admin/pendingrequest" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdHomeWork /></span>All Resorts</Link>
+          <Link to="/admin/adminadventure" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDataThresholding/></span>Adventure</Link>
+          <Link to="/admin/bookings" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdBookmarkAdded/></span>Booking</Link>
           {admin.email?(
             <>
             <div className='dropdown dropdown-hover'>
             <label tabIndex={0} className="py-2 px-4"><span className='hover:text-white-300'>{admin.email}</span></label>
             <ul tabIndex={0} className="dropdown-content menu shadow w-22 bg-slate-900">
             <li className=''><a>Profile</a></li>
-            <Link to='/adlogin'><a onClick={handleLogout} className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdLogout /></span>Logout</a></Link>
+            <Link to='/admin/adlogin'><a onClick={handleLogout} className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdLogout /></span>Logout</a></Link>
               </ul>
             </div>
             </>
           ):(
-            <li><Link to="/adlogin" className="hover:text-gray-300">Login</Link></li>
+            <li><Link to="/admin/adlogin" className="hover:text-gray-300">Login</Link></li>
           )}
           
           {/* <li><Link to ='/login'><a onClick={handleLogout}>Logout</a></Link></li> */}

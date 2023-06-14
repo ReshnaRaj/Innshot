@@ -1,10 +1,10 @@
 import React from 'react'
-import Adminresort from '../../components/AdminPages/Adminresort'
+import ApprovedResort from '../../components/AdminPages/ApprovedResort'
 
 const ResortList = () => {
   return (
     <div>
-        <Adminresort/>
+        <ApprovedResort/>
     </div>
   )
 }

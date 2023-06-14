@@ -18,7 +18,17 @@ const AddResort = () => {
     phone: "",
 
   });
-// console.log(resortData,"jjjjjjjjj");
+  // const [resortname,setresortname]=useState('')
+  // const [num_room,setnum_room]=useState('')
+  // const [address,setaddress]=useState('')
+  // const [place,setplace]=useState('')
+  // const [description,setdescription]=useState('')
+  // const [image,setimage]=useState([])
+  // const [file,setfile]=useState('')
+  // const [price,setprice]=useState('')
+  // const [phone,setphone]=useState('')
+
+  // console.log(resortData,"jjjjjjjjj");
   const handleSubmit = async (e) => {
     // console.log("submitting",resortData.image);
     // console.log('documen',resortData.document)
@@ -44,9 +54,10 @@ const AddResort = () => {
     
     // Add logic to handle the form submission (e.g., sending data to the server)
     try {
-      console.log("resort data submitting from formData");
+      // console.log("resort data submitting from formData");
 
       const response = await staffresort( formData);
+      console.log(response,"response printed...")
       if(response.data.created)
       {
         console.log("inside toast")
@@ -56,8 +67,7 @@ const AddResort = () => {
         })
       
       }
-      console.log("toastify working...")
-      console.log(response, "response of data of resort");
+     
      
     } catch (error) {
       console.log(error);
@@ -78,13 +88,20 @@ const AddResort = () => {
                   Resort Name
                 </label>
                 <input
-
+                 value={resortData.resortname}
                   type="text"
                   onChange={(e) =>
-                    setResortData({ ...resortData, resortname: e.target.value })
+                    {
+                      const resname = e.target.value.replace(/[^a-zA-Z]/g, ' ');
+
+                      console.log(resname,"resname....")
+                    setResortData({ ...resortData, resortname: resname })
+                    }
                   }
                   placeholder="Type here"
                   className="input input-bordered input-md w-96 max-w-xs" required
+                //  const pattern="/^[a-zA-Z]+ [a-zA-Z]+$/"
+
                 />
               </div>
               <div className="w-full max-w-xs mr-4">
@@ -107,26 +124,44 @@ const AddResort = () => {
                   Address of the Resort
                 </label>
                 <textarea
+                value={resortData.address}
                   onChange={(e) =>
-                    setResortData({ ...resortData, address: e.target.value })
+                    {
+                      const addres=e.target.value.split(' ')
+                      if(addres.length<=20)
+                      {
+                    setResortData({ ...resortData, address: addres.join(' ')})
+                      }
+                    }
                   }
+                  
+                
                   className="textarea textarea-bordered h-24 w-80"
-                  placeholder="Bio" required
-                ></textarea>
+                  placeholder="Address of the resort" required
+                >
+                
+                </textarea>
               </div>
               <div className="form-control">
                 <label htmlFor="resortname" className="block font-bold mb-1">
                   Description
                 </label>
                 <textarea
+                value={resortData.description}
                   onChange={(e) =>
+                    {
+                      const words = e.target.value.split(' ');
+                      console.log(words,"words coming.....")
+                      if(words.length<=10 || e.target.value.length<500){
                     setResortData({
                       ...resortData,
-                      description: e.target.value,
+                      description: words.join(' ')
                     })
                   }
+                  }
+                  }
                   className="textarea textarea-bordered h-24 w-80"
-                  placeholder="Bio" required
+                  placeholder="Description of the resort" required
                 ></textarea>
               </div>
             </div>
@@ -137,12 +172,21 @@ const AddResort = () => {
                 </label>
                 <input
                   type="number"
+                  
+                  value={resortData.phone}
                   onChange={(e) =>
-                    setResortData({ ...resortData, phone: e.target.value })
+                    {
+                      const phoneNumber=e.target.value.replace(/[^0-9]/g, "")
+                      console.log(phoneNumber,"gggggggg")
+                      if(phoneNumber.length<=10){
+                    setResortData({ ...resortData, phone:phoneNumber})
+                      }
                   }
-                  placeholder="Type here"
+                }
+                  placeholder="+91"
                   className="input input-bordered input-md w-96 max-w-xs" required
                 />
+
               </div>
               <div className="w-full max-w-xs mr-4">
                 <label htmlFor="resortname" className="block font-bold mb-1">
@@ -150,10 +194,15 @@ const AddResort = () => {
                 </label>
                 <input
                   type="number"
-                  onChange={(e) =>
-                    setResortData({ ...resortData, price: e.target.value })
+                  value={resortData.price}
+                  onChange={(e) =>{
+                    const Pricee=e.target.value.replace(/[^0-9]/g, "")
+                    if(Pricee.length<=4){
+                    setResortData({ ...resortData, price: Pricee})
+                    }
                   }
-                  placeholder="Type here"
+                }
+                  placeholder="$"
                   className="input input-bordered input-md w-full max-w-xs" required
                 />
               </div>
@@ -198,8 +247,15 @@ const AddResort = () => {
               </label>
               <input
                 type="number"
+                value={resortData.number_room}
                 onChange={(e) =>
-                  setResortData({ ...resortData, number_room: e.target.value })
+                  {
+                    const rooms=e.target.value.replace(/[^0-9]/g, "")
+                    if(rooms.length<=2)
+                    {
+                  setResortData({ ...resortData, number_room:rooms })
+                    }
+                  }
                 }
                 placeholder="Type here"
                 className="input input-bordered w-full max-w-xs" required

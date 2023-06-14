@@ -1,197 +1,169 @@
-import React, { useState,useEffect } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
-import Navbars from './layout/Navbars'
-import Headers from './layout/Headers'
-import { editpostresortdatas } from '../../services/Staffapi'
-// import {  baseUrl} from '../../files/file';
-
-
-
+import React, { useEffect, useState } from "react";
+import Navbars from "./layout/Navbars";
+import Headers from "./layout/Headers";
+import { getuniqueresort } from "../../services/Adminapi";
+import { useParams } from "react-router-dom";
+import { baseUrl } from "../../files/file";
 
 const ViewResort = () => {
- 
-  const [resortname,setresortname]=useState('')
-  const [number_room,setnum]=useState('')
-  const [address,setaddress]=useState('')
-  const [place,setplace]=useState('')
-  const [description,setdescription]=useState('')
-  const [image,setimage]=useState([])
-  const [file,setfile]=useState('')
-  const [price,setprice]=useState('')
-  const [phone,setphone]=useState('')
-  const [id,setid]=useState('')
-  const location=useLocation()
-  const items=location.state?.item
-  console.log(items,"resorrrrrrrrrrr")
-
+  const [resortdetails, setResortdetails] = useState([]);
+  let { id } = useParams();
   useEffect(() => {
-      // setresortt(items)
-      setresortname(items.resortname);
-      setnum(items.number_room)
-      setaddress(items.address)
-      setplace(items.place)
-      setdescription(items.description)
-      setimage(items.image)
-      setfile(items.file)
-      setprice(items.price)
-      setphone(items.phone)
-      setid(items._id)
-
-    
+    getresortdetails();
   }, []);
-
+  const getresortdetails = async () => {
+    try {
+      // console.log(id,"id view page...")
+      let { data } = await getuniqueresort(id);
+      console.log(data, "unique data of each resort,,,");
+      if (data.success) {
+        // console.log(data.success,"resort data getting succes....")
+        console.log(data.resortdata, "yyyyyy");
+        setResortdetails(data.resortdata);
+      }
+    } catch (error) {}
+  };
+  // const showImages = async () => {
+  //   try {
+  //     console.log("show images is working...");
+  //   } catch (error) {}
+  // };
+  // console.log(resortdetails, "resortdetails working....");
+  // console.log(resortdetails.image.length,"length of image uploaded by resort")
+  const images = Array.from({ length: resortdetails?.image?.length }).map((_, index) => ({
+    id: index + 1,
+    src: `${baseUrl}${resortdetails?.image && resortdetails?.image[index]}`,
+  }));
   
- 
-
   return (
-    <div className="flex">
-      <Navbars />
-      <div className="flex-1">
-        <Headers name={"View "} />
-        <div className="p-4">
-         
-          <form  className="space-y-4">
-            <div className="flex flex-wrap">
-              <div className="w-full max-w-xs mr-4">
-                <label htmlFor="resortname" className="block font-bold mb-1">
-                  Resort Name
+    <>
+      <div className="flex">
+        <Navbars />
+        <div className="flex-1">
+          <Headers name={"View Resort"} />
+          <div className="card lg:card-side bg-slate-500 shadow-xl rounded-none flex-row">
+            <figure>
+              {resortdetails?.image && resortdetails.image[0] ? (
+                <img
+                  src={`${baseUrl}${resortdetails.image[0]}`}
+                  alt="resort image"
+                  style={{ maxWidth: "200px", maxHeight: "200px" }}
+                />
+              ) : (
+                <span>No image available</span>
+              )}
+            </figure>
+            <div className="card-body h-60">
+              <h2 className="card-title">{resortdetails?.resortname}</h2>
+              <p>{resortdetails?.address}</p>
+              <div className="card-actions justify-end">
+                {/* You can open the modal using ID.showModal() method */}
+                <label className="btn" htmlFor="view_image">
+                  View Images
                 </label>
                 <input
+                  type="checkbox"
+                  id="view_image"
+                  className="modal-toggle"
+                />
+                <div className="modal">
+                  <div className="carousel">
+                    {images?.map((image) => (
+                      <div
+                        id={`slide${image?.id}`}
+                        key={image?.id}
+                        className="carousel-item relative w-full"
+                      >
+                        <img
+                          src={image?.src}
+                          className="w-40 mx-auto"
+                          alt="IMAGE"
+                        />
+                        <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                          <a
+                            href={`#slide${
+                              image?.id === 1 ? images?.length : image?.id - 1
+                            }`}
+                            className="btn btn-circle btn-ghost"
+                          >
+                            ❮
+                          </a>
+                          <a
+                            href={`#slide${
+                              image?.id === images?.length ? 1 : image?.id + 1
+                            }`}
+                            className="btn btn-circle btn-ghost"
+                          >
+                            ❯
+                          </a>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
 
-                  type="text"
-                 value={resortname} onChange={(e) =>
-                  setresortname(e.target.value) }
-                  placeholder="Type here"
-                  className="input input-bordered input-md w-96 max-w-xs" required
-                />
-              </div>
-              <div className="w-full max-w-xs mr-4">
-                <label htmlFor="resortname" className="block font-bold mb-1">
-                  Place of the Resort
-                </label>
-                <input
-                  type="text"
-                  value={place} 
-                  onChange={(e) =>
-                    setplace(e.target.value) }
-                  placeholder="Type here"
-                  className="input input-bordered input-md w-full max-w-xs" required
-                />
+                  <label className="modal-backdrop" htmlFor="view_image">
+                    close
+                  </label>
+                </div>
               </div>
             </div>
-            <div className="flex flex-wrap">
-              <div className="form-control mr-4">
-                <label htmlFor="resortname" className="block font-bold mb-1">
-                  Address of the Resort
-                </label>
-                <textarea
-                  value={address}
-                  onChange={(e) =>
-                    setaddress(e.target.value) }
-                  className="textarea textarea-bordered h-24 w-80"
-                  placeholder="Bio" required
-                ></textarea>
-              </div>
-              <div className="form-control">
-                <label htmlFor="resortname" className="block font-bold mb-1">
-                  Description
-                </label>
-                <textarea
-                 value={description}
-                 onChange={(e) =>
-                  setdescription(e.target.value) }
-                  className="textarea textarea-bordered h-24 w-80"
-                  placeholder="Bio" required
-                ></textarea>
-              </div>
-            </div>
-            <div className="flex flex-wrap">
-              <div className="w-full max-w-xs mr-4">
-                <label htmlFor="resortname" className="block font-bold mb-1">
-                  Phone number
-                </label>
-                <input
-                  type="number"
-                  value={phone}
-                  onChange={(e) =>
-                    setphone(e.target.value) }
-                  placeholder="Type here"
-                  className="input input-bordered input-md w-96 max-w-xs" required
-                />
-              </div>
-              <div className="w-full max-w-xs mr-4">
-                <label htmlFor="resortname" className="block font-bold mb-1">
-                  Price
-                </label>
-                <input
-                  type="number"
-                  value={price}
-                  onChange={(e) =>
-                    setprice(e.target.value) }
-                  placeholder="Type here"
-                  className="input input-bordered input-md w-full max-w-xs" required
-                />
-              </div>
-            </div>
-            <div className="flex flex-wrap">
-              {/* <div className="w-full max-w-xs mr-4">
-                <label htmlFor="resortname" className="block font-bold mb-1">
-                  Certificate
-                </label>
-                <input
-                  type="file"
-                  className="file-input w-full max-w-xs" required  
-                  value={file}
-                />
-                
-               <iframe src={`${baseUrl}${file}`} title="PDF Viewer" width="100%" height="500px" />
+          </div>
+          <br />
 
-              </div> */}
-              {/* <div className="w-full max-w-xs mr-4">
-                <label htmlFor="resortname" className="block font-bold mb-1">
-                  Images of the Resort
-                </label>
-                <input
-                  type="file"
-                 
-                  className="file-input w-full max-w-xs"
-                  multiple
-                   required
-                  
-                
+          <div className="card lg:card-side bg-slate-500 shadow-xl rounded-none h-96">
+            <h3 className="text-2xl font-semibold text-center mb-4">
+              Overview of Resort
+            </h3>
+
+            <div className="card-body">
+              <h2>Address & place</h2>
+              <p>{resortdetails.address}</p>
+              <p>{resortdetails.place}</p>
+              <h2>Description</h2>
+              <p>{resortdetails.description}</p>
+              <h2>Certificate uploaded</h2>
+              {resortdetails?.document ? (
+                <embed
+                  src={`${baseUrl}${resortdetails.document}`}
+                  type="application/pdf"
+                  width="50%"
+                  height="100px"
                 />
-              </div> */}
-            </div> 
-            <div>
-              <label htmlFor="number_of_rooms" className="block font-bold mb-1">
-                Number of Rooms
-              </label>
-              <input
-                type="number"
-                value={number_room}
-                onChange={(e) =>
-                  setnum(e.target.value) }
-                placeholder="Type here"
-                className="input input-bordered w-full max-w-xs" required
-              />
+              ) : (
+                <p>No document available</p>
+              )}
+              {/* certicate image upload  */}
             </div>
-            <button
-              type="submit"
-              className="bg-blue-500 text-white rounded px-4 py-2"
-            >
-            
-              
-            </button>
-            
-          </form>
-          
+            <div className="card w-96 bg-blue-500 shadow-xl rounded-none">
+              <figure className="px-10 pt-10">
+                <img
+                  src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
+                  alt="profile of resortowner"
+                  className="rounded-xl"
+                />
+              </figure>
+              <div className="card-body">
+                <h2 className="text-xl font-semibold">
+                  Name:{resortdetails?.resortowner?.name}
+                </h2>
+                <h2 className="text-xl font-semibold">
+                  contact:{resortdetails?.resortowner?.phone}
+                </h2>
+                <h2 className="text-xl font-semibold mb-20">
+                  Email:{resortdetails?.resortowner?.email}
+                </h2>
+
+                {/* <div className="card-actions justify-end">
+      <button className="btn btn-success">Approve</button>
+      <button className="btn btn-error">Reject</button>
+    </div> */}
+              </div>
+            </div>
+          </div>
         </div>
-        
-       
       </div>
-      
-    </div>
-  )
-}
+    </>
+  );
+};
 
-export default ViewResort
+export default ViewResort;

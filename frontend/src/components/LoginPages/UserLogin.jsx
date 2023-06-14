@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setUserDetails } from '../../redux/userSlice';
 import { userlogin } from '../../services/Userapi';
 
 
 const UserLogin = () => {
-  const users = useSelector((state) => state.user);
+  // const users = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [user, setUser] = useState({
-    email: '',
-    password: ''
-  });
+  const [useremail,setuseremail]=useState('')
+  const [userpass,setuserpass]=useState('')
+  // const [user, setUser] = useState({
+  //   email: '',
+  //   password: ''
+  // });
 
   useEffect(() => {
     const token=localStorage.getItem('usertoken')
@@ -33,17 +35,20 @@ const UserLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!user.email) {
-      generateError('email is required');
-      return;
-    }
-    if (!user.password) {
-      generateError('password is required');
-      return;
-    }
+    // if (!user.email) {
+    //   generateError('email is required');
+    //   return;
+    // }
+    // if (!user.password) {
+    //   generateError('password is required');
+    //   return;
+    // }
     try {
-      console.log(user,"login user dataaaa")
-     const data =await userlogin({...user})
+      // console.log(user,"login user dataaaa")
+     const data =await userlogin({
+      email:useremail,
+      password:userpass
+     })
       // if (data.data){
       if(data) {
         // console.log(data);
@@ -78,9 +83,15 @@ const UserLogin = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-    <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-      <h2 className="text-2xl font-bold mb-6">User Login</h2>
+    <div className="flex items-center justify-center min-h-screen" style={{
+      backgroundImage: "url('https://res.cloudinary.com/dsyln8j3g/image/upload/v1686661233/banner3_ckamoa.jpg')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      width: "100%",
+      height: "100vh",
+    }}>
+    <div className="w-full max-w-md bg-white-200 rounded-lg shadow-md p-8" style={{ opacity: 0.9 }} >
+      <h2 className="text-2xl font-bold mb-6 text-center text-white">User Login</h2>
      
       <form onSubmit={handleSubmit}>
         
@@ -88,7 +99,7 @@ const UserLogin = () => {
         <div className="mb-4">
           <label
             htmlFor="email"
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block text-white text-sm font-bold mb-2"
           >
             Email
           </label>
@@ -99,7 +110,7 @@ const UserLogin = () => {
             id="email"
             className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             placeholder="Enter your email"
-            onChange={(e) => setUser({ ...user, email: e.target.value })}
+            onChange={(e) => setuseremail( e.target.value )}
             required
           />
         </div>
@@ -107,7 +118,7 @@ const UserLogin = () => {
         <div className="mb-6">
           <label
             htmlFor="password"
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block text-white text-sm font-bold mb-2"
           >
             Password
           </label>
@@ -116,7 +127,7 @@ const UserLogin = () => {
             id="password"
             className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             placeholder="Enter your password"
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
+            onChange={(e) => setuserpass(e.target.value)}
             required
           />
         </div>
@@ -127,8 +138,8 @@ const UserLogin = () => {
           Login
         </button>
       </form>
-      <p className="mt-4">Not registered? <Link to="/register" className="text-blue-500">Signup here</Link></p>
-      <p className="mt-4">Login As A staff?<Link to="/stafflogin" className="text-blue-500"> SignIn</Link></p>
+      <p className=" font-bold text-blue-700 mt-4">Not registered? <Link to="/register" className="text-blue-700 font-bold">Signup here</Link></p>
+      <p className=" font-bold text-blue-700 mt-4">Login As A staff?<Link to="/staff/stafflogin" className="text-blue-700 font-bold"> SignIn</Link></p>
       <ToastContainer />
       {/* <button className="link-btn">
 Already have an account? <Link to="/stafflogin" className="text-blue-500">Login here</Link>

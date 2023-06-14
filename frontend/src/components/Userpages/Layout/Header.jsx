@@ -13,7 +13,7 @@ const Header = () => {
   console.log(users, "user");
 
   return (
-    <div className="navbar bg-indigo-500 flex justify-between">
+    <div className="navbar bg-sky-500 flex justify-between">
       <div>
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -34,7 +34,7 @@ const Header = () => {
           </label>
           <ul
             tabIndex={0}
-            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-indigo-500 rounded-box w-52 text-white" 
+            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-sky-500 rounded-none w-52 text-white" 
           >
             <li>
               <Link to="/">Home</Link>
@@ -59,7 +59,7 @@ const Header = () => {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/resort">Resort</Link>
+            <Link to="/resortlist">Resort</Link>
           </li>
           <li>
             <Link to="/adventure">Adventure</Link>
@@ -84,7 +84,7 @@ const Header = () => {
           </label>
           <ul
             tabIndex={0}
-            className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-indigo-500 rounded-box w-52 text-white"
+            className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-sky-500 rounded-box w-52 text-white"
           >
             <li>
               <Link to='/profile'>
@@ -108,7 +108,7 @@ const Header = () => {
         </>
 
       ):(
-        <Link to='/login' className="btn">Login</Link>
+        <Link to='/login' className="btn btn-ghost">Login</Link>
       )}
       
       {/* <div className="navbar-end">
