@@ -52,7 +52,7 @@ const UserLogin = () => {
       // if (data.data){
       if(data) {
         // console.log(data);
-        console.log(data.data,"data coming")
+        // console.log(data.data,"data coming")
         if (data.data.errors) {
           const { email, password } = data.data.errors;
           if (email) generateError(email);

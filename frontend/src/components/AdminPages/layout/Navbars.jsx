@@ -24,7 +24,7 @@ const Navbars = () => {
           <Link to="/admin/pendingrequest" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdHomeWork /></span>All Resorts</Link>
           <Link to="/admin/adminadventure" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDataThresholding/></span>Adventure</Link>
           <Link to="/admin/bookings" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdBookmarkAdded/></span>Booking</Link>
-          {admin.email?(
+          {admin.email &&(
             <>
             <div className='dropdown dropdown-hover'>
             <label tabIndex={0} className="py-2 px-4"><span className='hover:text-white-300'>{admin.email}</span></label>
@@ -34,8 +34,6 @@ const Navbars = () => {
               </ul>
             </div>
             </>
-          ):(
-            <li><Link to="/admin/adlogin" className="hover:text-gray-300">Login</Link></li>
           )}
           
           {/* <li><Link to ='/login'><a onClick={handleLogout}>Logout</a></Link></li> */}

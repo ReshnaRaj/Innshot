@@ -38,7 +38,11 @@ const disableresort=(id)=>{
     console.log(id,"disable working...")
     return staffAxiosInstance.post(`/disableresort/${id}`)  
 }
+const authStaff=()=>{
+    console.log("authstaff")
+    return staffAxiosInstance.get('/isStaffAuth')
+}
 
 
 
-export {staffregister,stafflogin,staffresort,staffverify,getResortData,editpostresortdatas,disableresort}
+export {staffregister,stafflogin,staffresort,staffverify,getResortData,editpostresortdatas,disableresort,authStaff}

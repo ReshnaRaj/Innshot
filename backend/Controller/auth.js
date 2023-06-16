@@ -6,13 +6,13 @@ const jwt=require('jsonwebtoken');
 const sendmail = require("../Service/mailservice");
 const {verifyLink,verifystaffLink}=require('../Middleware/authuser')
 
-const maxtime= 3*24*60*60
-const createtoken=(id)=>{
-    return jwt.sign({id},process.env.SECRET,{
-        expiresIn:maxtime,
-    })
+// const maxtime= 3*24*60*60
+// const createtoken=(id)=>{
+//     return jwt.sign({id},process.env.SECRET,{
+//         expiresIn:maxtime,
+//     })
 
-}
+// }
 const handleErrors=(err)=>{
     let errors={email:"",password:""}
 
@@ -57,9 +57,10 @@ module.exports.login=async (req,res,next)=>{
         if(user){
             if(user.verifiyd){
                 // console.log("user verified working")
-                const auth=await bcrypt.compare(password,user.password)
-                if(auth){
-                   const token=createtoken(user._id)
+                const validpassword=await bcrypt.compare(password,user.password)
+                if(validpassword){
+                    const userId=user._id
+                   const token=jwt.sign({userId},process.env.JWT_SECRET_KEY,{expiresIn:30000})
                    
             console.log(token,"tyuy")
               res
@@ -108,6 +109,47 @@ module.exports.verifyuser=async(req,res)=>{
         
     }
 }
+module.exports.isUserAuth=async(req,res,next)=>{
+    try {
+        console.log(req.userId,"userID getting...")
+        let userDetials=await UserModel.findById(req.userId)
+        console.log(userDetials,"user detaills consoling...")
+        // userDetials.auth=true 
+        res.json({
+            'auth':true,
+            _id:userDetials._id,
+            name:userDetials.name,
+            email:userDetials.email,
+            phone:userDetials.phone,
+
+        })
+    } catch (error) {
+        res.json({auth:false,status:"error",message:error.message})
+        
+    }
+}
+module.exports.isStaffAuth=async(req,res,next)=>{
+    try {
+        console.log(req.staffId,"staff Id getting....")
+        let staffDetails=await StaffModel.findById(req.staffId)
+        console.log(staffDetails,"staff detials consoling...")
+        staffDetails.auth=true;
+        if(staffDetails){
+            res.json({
+                auth:true,
+                _id:staffDetails._id,
+                name:staffDetails.name,
+                email:staffDetails.email,
+                phone:staffDetails.phone,
+
+            })
+        }
+
+    } catch (error) {
+        res.json({auth:false,message:error.message})
+        
+    }
+}
 module.exports.staffreg=async(req,res,next)=>{
     try {
         console.log("staff register page is working..");
@@ -137,9 +179,11 @@ module.exports.stafflogin=async (req,res,next)=>{
                 const auth=await bcrypt.compare(password,staff.password)
                 console.log(auth,'authentication working')
                 if(auth){
+                    const staffId=staff._id
                     console.log(staff._id,"staff id")
-                   const token=createtoken(staff._id)
+                   const token=jwt.sign({staffId},process.env.JWT_SECRET_KEY,{expiresIn:30000})
                 //    i getting doubt
+                console.log(token,"token coming.....")
                    
             
               res
@@ -193,14 +237,20 @@ module.exports.verifystaff=async(req,res)=>{
     }
 }
 module.exports.adminlogin=async(req,res)=>{
-    // console.log("admin login page working")
+    console.log("admin login page working")
     try {
         const {email,password}=req.body
         const admin=await AdminModel.findOne({email})
         if(admin){
             const validatePassword=await bcrypt.compare(password,admin.password)
             if(validatePassword){
-                const token=createtoken(admin._id)
+                const adminId=admin._id
+                // console.log(adminId,"adminId getting...")
+                const token=jwt.sign({adminId},process.env.JWT_SECRET_KEY,{expiresIn:30000})
+                // const token=jwt.sign({adminId},process.env.JWT_SECRET_KEY,{
+                //     expiresIn:30000
+                // })
+                // console.log(token,"token coming....")
                 res.status(200).json({admin,token,created:true})
             }
             else{
@@ -219,3 +269,19 @@ module.exports.adminlogin=async(req,res)=>{
         
     }
 }
+module.exports.isAdminAuth = async (req, res) => {
+    try {
+      let admin = await AdminModel.findById(req.adminId);
+      const admindetails = {
+        email: admin.email,
+      };
+      res.json({
+        auth: true,
+        result: admindetails,
+        status: "success",
+        message: "signin success",
+      });
+    } catch (error) {
+      res.status(400).json({ auth: false, message: `something went wrong` });
+    }
+  };

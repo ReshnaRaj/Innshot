@@ -18,10 +18,20 @@ const staffSlice=createSlice({
             state.email=action.payload.email;
             state.phone=action.payload.phone;
             // state.image=action.payload.image;
-            state.token=action.payload.token;
+            // state.token=action.payload.token;
         },
+        staffLogin:(state,action)=>{
+            state.value={...action.payload,
+            isStaffAuth:true}
+        },
+        staffLogout:(state)=>{
+            state.value={
+            isStaffAuth:false,
+            staff:null,
+            }
+        }
     
     }
 })
-export const {setStaffDetails}=staffSlice.actions;
+export const {setStaffDetails,staffLogin,staffLogout}=staffSlice.actions;
 export default staffSlice.reducer;

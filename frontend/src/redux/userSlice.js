@@ -20,8 +20,19 @@ const userSlice=createSlice({
             // state.image=action.payload.image;
             state.token=action.payload.token;
         },
+        userlogin:(state,action)=>{
+            // console.log(action.payload,"mmmmm")
+            state.value={...action.payload,
+            isUserAuth:true}
+        },
+        userlogout:(state)=>{
+            state.value={
+                isUserAuth:false,
+                userz:null
+            }
+        }
     
     }
 })
-export const {setUserDetails}=userSlice.actions;
+export const {setUserDetails,userlogin,userlogout}=userSlice.actions;
 export default userSlice.reducer;

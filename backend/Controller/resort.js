@@ -86,7 +86,7 @@ module.exports.addresort=async(req,res,next)=>{
 module.exports.getResort = async (req, res, next) =>
  {
     try {
-      let id=req.staff
+      let id=req.staffId
       // console.log(id,"id consoling.....")
       const resorts = await ResortModel.find({resortowner:id});
       res.status(200).json({result:resorts,success:true});

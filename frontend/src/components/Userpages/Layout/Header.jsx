@@ -10,7 +10,7 @@ const Header = () => {
     localStorage.removeItem("usertoken");
     // dispatch an action if necessary
   };
-  console.log(users, "user");
+  // console.log(users, "user");
 
   return (
     <div className="navbar bg-sky-500 flex justify-between">
@@ -40,7 +40,7 @@ const Header = () => {
               <Link to="/">Home</Link>
             </li>
             <li tabIndex={0}>
-              <Link to="/resort">Resort</Link>
+              <Link to="/resortlist">Resort</Link>
             </li>
             <li>
               <Link to="/adventure">Adventure</Link>

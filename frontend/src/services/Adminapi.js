@@ -16,4 +16,8 @@ const getuniqueresort=(id)=>{
     console.log('resort view page working')
     return adminAxiosInstance.get(`/getuniqueresort/${id}`)
 }
-export {adminlogin,getAllData,approveresort,getuniqueresort}
+const authAdmin=()=>{
+    // console.log('privete root of admin is going to backend ')
+    return adminAxiosInstance.get('/isAdminauth')
+}
+export {adminlogin,getAllData,approveresort,authAdmin,getuniqueresort}
