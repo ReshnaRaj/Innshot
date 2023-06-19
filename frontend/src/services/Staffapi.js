@@ -42,7 +42,20 @@ const authStaff=()=>{
     console.log("authstaff")
     return staffAxiosInstance.get('/isStaffAuth')
 }
+const staffadv=(data)=>{
+    console.log("adv data added working")
+    return staffAxiosInstance.post('/add-adv',data,{
+        headers:{
+            'Content-Type':'multipart/form-data'
+        }
+    })
+}
+const getStaffAdv=()=>{
+    console.log("advvvvvvvvvvv")
+    return staffAxiosInstance.get('/getadvdata')
+}
 
 
 
-export {staffregister,stafflogin,staffresort,staffverify,getResortData,editpostresortdatas,disableresort,authStaff}
+
+export {staffregister,stafflogin,staffresort,staffverify,getResortData,editpostresortdatas,disableresort,authStaff,staffadv,getStaffAdv}

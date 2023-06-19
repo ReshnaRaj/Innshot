@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Header from "./Layout/Header";
+import Footer from "./Layout/Footer";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -108,8 +109,10 @@ const Home = () => {
     <button className="btn btn-info mx-0 ">Explore</button>
   </div>
 </div>
-
+<Footer/>
     </div>
+    
+    
   );
 };
 

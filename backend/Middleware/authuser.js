@@ -54,7 +54,7 @@ module.exports.checkStaff = (req, res, next) => {
           res.json({ status: false, message: "failed at verifying" });
         } else {
           req.staffId = decodedToken.staffId;
-          console.log(req.staffId, "staff id...");
+          // console.log(req.staffId, "staff id...");
           // const staff = await Staff.findById({_id:decodedToken.id})
           // req.staff=staff._id
 

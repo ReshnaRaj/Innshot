@@ -5,7 +5,6 @@ import Navbar from "./layout/Navbar";
 import {
   getResortData,
   disableresort,
-  editResort,
 } from "../../services/Staffapi";
 
 const StafResort = () => {
@@ -18,10 +17,10 @@ const StafResort = () => {
   const getresortData = async () => {
     try {
       let {data} = await getResortData();
-      // console.log(data, "data of resort ");
+      console.log(data, "data of resort ");
 
       if (data.success) {
-        console.log(data.result,"result consoling...")
+        // console.log(data.result,"result consoling...")
         setresort(data.result);
       }
     } catch (error) {
@@ -31,17 +30,17 @@ const StafResort = () => {
   // console.log(resort,"settinhhh")
   const handleEdit = async (item) => {
     try {
-      console.log(item, "resort full coming...");
+      // console.log(item, "resort full coming...");
 
       navigate("/staff/editresort", { state: { item } });
     } catch (error) {}
   };
   const handledisable = async (resortId) => {
     try {
-      console.log(resortId, "resort is coming...");
+      // console.log(resortId, "resort is coming...");
 
       let { data } = await disableresort(resortId);
-      console.log(data, "kkkkkk");
+      // console.log(data, "kkkkkk");
       if (data) {
         getresortData();
       }
@@ -56,7 +55,7 @@ const StafResort = () => {
       <div className="flex-1">
         <Headerr name={"List of Resorts"} />
         <div className="p-4 flex justify-between items-center">
-          <h2 className="text-xl font-bold mb-4">Details of Booked Resort</h2>
+          <h2 className="text-xl font-bold mb-4">Details of Resort</h2>
           <Link to="/staff/add-resort" className="btn btn-ghost">
             Add Resort
           </Link>

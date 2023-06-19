@@ -34,6 +34,7 @@ const ViewResort = () => {
     id: index + 1,
     src: `${baseUrl}${resortdetails?.image && resortdetails?.image[index]}`,
   }));
+  // console.log(resortdetails,"repppp")
   
   return (
     <>

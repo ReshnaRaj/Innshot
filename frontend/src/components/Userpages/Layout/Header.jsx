@@ -13,7 +13,7 @@ const Header = () => {
   // console.log(users, "user");
 
   return (
-    <div className="navbar bg-sky-500 flex justify-between">
+    <div className="navbar bg-sky-300 flex justify-between">
       <div>
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">

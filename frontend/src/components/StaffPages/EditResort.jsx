@@ -3,24 +3,8 @@ import { useLocation, useParams } from 'react-router-dom'
 import Navbar from './layout/Navbar'
 import Headerr from './layout/Headerr'
 import { editpostresortdatas } from '../../services/Staffapi'
-import {  baseUrl} from '../../files/file';
 import { ToastContainer, toast } from "react-toastify";
-
-
-
 const EditResort = () => {
-  // const [resortt,setresortt]=useState({
-  //   resortname:'',
-  //   number_room:'',
-  //   address:'',
-  //   place:'',
-  //   description:'',
-  //   image:[],
-  //   file:'',
-  //   price:'',
-  //   phone:''
-
-  // })
   const [resortname,setresortname]=useState('')
   const [number_room,setnum]=useState('')
   const [address,setaddress]=useState('')
@@ -33,10 +17,6 @@ const EditResort = () => {
   const [id,setid]=useState('')
   const location=useLocation()
   const items=location.state?.item
-  console.log(items,"resorrrrrrrrrrr")
-  // const [images,setimages]=useState([])
-  // const [doc,setdoc]=useState('')
-
   useEffect(() => {
       // setresortt(items)this code is used to show the details of resort of one resort
       setresortname(items.resortname);
@@ -49,11 +29,8 @@ const EditResort = () => {
       setprice(items.price)
       setphone(items.phone)
       setid(items._id)
-
-    
   }, []);
   // console.log(image,"lllllllllllllll")
-
   const handleEditSubmit=async (e)=>{
     e.preventDefault();
     const formData=new FormData()
@@ -71,10 +48,6 @@ const EditResort = () => {
       
     }
     formData.append('document',document)
-    
-    // console.log(items.document,"doc success")
-    // console.log(file,"file success")
-  
     console.log("edit submitting working")
     let data =await editpostresortdatas(formData,id)
     console.log(data,"resort coming...")
@@ -85,15 +58,8 @@ const EditResort = () => {
         toast.success(data.data.message,{
           position: "top-center",
         })
-      
       }
-    
-    
- 
   }
-  
- 
-
   return (
     <div className="flex">
       <Navbar />
@@ -213,8 +179,6 @@ const EditResort = () => {
                   className="file-input w-full max-w-xs"
                   multiple
                    required
-                  
-                
                 />
                 {/* {image.map((img, index) => (
                   <img
@@ -223,8 +187,7 @@ const EditResort = () => {
                     alt={`Image ${index + 1}`}
                     className="w-40 h-20 object-cover"
                   />
-                  ))}  */}
-                
+                  ))}  */} 
               </div>
             </div> 
             <div>
@@ -244,19 +207,13 @@ const EditResort = () => {
               type="submit"
               className="bg-blue-500 text-white rounded px-4 py-2"
             >
-              Update Resort
-              
+              Update Resor
             </button>
-            
           </form>
-          
         </div>
         <ToastContainer />
-       
       </div>
-      
     </div>
   )
 }
-
 export default EditResort

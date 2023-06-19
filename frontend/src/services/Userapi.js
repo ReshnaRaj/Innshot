@@ -18,6 +18,12 @@ const authUser=()=>{
     console.log("private root user root is going to backend...")
     return userAxiosInstance.get('/isUserAuth')
 }
+const getresortdata=(id)=>{
+    return userAxiosInstance.get(`/oneresort/${id}`)
+}
+const getsimiliarstay=(data)=>{
+    return userAxiosInstance.get(`/getsimiliarstay/${data}`)
+}
 
 
-export {userregister,userlogin,userverify,getuserresort,authUser}
+export {userregister,userlogin,userverify,getuserresort,authUser,getresortdata,getsimiliarstay}

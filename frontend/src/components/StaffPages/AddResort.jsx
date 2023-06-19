@@ -152,7 +152,7 @@ const AddResort = () => {
                     {
                       const words = e.target.value.split(' ');
                       console.log(words,"words coming.....")
-                      if(words.length<=10 || e.target.value.length<500){
+                      if(words.length<=10 || e.target.value.length<5500){
                     setResortData({
                       ...resortData,
                       description: words.join(' ')
@@ -197,7 +197,7 @@ const AddResort = () => {
                   value={resortData.price}
                   onChange={(e) =>{
                     const Pricee=e.target.value.replace(/[^0-9]/g, "")
-                    if(Pricee.length<=4){
+                    if(Pricee.length<=5){
                     setResortData({ ...resortData, price: Pricee})
                     }
                   }
