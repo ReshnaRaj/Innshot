@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./layout/Navbar";
 import Headerr from "./layout/Headerr";
-import { getResortData, staffadv, getStaffAdv } from "../../services/Staffapi";
+import { getResortData, staffadv, getStaffAdv,editadvpost } from "../../services/Staffapi";
 import { ToastContainer, toast } from "react-toastify";
 
 const StaffAdventure = () => {
@@ -14,10 +14,13 @@ const StaffAdventure = () => {
   const [resort, setResort] = useState("");
   const [list, setList] = useState([]);
   const [image, setImage] = useState([]);
+  const[adv,setAdv]=useState()
+  // const [id,setid]=useState('')
 
   useEffect(() => {
     getAdvData();
   }, []);
+
   const handleModalOpen = () => {
     // console.log("modal working....")
     getresortData();
@@ -25,7 +28,7 @@ const StaffAdventure = () => {
   const getresortData = async () => {
     try {
       let { data } = await getResortData();
-      console.log(data, "data of resort ");
+      // console.log(data, "data of resort ");
 
       if (data.success) {
         // console.log(data.result,"result consoling...")
@@ -43,6 +46,25 @@ const StaffAdventure = () => {
       }
     } catch (error) {}
   };
+  // this code is for to see the detials of the advneture activity..
+  const  handleEditClick=(item)=>{
+    try {
+      console.log(item,"255555555")
+      
+      setAdv(item)
+    
+      setActivity(item.activity || "");
+      setPrice(item.price || "");
+      setTime(item.time || "");
+      setPlace(item.place || "");
+      setDesc(item.description || "");
+      setResort(item.resortName || "")
+      
+    } catch (error) {
+      console.log(error,"99999")
+      
+    }
+  }
  
 
   const handleSubmit = async (e) => {
@@ -77,6 +99,33 @@ const StaffAdventure = () => {
   };
   // console.log(resort, "pppppppppppppppp");
   // console.log(AdvActivity, "22222222");
+  const handleUpdateSubmit=async(e)=>{
+    e.preventDefault()
+    const formData=new FormData()
+    formData.append('advact',activity)
+    formData.append('advprc',price)
+    formData.append('advtime',time)
+    formData.append('advplace',place)
+    formData.append('advdesc',desc)
+    formData.append('advresort',resort)
+    for (let i = 0; i < image.length; i++) {
+      const img = image[i];
+      formData.append("advimage", img);
+    }
+
+   
+    try {
+      const newadv=await editadvpost(formData)
+      if(newadv.data.success){
+        toast.success(newadv.data.message,{
+          position:'top-center'
+        })
+      }
+    } catch (error) {
+      
+    }
+    
+  }
 
   return (
     <>
@@ -242,7 +291,12 @@ const StaffAdventure = () => {
                     <td>{item.place}</td>
                     <td>{item.price}</td>
                     <td>{item.resortName}</td>
-                     <label htmlFor="my_modal_6" className="btn btn-info">
+                     <label htmlFor="my_modal_6" className="btn btn-info"
+                     onClick={() => {
+                      // console.log(item,"2222222222222")
+                      // console.log(index,"44444")
+                      handleEditClick(item)}}
+                     >
               Edit
             </label>
 
@@ -255,7 +309,7 @@ const StaffAdventure = () => {
             <div className="modal">
             <div className="modal-box">
               <form
-               
+               onSubmit={handleUpdateSubmit}
                 className="form-control w-full max-w-xs"
               >
                 <div className="form-control w-full max-w-xs">
@@ -263,7 +317,9 @@ const StaffAdventure = () => {
                     <span className="label-text">Activity Name</span>
                   </label>
                   <input
-                    value={activity}
+                    // value={adv?.activity || ""}
+                   
+                    
                     type="text"
                     
                     placeholder="Enter the Activity Name"
@@ -273,7 +329,7 @@ const StaffAdventure = () => {
                     <span className="label-text">Price</span>
                   </label>
                   <input
-                    value={price}
+                    // value={adv?.price}
                     
                     type="number"
                     placeholder="Enter the price"
@@ -285,7 +341,7 @@ const StaffAdventure = () => {
                   </label>
                   <input
                     type="number"
-                    value={time}
+                    // value={time}
                     
                     placeholder="Enter the time"
                     className="input input-bordered w-full max-w-xs"
@@ -294,7 +350,7 @@ const StaffAdventure = () => {
                     <span className="label-text">Place</span>
                   </label>
                   <input
-                    value={place}
+                    // value={place}
                     
                     type="text"
                     placeholder="Enter the place"
@@ -305,7 +361,7 @@ const StaffAdventure = () => {
                     <span className="label-text">Overview </span>
                   </label>
                   <textarea
-                    value={desc}
+                    // value={desc}
                     
                     placeholder="About the activity"
                     className="textarea textarea-bordered textarea-md w-full max-w-xs"
@@ -315,7 +371,7 @@ const StaffAdventure = () => {
                     <span className="label-text">Provided by this Resort</span>
                   </label>
                   <select
-                    value={resort}
+                    // value={resort}
                     
                     className="select select-bordered w-full max-w-xs"
                   >
@@ -337,7 +393,7 @@ const StaffAdventure = () => {
                 </div>
 
                 <div className="modal-action">
-                  <button type="submit" className="btn">
+                  <button type="submit" className="btn btn-success">
                     Update
                   </button>
                 </div>

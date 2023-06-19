@@ -51,11 +51,18 @@ const staffadv=(data)=>{
     })
 }
 const getStaffAdv=()=>{
-    console.log("advvvvvvvvvvv")
+    // console.log("advvvvvvvvvvv")
     return staffAxiosInstance.get('/getadvdata')
+}
+const editadvpost=(data)=>{
+    return staffAxiosInstance.post(`/posteditadv/`,data,{
+        headers:{
+            'Content-Type':'multipart/form-data'
+        }
+    })
 }
 
 
 
 
-export {staffregister,stafflogin,staffresort,staffverify,getResortData,editpostresortdatas,disableresort,authStaff,staffadv,getStaffAdv}
+export {staffregister,stafflogin,staffresort,staffverify,getResortData,editpostresortdatas,disableresort,authStaff,staffadv,getStaffAdv,editadvpost}
