@@ -23,16 +23,10 @@ const ViewResort = () => {
       }
     } catch (error) {}
   };
-  // const showImages = async () => {
-  //   try {
-  //     console.log("show images is working...");
-  //   } catch (error) {}
-  // };
-  // console.log(resortdetails, "resortdetails working....");
-  // console.log(resortdetails.image.length,"length of image uploaded by resort")
+
   const images = Array.from({ length: resortdetails?.image?.length }).map((_, index) => ({
     id: index + 1,
-    src: `${baseUrl}${resortdetails?.image && resortdetails?.image[index]}`,
+    src: `${resortdetails?.image && resortdetails?.image[index]}`,
   }));
   // console.log(resortdetails,"repppp")
   
@@ -46,7 +40,7 @@ const ViewResort = () => {
             <figure>
               {resortdetails?.image && resortdetails.image[0] ? (
                 <img
-                  src={`${baseUrl}${resortdetails.image[0]}`}
+                  src={`${resortdetails.image[0]}`}
                   alt="resort image"
                   style={{ maxWidth: "200px", maxHeight: "200px" }}
                 />
@@ -125,7 +119,7 @@ const ViewResort = () => {
               <h2>Certificate uploaded</h2>
               {resortdetails?.document ? (
                 <embed
-                  src={`${baseUrl}${resortdetails.document}`}
+                  src={`${resortdetails?.document}`}
                   type="application/pdf"
                   width="50%"
                   height="100px"

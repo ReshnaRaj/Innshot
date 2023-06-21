@@ -23,7 +23,7 @@ const adventureSchema=new mongoose.Schema({
         type:String
     },
     image:{
-        type:Object,
+        type:[String],
         required:[true]
     },
     price:{
@@ -34,6 +34,10 @@ const adventureSchema=new mongoose.Schema({
         type:Number,
         required:[true]
     },
+    verify:{
+        type:Boolean,
+        default:false
+    }
     
 })
 module.exports=mongoose.model('Adventure',adventureSchema)

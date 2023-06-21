@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Navbars from "./layout/Navbars";
 import Headers from "./layout/Headers";
-import { getAllData,approveresort } from "../../services/Adminapi";
-import {  useNavigate } from "react-router-dom";
+import { getAllData, approveresort } from "../../services/Adminapi";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-
 
 const PendingRequest = () => {
   const [data, setdata] = useState([]);
@@ -18,7 +17,7 @@ const PendingRequest = () => {
       // console.log(dataa, "data of all resorts");
 
       if (dataa.data.resort) {
-        console.log(dataa.data,"tttttttt")
+        console.log(dataa.data, "tttttttt");
         // const resortOwnerNames = dataa.data.map(
         //   (resort) => resort.resortowner.name
         // );
@@ -29,25 +28,22 @@ const PendingRequest = () => {
       console.log(error, "error coming..");
     }
   };
-  const handleapprove=async(resortId)=>{
+  const handleapprove = async (resortId) => {
     try {
-      let {data}=await approveresort(resortId)
+      let { data } = await approveresort(resortId);
       // console.log(data,"data from approve part of admin")
-      if(data){
+      if (data) {
         // console.log(data.message,"message came")
-        toast.success(data.message,{
-          position:'top-center'
-        })
-        getData()
+        toast.success(data.message, {
+          position: "top-center",
+        });
+        getData();
       }
-      
     } catch (error) {
-      console.log(error,"error")
-      
+      console.log(error, "error");
     }
-  }
+  };
   const handleView = async (item) => {
-    
     try {
       console.log(item, "resort full coming...");
 
@@ -67,13 +63,30 @@ const PendingRequest = () => {
       <div className="flex-1">
         <Headers name={"List of Resorts"} />
         <div className="form-control float-right">
-  <div className="input-group">
-    <input type="text" placeholder="Search…" className="input input-bordered" />
-    <button className="btn btn-square">
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-    </button>
-  </div>
-</div>
+          <div className="input-group">
+            <input
+              type="text"
+              placeholder="Search…"
+              className="input input-bordered"
+            />
+            <button className="btn btn-square">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
         <div className="overflow-x-auto inline">
           <table className="table table-compact w-full">
             <thead>
@@ -93,30 +106,35 @@ const PendingRequest = () => {
                   <td>{item?.resortname}</td>
                   <td>{item?.resortowner?.name}</td>
                   <td>{item?.place}</td>
-                  <td>{item?.verify?'approved':'rejected'}</td>
-                 
-                  
-                  <button onClick={() => {
+                  <td>{item?.verify ? "approved" : "rejected"}</td>
+
+                  <button
+                    onClick={() => {
                       console.log(item, "item is coming....");
                       handleView(item._id);
-                    }}className="btn btn-xs btn-info"  style={{ marginRight: "10px" }}>View</button>
-                  {item.verify===false ? (
-  <button 
-    onClick={() => handleapprove(item._id)}
-    className="btn btn-xs btn-success" 
-    style={{ marginRight: "10px" }}
-  >
-    Approve
-  </button>
-) : (
-  <button 
-    onClick={() => handleapprove(item._id)}
-    className="btn btn-xs btn-error"
-    style={{ marginRight: "10px" }}
-  >
-    Reject
-  </button>
-)}
+                    }}
+                    className="btn btn-xs btn-info"
+                    style={{ marginRight: "10px" }}
+                  >
+                    View
+                  </button>
+                  {item.verify === false ? (
+                    <button
+                      onClick={() => handleapprove(item._id)}
+                      className="btn btn-xs btn-success"
+                      style={{ marginRight: "10px" }}
+                    >
+                      Approve
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleapprove(item._id)}
+                      className="btn btn-xs btn-error"
+                      style={{ marginRight: "10px" }}
+                    >
+                      Reject
+                    </button>
+                  )}
                 </tr>
               ))}
             </tbody>

@@ -6,6 +6,10 @@ import ViewResort from "../components/AdminPages/ViewResort";
 import AdminLogin from "../pages/Admin/Login";
 import Adminhome from "../pages/Admin/Dashboard";
 import PrivateRoute from "../Protectedroute/PrivateRoute";
+import AllAdventure from "../components/AdminPages/AllAdventure";
+import AllDestination from "../components/AdminPages/AllDestination";
+import ViewAdventure from "../components/AdminPages/ViewAdventure";
+import ViewDestination from '../components/AdminPages/ViewDest'
 
 const AdminRoute = () => {
   return (
@@ -19,6 +23,10 @@ const AdminRoute = () => {
           <Route exact path="/adminallresort" element={<ResortList />} />
           <Route exact path="/pendingrequest" element={<PendingRequest />} />
           <Route exact path="/viewresort/:id" element={<ViewResort />} />
+          <Route exact path='/adminadventure' element={<AllAdventure/>}/>
+          <Route exact path='/viewactivity/:id' element={<ViewAdventure/>}/>
+          <Route exact path='/admindestination' element={<AllDestination/>}/>
+          <Route exact path='/viewdestination/:id' element={<ViewDestination/>}/>
           {/* <Route exact path='/allresort' element={<Resort/>}/> */}
         </Route>
       </Routes>

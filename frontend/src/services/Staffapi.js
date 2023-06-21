@@ -54,15 +54,29 @@ const getStaffAdv=()=>{
     // console.log("advvvvvvvvvvv")
     return staffAxiosInstance.get('/getadvdata')
 }
-const editadvpost=(data)=>{
-    return staffAxiosInstance.post(`/posteditadv/`,data,{
+const editadvpost=(id,data)=>{
+    console.log(id,"id getting....")
+    return staffAxiosInstance.post(`/posteditadv/${id}`,data,{
+        headers:{
+            'Content-Type':'multipart/form-data'
+        }
+    })
+}
+const AddDest=(data)=>{
+    console.log(data,"ggggggggggggggggggggggg")
+    return staffAxiosInstance.post('/add-dest',data,{
         headers:{
             'Content-Type':'multipart/form-data'
         }
     })
 }
 
+const getDest=()=>{
+    // console.log("resort details")
+    return staffAxiosInstance.get('/getdestdata')
+}
 
 
 
-export {staffregister,stafflogin,staffresort,staffverify,getResortData,editpostresortdatas,disableresort,authStaff,staffadv,getStaffAdv,editadvpost}
+
+export {staffregister,stafflogin,staffresort,staffverify,getResortData,editpostresortdatas,disableresort,authStaff,staffadv,getStaffAdv,editadvpost,AddDest,getDest}

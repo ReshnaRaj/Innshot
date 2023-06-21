@@ -20,4 +20,24 @@ const authAdmin=()=>{
     // console.log('privete root of admin is going to backend ')
     return adminAxiosInstance.get('/isAdminauth')
 }
-export {adminlogin,getAllData,approveresort,authAdmin,getuniqueresort}
+const getalladvData=()=>{
+    // console.log("get all adv data")
+    return adminAxiosInstance.get("/getalladvdata")
+}
+const getuniqadv=(id)=>{
+    console.log(id,"uniqqqq")
+    return adminAxiosInstance.get(`/getuniqadv/${id}`)
+}
+const approveadvent=(id)=>{
+    // console.log("approve or reject")
+    return adminAxiosInstance.post(`/approveadvent/${id}`)
+}
+const getalldestData=()=>{
+    // console.log("get all adv data")
+    return adminAxiosInstance.get("/getalldestdata")
+}
+const getuniqdest=(id)=>{
+    console.log(id,"uniqqqq")
+    return adminAxiosInstance.get(`/getuniqdest/${id}`)
+}
+export {adminlogin,getAllData,approveresort,authAdmin,getuniqueresort,getalladvData,getuniqadv,approveadvent,getalldestData,getuniqdest}

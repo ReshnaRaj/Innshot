@@ -77,7 +77,7 @@ module.exports.checkAdmin = (req, res, next) => {
           res.json({ status: false, message: "token expired" });
         } else {
           req.adminId = decodedToken.adminId;
-          console.log(req.adminId, "admin Id getting...");
+          // console.log(req.adminId, "admin Id getting...");
           // const admin=await Admin.findById({_id:decodedToken._id})
           // req.admin=admin._id
           next();

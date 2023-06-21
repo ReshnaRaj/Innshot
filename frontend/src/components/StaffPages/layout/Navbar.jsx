@@ -22,6 +22,7 @@ const Navbar = () => {
           <Link to="/staff/staffhome" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDashboard/></span>Dashboard</Link>
           <Link to="/staff/staffresorts" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdHomeWork /></span> Resort</Link>
           <Link to="/staff/staffadventure" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDataThresholding/></span>Adventure</Link>
+          <Link to="/staff/staffdestination" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDataThresholding/></span>Destination</Link>
           <Link to="/staff/bookings" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdBookmarkAdded/></span>Booking</Link>
           {staffs.name &&(
             <>

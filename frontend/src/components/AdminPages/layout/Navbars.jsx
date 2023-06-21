@@ -22,8 +22,9 @@ const Navbars = () => {
           <Link to="/admin/adminhome" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDashboard/></span>Dashboard</Link>
           {/* <Link to="/admin/adminallresort" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdHomeWork /></span> Resort</Link> */}
           <Link to="/admin/pendingrequest" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdHomeWork /></span>All Resorts</Link>
-          <Link to="/admin/adminadventure" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDataThresholding/></span>Adventure</Link>
-          <Link to="/admin/bookings" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdBookmarkAdded/></span>Booking</Link>
+          <Link to="/admin/adminadventure" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDataThresholding/></span> All Adventure</Link>
+          <Link to="/admin/admindestination" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDataThresholding/></span> All Destination</Link>
+          {/* <Link to="/admin/bookings" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdBookmarkAdded/></span>Booking</Link> */}
           {admin.email &&(
             <>
             <div className='dropdown dropdown-hover'>

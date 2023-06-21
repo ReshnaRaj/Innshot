@@ -3,6 +3,9 @@ const AdvModal=require('../Model/AdventureModel')
 const fs = require("fs");
 const cloudinary = require('./config/cloudConfigure');
 const AdventureModel = require('../Model/AdventureModel');
+const { ObjectId } = require('mongodb');
+const DestinationModel = require('../Model/DestinationModel');
+
 module.exports.addresort=async(req,res,next)=>{
     try {
       console.log("bbbbjbjbjb")
@@ -73,6 +76,7 @@ module.exports.getResort = async (req, res, next) =>
       let id=req.staffId
       // console.log(id,"id consoling.....")
       const resorts = await ResortModel.find({resortowner:id});
+      console.log(resorts,"1111333")
       res.status(200).json({result:resorts,success:true});
       // actually we passing th eid means showing the owner added resort only 
     //   res.status(200).json({resorts,status:true,message:'success'});
@@ -235,24 +239,28 @@ module.exports.getResort = async (req, res, next) =>
   }
   module.exports.addAdventure=async(req,res,next)=>{
     try {
+      console.log(req.files,"ppppp")
       let id=req.staffId
       console.log(id,"staff ....")
-   const {adventureactivity,adventureprice,adventureTime,adventureplace,adventureresort,adventuredesc}=req.body
+      console.log(req.body,"iiiiiiiiii")
+   const {adventureactivity,adventureprice,adventureTime,adventureplace,adventureresort,adventuredescription}=req.body
 
    
     const images=req.files
-    const imagePaths = images.map(file => file.path);
-    const resort = await ResortModel.findOne({ resortname: adventureresort });
+    const imagePaths = images.map(file => file.path.replace('public', ''));
+  
+    // let newimagePath=imagePaths.replace('public','')
+    // const resort = await ResortModel.findOne({ resortname: adventureresort });
     // console.log(images,"hhhjhh")
     const Adventure=new AdvModal({
       activity:adventureactivity,
       place:adventureplace,
-      description:adventuredesc,
+      description:adventuredescription,
       image:imagePaths,
       price:adventureprice,
       time:adventureTime,
       resortowner:id,
-      resortName: resort.resortname,
+      resortName: adventureresort,
     })
     const newadv=await Adventure.save()
    
@@ -269,8 +277,12 @@ module.exports.getResort = async (req, res, next) =>
   }
   module.exports.getAdv=async(req,res)=>{
     try {
-      let id=req.staffId
-      const adventure=await AdventureModel.find({resortowner:id})
+      let id=req.staffId 
+      const objectId = new ObjectId(id);
+      console.log(objectId,"object id...")
+      const adventure=await AdventureModel.find({resortowner:objectId})
+      
+      console.log(adventure,"data in staff dashboard")
       res.status(200).json({result:adventure,success:true})
       
     } catch (error) {
@@ -278,4 +290,91 @@ module.exports.getResort = async (req, res, next) =>
       
     }
   }
+  module.exports.posteditadv = async (req, res, next) => {
+    try {
+      const  id  = req.params.id;
+      
+      console.log("working....")
+      // console.log(req.body)
+      const {
+        advact,
+        advprc,
+        advtime,
+        advplace,
+        advresort,
+        advdescription
+      } = req.body;
+    
+      
+      console.log(advresort,"000000000456765")
+  
+      const images = req.files;
+      const imagePaths = images.map(file => file.path);
+  
+      // const resort = await ResortModel.findOne({ resortname: advresort });
+  
+      const adventure = await AdvModal.findByIdAndUpdate({_id:id},{
+      activity: advact,
+      place: advplace,
+      description:advdescription,
+      image:imagePaths,
+      price:advprc,
+      time:advtime,
+      resortName:advresort,
+
+      }
+        );
+        console.log(adventure,"updated ....")
+        res.json({result:adventure,message:'Adeventure Updated Successfully',success:true})
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  };
+
+
+  module.exports.addDestination=async(req,res)=>{
+    try {
+      let id=req.staffId
+      console.log(id)
+      console.log(req.files,"file of images...")
+      // console.log(req.body,"formdata ")
+      const {destname,destplace,destabout,destresort}=req.body
+      console.log(req.body,"success")
+      const images=req.files
+      const imagePaths = images.map(file => file.path.replace('public', ''));
+      console.log(imagePaths,"image completed....")
+      const destination=new  DestinationModel({
+        dest_name:destname,
+        about:destabout,
+        place:destplace,
+        dest_img:imagePaths,
+        // price:destprice,
+        resortowner:id,
+        resortName:destresort
+
+      })
+      const newdest=await destination.save()
+      console.log(newdest,"new destination added...")
+      res.status(200).json({newdest,message:'New Destination Added',created:true})
+      
+    } catch (error) {
+      
+    }
+  }
+  module.exports.getDestinationData=async(req,res)=>{
+    try {
+      let id=req.staffId
+      
+      console.log(id,"dvdv")
+      const destination=await DestinationModel.find({resortowner:id})
+      console.log(destination,"succvvvv")
+      res.status(200).json({result:destination,success:true})
+
+      
+    } catch (error) {
+      
+    }
+  }
+  
 

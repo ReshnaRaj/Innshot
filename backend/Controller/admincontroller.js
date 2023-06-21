@@ -1,3 +1,5 @@
+const AdventureModel = require('../Model/AdventureModel');
+const DestinationModel = require('../Model/DestinationModel');
 const ResortModel=require('../Model/ResorttModel')
 const sendMail = require("../Service/approved");
 module.exports.approveresort = async (req, res, next) => {
@@ -48,4 +50,66 @@ module.exports.getuniqueresortdata=async(req,res,next)=>{
         res.json({message:'error while get unique page '})
         
     }
+}
+module.exports.getalladvdata=async(req,res,next)=>{
+  try {
+    const adventureactivity=await AdventureModel.find({}).populate('resortowner')
+    res.status(200).json({adventureactivity,success:true})
+    
+  } catch (error) {
+    console.log(error)
+    
+  }
+}
+module.exports.getuniqadvdata=async(req,res)=>{
+  try {
+    let advId=req.params.id
+    let adventuredata=await AdventureModel.findById(advId).populate('resortowner')
+    console.log(adventuredata,"data od adventure..")
+    res.status(200).json({adventuredata,success:true})
+  } catch (error) {
+    
+  }
+}
+
+module.exports.approveAdvent = async (req, res, next) => {
+  try {
+    let adventId = req.params.id;
+    let approve = await AdventureModel.findById(adventId).populate('resortowner');
+    console.log(approve, "d");
+    const newStatus = approve.verify === false ? true : false;
+    
+    let message = newStatus ? 'Resort approved' : 'Resort rejected';
+    AdventureModel.findOneAndUpdate({ _id: adventId }, { $set: { verify: newStatus } }).then((response) => {
+     
+      res.status(200).json({
+        message: message,
+        success: true
+      });
+    });
+  } catch (error) {
+    res.json({ message: 'Error', success: false });
+  }
+};
+
+module.exports.getalldestdata=async(req,res,next)=>{
+  try {
+    const destination=await DestinationModel.find({}).populate('resortowner')
+    console.log(destination,"aaaaaaaaaaa")
+    res.status(200).json({destination,success:true})
+    
+  } catch (error) {
+    console.log(error)
+    
+  }
+}
+module.exports.getuniquedest=async(req,res)=>{
+  try {
+    let destId=req.params.id
+    let destdata=await DestinationModel.findById(destId).populate('resortowner')
+    console.log(destdata,"data od destination..")
+    res.status(200).json({destdata,success:true})
+  } catch (error) {
+    
+  }
 }

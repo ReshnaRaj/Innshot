@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const {staffreg,stafflogin,verifystaff,isStaffAuth}=require('../Controller/authController')
-const { addresort,getResort,posteditresort,disableResort,addAdventure,getAdv} = require('../Controller/StaffController')
+const { addresort,getResort,posteditresort,disableResort,addAdventure,getAdv,posteditadv,addDestination,getDestinationData} = require('../Controller/StaffController')
 const {checkStaff}=require('../Middleware/authuser')
 const {uploadImage}=require('../Middleware/Multer')
 
@@ -21,6 +21,10 @@ router.get('/isStaffAuth',checkStaff,isStaffAuth)
 
 router.post('/add-adv',checkStaff,uploadImage.array('adventureimage', 5),addAdventure);
 router.get('/getadvdata',checkStaff,getAdv)
+router.post('/posteditadv/:id',checkStaff,uploadImage.array('adventureimage',5),posteditadv)
+
+router.post('/add-dest',checkStaff,uploadImage.array('destimages',5),addDestination)
+router.get('/getdestdata',checkStaff,getDestinationData)
 
 
 
