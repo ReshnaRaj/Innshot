@@ -2,7 +2,7 @@ const mongoose=require('mongoose')
 const dbConnection=async()=>{
     mongoose.set('strictQuery',false)
     try{
-        mongoose.connect("mongodb://127.0.0.1:27017/ResortBook", {
+        mongoose.connect(process.env.DATABASE_URL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
           })

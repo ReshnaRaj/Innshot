@@ -7,6 +7,7 @@ import EmailVerify from '../components/LoginPages/EmailVerify';
 import ResortList from '../components/Userpages/Resort'
 import PrivateRoute from '../Protectedroute/PrivateRoute';
 import ResortData from '../components/Userpages/ResortData';
+import Adventure from '../components/Userpages/Adventure';
 const UserRoute = () => {
   return (
     <>
@@ -18,6 +19,7 @@ const UserRoute = () => {
     <Route element={<PrivateRoute role={'user'} route={'/login'}/>}>
     <Route exact path='/resortlist' element={<ResortList/>}/>
     <Route exact path='/viewdata/:id' element={<ResortData/>}/>
+    <Route exact path='/adventure' element={<Adventure/>}/>
     </Route>
     </Routes>
     </>

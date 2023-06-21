@@ -60,7 +60,7 @@ const ResortData = () => {
                   <img
                     src={image.src}
                     alt={`Image ${image.id}`}
-                    className={`w-full h-auto ${index === 0 ? 'lg:w-full' : 'lg:w-full'}`}
+                    className="w-full h-auto lg:w-full lg:h-full"
                   />
                 </figure>
               ))}
@@ -86,7 +86,7 @@ const ResortData = () => {
     {resortdata._id === stay._id ? null : (
       <>
         {stay.image && stay.image.length > 0 ? (
-          <img src={`${stay.image[0]}`} alt={`Image ${stay.id}`} className="w-96 h-32 object-cover" />
+          <img src={`${stay.image[0]}`} alt={`Image ${stay.id}`} className="w-full h-32 object-cover" />
         ) : (
           <p>No image available</p>
         )}

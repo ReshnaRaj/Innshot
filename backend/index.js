@@ -6,7 +6,7 @@ const path = require('path');
 // const http = require("http");
 const dbConnection=require('./Connection/database')
 const cookieParser=require('cookie-parser')
-const bodyparser=require('body-parser')
+// const bodyparser=require('body-parser')
 const userouter=require('./Routes/UserRoute')
 const staffrouter=require('./Routes/StaffRoute')
 const adminrouter=require('./Routes/AdminRoute')
@@ -20,7 +20,7 @@ app.use(cors({
 })
 )
 app.use(cookieParser())
-app.use(bodyparser.json())
+// app.use(bodyparser.json())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use('/',userouter)

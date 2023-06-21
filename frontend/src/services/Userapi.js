@@ -24,6 +24,10 @@ const getresortdata=(id)=>{
 const getsimiliarstay=(data)=>{
     return userAxiosInstance.get(`/getsimiliarstay/${data}`)
 }
+const getuseradventure=()=>{
+    console.log("user resort page working...")
+    return userAxiosInstance.get('/adventurelist')
+}
 
 
-export {userregister,userlogin,userverify,getuserresort,authUser,getresortdata,getsimiliarstay}
+export {userregister,userlogin,userverify,getuserresort,authUser,getresortdata,getsimiliarstay,getuseradventure}

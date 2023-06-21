@@ -34,6 +34,7 @@ const Home = () => {
   ];
 
   return (
+ 
     <div>
       <Header />
       <div className="carousel">
@@ -111,7 +112,6 @@ const Home = () => {
 </div>
 <Footer/>
     </div>
-    
     
   );
 };
