@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import Navbar from './layout/Navbar'
 import Headerr from './layout/Headerr'
 import { editpostresortdatas } from '../../services/Staffapi'

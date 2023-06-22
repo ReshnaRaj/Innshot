@@ -16,9 +16,11 @@ const UserRoute = () => {
     <Route exact path='/register' element={<RegisterPage/>}/>
     <Route exact path='/login' element={<LoginPage/>}/>
     <Route exact path="/verifyemail/:id" element={<EmailVerify/>} />
-    <Route element={<PrivateRoute role={'user'} route={'/login'}/>}>
     <Route exact path='/resortlist' element={<ResortList/>}/>
     <Route exact path='/viewdata/:id' element={<ResortData/>}/>
+    <Route element={<PrivateRoute role={'user'} route={'/login'}/>}>
+   
+   
     <Route exact path='/adventure' element={<Adventure/>}/>
     </Route>
     </Routes>

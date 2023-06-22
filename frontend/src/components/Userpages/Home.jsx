@@ -5,15 +5,15 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const Home = () => {
-  const [checkInDate, setCheckInDate] = useState(null);
-  const [checkOutDate, setCheckOutDate] = useState(null);
-  const handleCheckInDateChange = (date) => {
-    setCheckInDate(date);
-  };
+  // const [checkInDate, setCheckInDate] = useState(null);
+  // const [checkOutDate, setCheckOutDate] = useState(null);
+  // const handleCheckInDateChange = (date) => {
+  //   setCheckInDate(date);
+  // };
 
-  const handleCheckOutDateChange = (date) => {
-    setCheckOutDate(date);
-  };
+  // const handleCheckOutDateChange = (date) => {
+  //   setCheckOutDate(date);
+  // };
   const images = [
     {
       id: 1,
@@ -35,7 +35,7 @@ const Home = () => {
 
   return (
  
-    <div>
+    <div className='container mx-auto'>
       <Header />
       <div className="carousel">
         {images.map((img) => (
@@ -78,38 +78,7 @@ const Home = () => {
           </div>
         ))}
       </div>
-      <div className="input input-info w-fit  px-0 mx-auto">
-  <div className="flex">
-    <select className="w-64 h-10 max-w-xs">
-      <option disabled selected>
-        Select your Stay
-      </option>
-      <option>kumarkom</option>
-      <option>Allepey</option>
-    </select>
-
-    <div className="ml-2">
-      <DatePicker
-        selected={checkInDate}
-        onChange={handleCheckInDateChange}
-        placeholderText="Check-in"
-        className="w-64 h-10 max-w-xs"
-      />
-    </div>
-    
-    <div className="ml-4">
-      <DatePicker
-        selected={checkOutDate}
-        onChange={handleCheckOutDateChange}
-        placeholderText="Check-out"
-        className="w-64 h-10 max-w-xs"
-      />
-      
-    </div>
-    
-    <button className="btn btn-info mx-0 ">Explore</button>
-  </div>
-</div>
+   
 <Footer/>
     </div>
     
