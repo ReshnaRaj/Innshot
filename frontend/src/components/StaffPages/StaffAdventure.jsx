@@ -115,12 +115,21 @@ const StaffAdventure = () => {
           position: "top-center",
         });
       console.log(adv, "adventure formdata");
-      
+      setActivity("");
+      setPrice("");
+      setTime("");
+      setPlace("");
+      setResort("");
+      setdescription("");
 
       // if (adv.data.created) {
         handleShow()
-      
         modal.checked=false
+        
+        // making the state as null while adding tmo
+        
+  
+        
         // we making the modal.checked =false means to make the while add button clicked i need to remove the modal that is y
      
       // }
@@ -367,10 +376,18 @@ const StaffAdventure = () => {
                       type="checkbox"
                       id="my_modal_7"
                       className="modal-toggle"
+
                     />
                     <div className="modal">
                       <div className="modal-box">
-                      <label htmlFor="my_modal_7" className="btn btn-circle btn-ghost" >
+                      <label onClick={()=>{
+                          setActivity("");
+                          setPrice("");
+                          setTime("");
+                          setPlace("");
+                          setResort("");
+                          setdescription("");
+                      }} htmlFor="my_modal_7" className="btn btn-circle btn-ghost" >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"

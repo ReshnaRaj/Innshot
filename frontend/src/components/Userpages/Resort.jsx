@@ -4,6 +4,7 @@ import { MdPlace } from "react-icons/md";
 import { FaBed } from "react-icons/fa";
 import {BiHomeAlt} from 'react-icons/bi'
 import DatePicker from "react-datepicker";
+
 import "react-datepicker/dist/react-datepicker.css";
 import { getuserresort } from "../../services/Userapi";
 // import { baseUrl } from '../../files/file';
@@ -27,10 +28,12 @@ const Resort = () => {
   };
 
   const handleCheckInDateChange = (date) => {
+    console.log(date,"checkin date")
     setCheckInDate(date);
   };
 
   const handleCheckOutDateChange = (date) => {
+    console.log(date,"check out date...")
     setCheckOutDate(date);
   };
 

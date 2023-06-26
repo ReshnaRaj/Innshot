@@ -138,6 +138,15 @@ const ResortData = () => {
                 <div className="text-justify font-serif">
                   {resortdata.description}
                 </div>
+                <div>
+                  <h3 className="text-2xl">Hotel Policies</h3>
+                  <ul>
+                    <li>Check In Time is 12 PM.</li>
+                    <li>Check Out time is 11 AM.</li>
+                    <li>No smoking in rooms or public areas.</li>
+                  </ul>
+
+                </div>
               </div>
             </div>
           </div>
