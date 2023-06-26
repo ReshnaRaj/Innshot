@@ -40,4 +40,8 @@ const getuniqdest=(id)=>{
     console.log(id,"uniqqqq")
     return adminAxiosInstance.get(`/getuniqdest/${id}`)
 }
-export {adminlogin,getAllData,approveresort,authAdmin,getuniqueresort,getalladvData,getuniqadv,approveadvent,getalldestData,getuniqdest}
+const approvedest=(id)=>{
+    // console.log("approve or reject")
+    return adminAxiosInstance.post(`/approvedest/${id}`)
+}
+export {adminlogin,getAllData,approveresort,authAdmin,getuniqueresort,getalladvData,getuniqadv,approveadvent,getalldestData,getuniqdest,approvedest}

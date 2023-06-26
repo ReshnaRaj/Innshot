@@ -1,5 +1,6 @@
 const AdventureModel = require('../Model/AdventureModel');
 const ResortModel=require('../Model/ResorttModel')
+const DestinationModel=require('../Model/DestinationModel')
 module.exports.UserResort = async (req, res, next) =>
  {
     try {
@@ -27,12 +28,12 @@ module.exports.UserResort = async (req, res, next) =>
 module.exports.getsimilarstay=async(req,res,next)=>{
   try {
     const place = req.params.data;
-    console.log(place,"place is getting...")
+    // console.log(place,"place is getting...")
     // const {excludedResortId} = req.body;
     // console.log(excludedResortId,"hhhhhhh")
     const similarStays = await ResortModel.find({
       place,
-      _id: { $ne: excludedResortId },
+      // _id: { $ne: excludedResortId },
     });
     // console.log(similarStays, "similar stays");
     res.json({ success: true, similarStays });
@@ -50,6 +51,18 @@ module.exports.UserAdventure = async (req, res, next) =>
         const adventure=await AdventureModel.find({verify:true})
         // console.log(resort,"resort showing working.....")
         res.status(200).json({adventure,success:true})
+     
+    } catch (error) {
+    console.log(error,"error consoling...")
+      
+    }
+  };
+  module.exports.UserDestinations = async (req, res, next) =>
+ {
+    try {
+        const destination=await DestinationModel.find({verify:true})
+        // console.log(resort,"resort showing working.....")
+        res.status(200).json({destination,success:true})
      
     } catch (error) {
     console.log(error,"error consoling...")

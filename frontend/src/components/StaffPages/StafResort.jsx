@@ -32,7 +32,7 @@ const StafResort = () => {
     try {
       // console.log(item, "resort full coming...");
 
-      navigate("/staff/editresort", { state: { item } });
+      navigate("/staff/editresort/", { state: { item } });
     } catch (error) {}
   };
   const handledisable = async (resortId) => {
@@ -70,12 +70,12 @@ const StafResort = () => {
                 <th>Place</th>
                 <th>Price</th>
                 <th>Status</th>
+                <th>Admin Response</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {resort.map((item, index) => (
-                
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item.resortname}</td>
@@ -83,10 +83,11 @@ const StafResort = () => {
                   <td>{item.place}</td>
                   <td>{item.price}</td>
                   <td>{item.status}</td>
+                  <td>{item?.verify ? "approved" : "rejected"}</td>
                   <button
                     className="btn btn-xs btn-info"
                     onClick={() => {
-                      console.log(item, "item is coming....");
+                      // console.log(item, "item is coming....");
                       handleEdit(item);
                     }}
                     style={{ marginRight: "10px" }}

@@ -28,6 +28,9 @@ const getuseradventure=()=>{
     console.log("user resort page working...")
     return userAxiosInstance.get('/adventurelist')
 }
+const  getuserdestination=()=>{
+    return userAxiosInstance.get('/destinations')
+}
 
 
-export {userregister,userlogin,userverify,getuserresort,authUser,getresortdata,getsimiliarstay,getuseradventure}
+export {userregister,userlogin,userverify,getuserresort,authUser,getresortdata,getsimiliarstay,getuseradventure,getuserdestination}

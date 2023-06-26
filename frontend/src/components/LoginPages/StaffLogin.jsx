@@ -15,6 +15,7 @@ const StaffLogin = () => {
   //   email: '',
   //   password: ''
   // });
+  const [errors, setError] = useState("");
   const [staffemail,setstaffemail]=useState('')
   const [staffpass,setstaffpass]=useState('')
   useEffect(()=>{
@@ -37,14 +38,15 @@ const StaffLogin = () => {
   const handleSubmit = async(e) => {
     // console.log("in")
     e.preventDefault();
-    // if(!staffuser.email){
-    //   generateError('email is required')
-    //   return 
-    // }
-    // if(!staffuser.password){
-    //   generateError("password is required")
-    //   return
-    // }
+    
+    if(!staffemail){
+      generateError('email is required')
+      return 
+    }
+    if(!staffpass){
+      generateError("password is required")
+      return
+    }
     try {
       // console.log(staffuser,"staff before login")
       // const data=await stafflogin({...staffuser})
@@ -91,14 +93,14 @@ const StaffLogin = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen" style={{
-      backgroundImage: "url('/login2.jpg')",
+      backgroundImage: "url('https://res.cloudinary.com/dsyln8j3g/image/upload/v1687606220/hermansyah-7uXn7nudorc-unsplash_1_udk8xq.jpg')",
       backgroundSize: "cover",
       backgroundPosition: "center",
       width: "100%",
       height: "100vh",
     }}>
       <div className="w-full max-w-md bg-white-200 rounded-lg shadow-md p-8 ml-9"  style={{ opacity: 0.9 }}>
-        <h2 className="text-2xl font-bold mb-6 text-center text-white">Resort Owner Login</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center text-black">Resort Owner Login</h2>
        
         <form onSubmit={handleSubmit}>
           
@@ -106,7 +108,7 @@ const StaffLogin = () => {
           <div className="mb-4">
             <label
               htmlFor="email"
-              className="block text-white text-sm font-bold mb-2"
+              className="block text-black text-sm font-bold mb-2"
             >
               Email
             </label>
@@ -118,14 +120,14 @@ const StaffLogin = () => {
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter your email"
               onChange={(e) => setstaffemail(e.target.value)}
-              required
+              
             />
           </div>
           
           <div className="mb-6">
             <label
               htmlFor="password"
-              className="block text-white text-sm font-bold mb-2"
+              className="block text-black text-sm font-bold mb-2"
             >
               Password
             </label>
@@ -135,18 +137,18 @@ const StaffLogin = () => {
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter your password"
               onChange={(e) => setstaffpass(e.target.value )}
-              required
+              
             />
           </div>
           <button
             type="submit"
-            className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className="bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           >
             Login
           </button>
         </form>
-        <p className=" font-bold text-blue-700  mt-4">Not registered? <Link to="/staff/staffregister" className="text-blue-500">Signup here</Link></p>
-        <p className="  font-bold text-blue-700  mt-4">Login As A Admin?<Link to="/admin/adlogin" className="text-blue-500"> SignIn</Link></p>
+        <p className=" font-bold text-black mt-4">Not registered? <Link to="/staff/staffregister" className="text-black">Signup here</Link></p>
+        <p className="  font-bold text-black  mt-4">Login As A Admin?<Link to="/admin/adlogin" className="text-black"> SignIn</Link></p>
         <ToastContainer />
         
       </div>

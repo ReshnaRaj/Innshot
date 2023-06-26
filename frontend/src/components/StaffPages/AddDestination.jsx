@@ -32,6 +32,10 @@ const AddDestination = () => {
 
     const handleSubmit=async (e)=>{
         e.preventDefault()
+        if(destname===""||place===""||about===""||resort===""||dest_image===""){
+          alert("please fill all are required")
+          return ;
+        }
         const formData=new FormData();
         formData.append('destname',destname)
         formData.append('destplace',place)
@@ -79,7 +83,7 @@ const AddDestination = () => {
                   type="text"
                   placeholder="Type here"
                   className="input input-bordered input-md w-96 max-w-xs"
-                  required
+                  
 
                 />
               </div>
@@ -93,7 +97,7 @@ const AddDestination = () => {
                   type="text"
                   placeholder="Type here"
                   className="input input-bordered input-md w-full max-w-xs"
-                  required
+                  
                 />
               </div>
             </div>
@@ -107,7 +111,7 @@ const AddDestination = () => {
                  onChange={(e)=>setAbout(e.target.value)}
                   className="textarea textarea-bordered h-24 w-80"
                   placeholder="Description of the resort"
-                  required
+                  
                 ></textarea>
               </div>
               <select 
@@ -135,7 +139,7 @@ const AddDestination = () => {
                   onChange={(e)=>setPrice(e.target.value)}
                   placeholder="$"
                   className="input input-bordered input-md w-full max-w-xs"
-                  required
+                  
                 />
               </div>
             </div> */}
@@ -149,7 +153,7 @@ const AddDestination = () => {
                   onChange={(e)=>setDest_image(e.target.files)}
                   className="file-input w-full max-w-xs"
                   multiple
-                  required
+                  
                 />
                 {/* {
                   files.map((img)=>(

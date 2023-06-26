@@ -11,6 +11,7 @@ const EmailVerify = () => {
   useEffect(() => {
     const verifyUser = async () => {
       try {
+        // I getting the id by using useParams()
         const response=await userverify(id)
         // const response = await axios.post(`http://localhost:4001/verifyemail/${id}`);
         const { success, error } = response.data;

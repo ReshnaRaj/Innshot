@@ -10,27 +10,35 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 
 const StaffAdventure = () => {
+  // const [isModalOpen, setModalOpen] = useState(false);
   const [AdvActivity, setAdvActivity] = useState([]);
   const [activity, setActivity] = useState("");
   const [price, setPrice] = useState("");
   const [time, setTime] = useState("");
   const [place, setPlace] = useState("");
-  const [description,setdescription] = useState("");
+  const [description, setdescription] = useState("");
   const [resort, setResort] = useState("");
   const [list, setList] = useState([]);
   const [image, setImage] = useState([]);
   const [adv, setAdv] = useState();
+  const [show,setShow]=useState(false)
   // const [id,setid]=useState('')
-
+ const handleShow=()=>{
+  setShow(!show)
+ }
   useEffect(() => {
     getAdvData();
     getresortData();
-  }, []);
+  }, [show]);
 
-  const handleModalOpen = () => {
-    // console.log("modal working....")
-    // getresortData();
-  };
+  // const handleModalOpen = () => {
+  //   console.log("modal working....")
+    
+  //   // getresortData();
+  // };
+  // const handleModalClose = () => {
+  //   setModalOpen(false);
+  // };
   const getresortData = async () => {
     try {
       let { data } = await getResortData();
@@ -48,7 +56,7 @@ const StaffAdventure = () => {
   const getAdvData = async () => {
     try {
       let { data } = await getStaffAdv();
-      console.log(data,"77777777777777")
+      console.log(data, "77777777777777");
       if (data.success) {
         setAdvActivity(data.result);
       }
@@ -74,7 +82,20 @@ const StaffAdventure = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const modal= document.getElementById('staff_adventure')
+    console.log(modal.checked,"modal checking...")
+    
+    if (
+      activity === "" ||
+      price === "" ||
+      time === "" ||
+      place === "" ||
+      resort === "" ||
+      description === ""
+    ) {
+      alert("please fill all required");
+      return;
+    }
     const formData = new FormData();
     formData.append("adventureactivity", activity);
     formData.append("adventureprice", price);
@@ -89,12 +110,20 @@ const StaffAdventure = () => {
     }
     try {
       const adv = await staffadv(formData);
-      console.log(adv, "adventure formdata");
-      if (adv.data.created) {
+      console.log(adv.data.message,"message came..")
         toast.success(adv.data.message, {
           position: "top-center",
         });
-      }
+      console.log(adv, "adventure formdata");
+      
+
+      // if (adv.data.created) {
+        handleShow()
+      
+        modal.checked=false
+        // we making the modal.checked =false means to make the while add button clicked i need to remove the modal that is y
+     
+      // }
     } catch (error) {
       console.log(error, "Error in adv");
     }
@@ -113,51 +142,67 @@ const StaffAdventure = () => {
     const formData = new FormData();
     formData.append("advact", adv.activity);
     formData.append("advprc", adv.price);
-    formData.append("advtime",adv.time);
-    formData.append("advplace",adv.place);
-    formData.append("advdescription",adv.description);
-    formData.append("advresort",adv.resortName);
-    console.log(activity,place,resort,"uuuu")
+    formData.append("advtime", adv.time);
+    formData.append("advplace", adv.place);
+    formData.append("advdescription", adv.description);
+    formData.append("advresort", adv.resortName);
+    console.log(activity, place, resort, "uuuu");
     for (let i = 0; i < image.length; i++) {
       const img = image[i];
       formData.append("advimage", adv.img);
     }
 
     try {
-      console.log(adv,"54554545455")
+      console.log(adv, "54554545455");
       console.log(adv._id, "pppp");
       // console.log(formData,"ooooo")
-      const newadv = await editadvpost(adv._id,formData);
-      if (newadv.data.success) {
-        toast.success(newadv.data.message, {
-          position: "top-center",
-        });
-      }
+      const newadv = await editadvpost(adv._id, formData);
+      // if (newadv.data.success) {
+      toast.success(newadv.data.message, {
+        position: "top-center",
+      });
+      // }
     } catch (error) {}
   };
-console.log(adv,"*********")
+  // console.log(adv, "*********");
   return (
     <>
       <div className="flex">
         <Navbar />
         <div className="flex-1">
           <Headerr name={"Adventure  Activities"} />
-          <div className="p-4 flex justify-between items-center">
+          <div className="p-2 flex justify-between items-center">
             <h2 className="text-xl font-bold mb-4">Details of Adventure</h2>
 
-            <label htmlFor="my_modal_6" className="btn">
+            <label htmlFor="staff_adventure" className="btn ml-auto">
               Add Activity
             </label>
 
             <input
               type="checkbox"
-              id="my_modal_6"
-              onClick={handleModalOpen}
+              id="staff_adventure"
+              // onClick={handleModalOpen}
               className="modal-toggle"
             />
 
             <div className="modal">
               <div className="modal-box">
+                <label htmlFor="staff_adventure" className="btn btn-circle btn-ghost" >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </label>
                 <form
                   onSubmit={handleSubmit}
                   className="form-control w-full max-w-xs"
@@ -190,7 +235,7 @@ console.log(adv,"*********")
                           setPrice(actprice);
                         }
                       }}
-                      type="number"
+                      type="text"
                       placeholder="Enter the price"
                       className="input input-bordered w-full max-w-xs"
                     />
@@ -199,7 +244,7 @@ console.log(adv,"*********")
                       <span className="label-text">Time</span>
                     </label>
                     <input
-                      type="number"
+                      type="text"
                       value={time}
                       onChange={(e) => {
                         const acttime = e.target.value.replace(/[^0-9]/g, " ");
@@ -273,14 +318,15 @@ console.log(adv,"*********")
                   </div>
 
                   <div className="modal-action">
-                    <button type="submit" className="btn">
+                    <button type="submit"   className="btn">
                       Add
                     </button>
                   </div>
                 </form>
               </div>
-              <ToastContainer />
+             
             </div>
+            <ToastContainer />
           </div>
           <div className="overflow-x-auto">
             <table className="table mx-auto w-full">
@@ -291,22 +337,25 @@ console.log(adv,"*********")
                   <th>Place</th>
                   <th>Price</th>
                   <th>Conducted By</th>
+                  <th>Status of activity</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 {AdvActivity.map((item, index) => (
+                  
                   <tr key={index}>
                     <th>{index + 1}</th>
                     <td>{item.activity}</td>
                     <td>{item.place}</td>
                     <td>{item.price}</td>
                     <td>{item.resortName}</td>
+                    <td>{item?.verify ? "approved" : "rejected"}</td>
                     <label
                       htmlFor="my_modal_7"
                       className="btn btn-info"
                       onClick={() => {
-                        console.log(item,"2222222222222")
+                        console.log(item, "2222222222222");
                         // console.log(index,"44444")
                         handleEditClick(item);
                       }}
@@ -321,6 +370,22 @@ console.log(adv,"*********")
                     />
                     <div className="modal">
                       <div className="modal-box">
+                      <label htmlFor="my_modal_7" className="btn btn-circle btn-ghost" >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </label>
                         <form
                           onSubmit={handleUpdateSubmit}
                           className="form-control w-full max-w-xs"
@@ -348,7 +413,7 @@ console.log(adv,"*********")
                               onChange={(e) =>
                                 setAdv({ ...adv, price: e.target.value })
                               }
-                              type="number"
+                              type="text"
                               placeholder="Enter the price"
                               className="input input-bordered w-full max-w-xs"
                             />
@@ -357,7 +422,7 @@ console.log(adv,"*********")
                               <span className="label-text">Time</span>
                             </label>
                             <input
-                              type="number"
+                              type="text"
                               value={adv?.time || ""}
                               onChange={(e) =>
                                 setAdv({ ...adv, time: e.target.value })
@@ -383,9 +448,9 @@ console.log(adv,"*********")
                             </label>
                             <textarea
                               value={adv?.description || ""}
-                              onChange={(e) =>{
+                              onChange={(e) => {
                                 // console.log(adv.description,"gfhgyfhfgbfg")
-                                setAdv({ ...adv, description: e.target.value })
+                                setAdv({ ...adv, description: e.target.value });
                               }}
                               placeholder="About the activity"
                               className="textarea textarea-bordered textarea-md w-full max-w-xs"
@@ -397,11 +462,11 @@ console.log(adv,"*********")
                               </span>
                             </label>
                             <select
-                            // this is for showing the resortname after added
+                              // this is for showing the resortname after added
                               value={adv?.resortName || ""}
-                              onChange={(e) =>{
-                                console.log(e.target.value,"vannuuu")
-                                setAdv({ ...adv, resortName: e.target.value })
+                              onChange={(e) => {
+                                console.log(e.target.value, "vannuuu");
+                                setAdv({ ...adv, resortName: e.target.value });
                               }}
                               className="select select-bordered w-full max-w-xs"
                             >
@@ -422,7 +487,9 @@ console.log(adv,"*********")
                             </label>
                             <input
                               type="file"
-                              onChange={(e) => setAdv({...adv,image:e.target.files})}
+                              onChange={(e) =>
+                                setAdv({ ...adv, image: e.target.files })
+                              }
                               className="file-input file-input-bordered w-full max-w-lg"
                               multiple
                               required

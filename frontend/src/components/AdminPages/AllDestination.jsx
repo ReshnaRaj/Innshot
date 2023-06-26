@@ -2,7 +2,8 @@ import React, { useEffect,useState } from 'react'
 import Navbars from './layout/Navbars'
 import Headers from './layout/Headers'
 import { useNavigate } from "react-router-dom";
-import {getalldestData} from '../../services/Adminapi'
+import {getalldestData,approvedest} from '../../services/Adminapi'
+import { ToastContainer, toast } from "react-toastify";
 
 const AllDestination = () => {
   const [destdata,setDestdata]=useState([])
@@ -28,6 +29,25 @@ const AllDestination = () => {
       
     }
   }
+  const handleapprove=async(DestId)=>{
+    try {
+      let {data}=await approvedest(DestId)
+      if(data){
+        // console.log(data.data.message,"destination mesg")
+        const message = data.message
+        console.log(message,"message approve or reject")
+        toast.success(message,{
+          position:'top-center'
+        })
+        getdestdata();
+      }
+      
+     
+    } catch (error) {
+      
+    }
+  }
+
   
   return (
     <div className='flex'>
@@ -65,9 +85,9 @@ const AllDestination = () => {
                   >
                     View
                   </button>
-                  {/* {item.verify === false ? (
+                  {item.verify === false ? (
                     <button
-                      // onClick={() => handleapprove(item._id)}
+                      onClick={() => handleapprove(item._id)}
                       className="btn btn-xs btn-success"
                       style={{ marginRight: "10px" }}
                     >
@@ -75,19 +95,20 @@ const AllDestination = () => {
                     </button>
                   ) : (
                     <button
-                      // onClick={() => handleapprove(item._id)}
+                      onClick={() => handleapprove(item._id)}
                       className="btn btn-xs btn-error"
                       style={{ marginRight: "10px" }}
                     >
                       Reject
                     </button>
-                  )} */}
+                  )}
                 </tr>
               ))}
             </tbody>
           </table>
           </div>
         </div>
+        <ToastContainer />  
     </div>
   )
 }

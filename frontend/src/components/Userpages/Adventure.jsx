@@ -1,7 +1,9 @@
 import React, { useEffect,useState } from 'react'
 import {getuseradventure} from '../../services/Userapi'
 import Header from './Layout/Header';
+import { MdPlace } from "react-icons/md";
 import { baseUrl } from "../../files/file";
+import { useNavigate } from "react-router-dom";
 
 const Adventure = () => {
     const [adventure,setAdventure]=useState([])
@@ -18,26 +20,50 @@ const Adventure = () => {
             
         }
     }
+    const navigate = useNavigate();
+    const handleView=async(item)=>{
+      try {
+        navigate(`/viewadventure/${item}`,{state:{item}})
+      } catch (error) {
+        
+      }
+    }
     console.log(adventure,"adventure datas are coming....")
 
   return (
     <div>
         <Header/>
+        <div className="flex flex-wrap">
         {adventure.map((item)=>(
-             <div className="card card-side bg-sky-300 mt-7 mx-72 shadow-xl">
-             <figure><img src={`${baseUrl}${item?.image[0]}`}  className="w-96 h-32 object-cover" alt="Movie"/></figure>
-             <div className="card-body">
-               <h2 className="card-title">{item?.activity}</h2>
-               <p>{item?.place}</p>
-               <p>{item?.price}</p>
+             <div className="bg-white shadow-1 p-5 rounded-tl-[20px] w-full max-w-[352px] mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105 ">
+             <figure><img src={`${baseUrl}${item?.image[0]}`}  className="rounded-tl-[20px] mb-8" alt="Movie"/></figure>
+             <div className="mb-4 flex flex-col">
+             <div className="flex items-center mb-2">
+            <div className="text-lg mr-2" />
+            <div className="text-lg font-semibold">{item.activity}</div>
+          </div>
+          <div className="flex items-center">
+            <MdPlace className="text-lg mr-2" />
+            <div className="text-black">{item.place}</div>
+            
+          </div>
+          <div className="flex items-center">
+            <div className="text-lg mr-2" />
+            <div className="text-black">{item.resortName}</div>
+            
+          </div>
+              
                <div className="card-actions justify-end">
-                 <button className="btn btn-primary">View Details</button>
+                 <button  onClick={()=>{
+                  console.log(item,"uuuuuu")
+                  handleView(item._id)}}className="btn btn-primary">View Details</button>
                </div>
              </div>
            </div>
         
 
         ))}
+        </div>
     </div>
        
   )

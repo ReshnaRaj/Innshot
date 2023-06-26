@@ -51,6 +51,11 @@ const resortSchema=new mongoose.Schema({
     status:{
         type:String,
         default:'Enable',   
+    },
+    service:{
+        type:[String],
+        required: [true, 'services are required'],
+
     }
    
 

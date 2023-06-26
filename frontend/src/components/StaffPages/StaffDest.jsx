@@ -49,7 +49,7 @@ const StaffDest = () => {
                 <th>Destination name</th>
                 <th>Place</th>
                 <th>Near By</th>
-                {/* <th>Status</th> */}
+                <th>Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -61,11 +61,11 @@ const StaffDest = () => {
                   <td>{item.dest_name}</td>
                   <td>{item.place}</td>
                   <td>{item.resortName}</td>
-                  {/* <td>{item.status}</td> */}
+                  <td>{item?.verify ? "approved" : "rejected"}</td>
                   <button
                     className="btn btn-xs btn-info"
                     onClick={() => {
-                      console.log(item, "item is coming....");
+                      // console.log(item, "item is coming....");
                       handleEdit(item);
                     }}
                     style={{ marginRight: "10px" }}

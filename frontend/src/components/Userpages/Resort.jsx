@@ -99,15 +99,15 @@ const Resort = () => {
             className="w-64 h-10 max-w-xs"
           />
         </div>
-
+        {/* <span className="loading loading-spinner loading-lg"></span> */}
         <button className="btn join-item ">Search</button>
       </div>
       <div className="flex flex-wrap">
       {filteredResorts.map((item) => (
         
-        <div className="bg-white shadow-1 p-5 rounded-tl-[90px] w-full max-w-[352px] mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105 " key={item.resortname}>
+        <div className="bg-white shadow-1 p-5 rounded-tl-[20px] w-full max-w-[352px] mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105 " key={item.resortname}>
         <figure>
-          <img src={`${item.image[0]}`} alt="resort image" className="rounded-tl-[90px] mb-8" />
+          <img src={`${item.image[0]}`} alt="resort image" className="rounded-tl-[20px] mb-8" />
         </figure>
         <div className="mb-4 flex flex-col">
           <div className="flex items-center mb-2">
@@ -124,9 +124,11 @@ const Resort = () => {
             <FaBed className="text-lg mr-2" />
             <div className="text-lg font-semibold">{item.number_room}</div>
           </div>
-          <div className="text-lg font-semibold text-sky-300 mb-2">{item.price}</div>
+          {/* <div className="text-lg font-semibold text-sky-300 mb-2">{item.price}</div> */}
       
-          <button onClick={() => { handleView(item._id); }} className="btn btn-ghost">View Details</button>
+          <button onClick={() => { 
+            console.log(item,"servicess")
+            handleView(item._id); }} className="btn btn-primary">View Details</button>
         </div>
         </div>
       

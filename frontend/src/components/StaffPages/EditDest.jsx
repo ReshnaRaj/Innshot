@@ -2,7 +2,8 @@ import React, { useState,useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import Navbar from './layout/Navbar'
 import Headerr from './layout/Headerr'
-import {getResortData} from '../../services/Staffapi'
+import {getResortData,editdestination} from '../../services/Staffapi'
+import { ToastContainer, toast } from "react-toastify";
 
 const EditDest = () => {
     const [des_name,setDes_name]=useState("")
@@ -11,9 +12,10 @@ const EditDest = () => {
     const [des_resorts,setDes_resorts]=useState("")
     const [des_images,setDes_images]=useState([])
     const [des_list,setDes_list]=useState([])
+    const [id,setId]=useState('')
     const location=useLocation()
     const items=location.state?.item
-    console.log(items,"itemsssss")
+    // console.log(items,"itemsssss")
     useEffect(()=>{
         getresortData()
     },[])
@@ -22,9 +24,10 @@ const EditDest = () => {
         setDes_place(items.place)
         setDes_about(items.about)
         setDes_resorts(items.resortName)
+        setId(items._id)
         
 
-    })
+    },[])
     const getresortData = async () => {
         try {
           let { data } = await getResortData();
@@ -41,11 +44,25 @@ const EditDest = () => {
       };
       const  handleEditSubmit=async(e)=>{
         e.preventDefault()
+        console.log("getting....")
         const formData=new FormData()
         formData.append('name',des_name)
         formData.append('place',des_place)
+        formData.append('about',des_about)
+        formData.append('destresorts',des_resorts)
+        for(let i=0;i<des_images.length;i++){
+          const img=des_images[i]
+          formData.append('destimages',img)
+        }
+        let data=await editdestination(formData,id)
+        console.log(formData,"fffffff") 
+        console.log(data.data.message,"uuuu")   
+      toast.success(data.data.message,{
+        position: "top-center",
+      })
 
       }
+  
   return (
     <div className='flex'>
         <Navbar/>
@@ -61,9 +78,9 @@ const EditDest = () => {
                 </label>
                 <input
                   value={des_name}
-                //   onChange={(e)=>{
-                //     setDestname(e.target.value)
-                //   }}
+                  onChange={(e)=>{
+                    setDes_name(e.target.value)
+                  }}
                   type="text"
                   placeholder="Type here"
                   className="input input-bordered input-md w-96 max-w-xs"
@@ -77,7 +94,7 @@ const EditDest = () => {
                 </label>
                 <input
                 value={des_place}
-                // onChange={(e)=>setPlace(e.target.value)}
+                onChange={(e)=>setDes_place(e.target.value)}
                   type="text"
                   placeholder="Type here"
                   className="input input-bordered input-md w-full max-w-xs"
@@ -92,7 +109,7 @@ const EditDest = () => {
                 </label>
                 <textarea
                  value={des_about}
-                //  onChange={(e)=>setAbout(e.target.value)}
+                 onChange={(e)=>setDes_about(e.target.value)}
                   className="textarea textarea-bordered h-24 w-80"
                   placeholder="Description of the resort"
                   required
@@ -100,7 +117,7 @@ const EditDest = () => {
               </div>
               <select 
               value={des_resorts}
-            //   onChange={(e)=>setResort(e.target.value)}
+              onChange={(e)=>setDes_resorts(e.target.value)}
               className="select select-bordered w-full mt-7 ml-5 max-w-xs">
                 <option disabled selected>
                   Near by Resorts
@@ -134,7 +151,7 @@ const EditDest = () => {
                 </label>
                 <input
                   type="file"
-                //   onChange={(e)=>setDest_image(e.target.files)}
+                  onChange={(e)=>setDes_images(e.target.files)}
                   className="file-input w-full max-w-xs"
                   multiple
                   required
@@ -155,6 +172,7 @@ const EditDest = () => {
             </button>
           </form>
         </div>
+        <ToastContainer />
         </div>
     </div>
   )

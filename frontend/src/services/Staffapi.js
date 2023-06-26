@@ -75,8 +75,16 @@ const getDest=()=>{
     // console.log("resort details")
     return staffAxiosInstance.get('/getdestdata')
 }
+const editdestination=(data,id)=>{
+    return staffAxiosInstance.post(`/posteditdest/${id}`,data,{
+        headers:{
+            'Content-Type':'multipart/form-data'
+        }
+    })
+
+}
 
 
 
 
-export {staffregister,stafflogin,staffresort,staffverify,getResortData,editpostresortdatas,disableresort,authStaff,staffadv,getStaffAdv,editadvpost,AddDest,getDest}
+export {staffregister,stafflogin,staffresort,staffverify,getResortData,editpostresortdatas,disableresort,authStaff,staffadv,getStaffAdv,editadvpost,AddDest,getDest,editdestination}

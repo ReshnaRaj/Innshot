@@ -14,7 +14,7 @@ const EmailVerifystaff = () => {
         console.log("verify staff working")
       try {
         console.log(id,"iiiiiiiii")
-        // I dont know how the id is getting
+        // I getting the id by using useParams()
         // const response = await axios.post(`http://localhost:4001/staff/verifystaffemail/${id}`);
         const response=await staffverify(id)
         console.log(response,"after working ")

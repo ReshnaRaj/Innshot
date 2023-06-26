@@ -95,7 +95,7 @@ module.exports.approveAdvent = async (req, res, next) => {
 module.exports.getalldestdata=async(req,res,next)=>{
   try {
     const destination=await DestinationModel.find({}).populate('resortowner')
-    console.log(destination,"aaaaaaaaaaa")
+    // console.log(destination,"aaaaaaaaaaa")
     res.status(200).json({destination,success:true})
     
   } catch (error) {
@@ -110,6 +110,25 @@ module.exports.getuniquedest=async(req,res)=>{
     console.log(destdata,"data od destination..")
     res.status(200).json({destdata,success:true})
   } catch (error) {
+    
+  }
+}
+module.exports.approveDestination=async(req,res)=>{
+  try {
+    // console.log("working....")
+    let destId=req.params.id
+    // console.log(destId,"destination id")
+    let destination=await DestinationModel.findById(destId).populate('resortowner')
+    // console.log(destination,"data.....")
+    const new_status=destination.verify===false ? true : false;
+    console.log(new_status,"updated...")
+    let message=new_status ? 'Resort Approved' : 'Resort Rejeceted';
+    DestinationModel.findOneAndUpdate({_id:destId},{$set:{verify:new_status}}).then((response)=>{
+      res.status(200).json({message:message,success:true})
+    })
+   
+  } catch (error) {
+    res.json({message:'Error',success:false})
     
   }
 }

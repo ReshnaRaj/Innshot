@@ -28,11 +28,11 @@ const StaffReg = () => {
     });
   };
 
-
- 
-
   const handleSubmit = async(e) => {
     e.preventDefault();
+    if(staffname===""||staffemail===""||staffphone===""||staffpassword===""){
+      generateError('Please fill all are required')
+    }
     if(staffpassword!==staffrepassword){
       console.log(generateError,"yyyyyyyyyy")
       generateError('Password not match Try again later')
@@ -40,18 +40,14 @@ const StaffReg = () => {
     
     else {
       try {
-      
-      
         const data =await staffregister({
           name: staffname,
           email: staffemail,
           phone: staffphone,
           password:staffpassword
         })
-        
-      
         console.log(data,"data staff")
-        if (data) {
+        if (data.created) {
           console.log(data,"data of staff")
           if (data.errors) {
             const { name, email, phone, password } = data.errors;
@@ -74,16 +70,16 @@ const StaffReg = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen" style={{
-      backgroundImage: "url('/login2.jpg')",
+      backgroundImage: "url('https://res.cloudinary.com/dsyln8j3g/image/upload/v1687606220/hermansyah-7uXn7nudorc-unsplash_1_udk8xq.jpg')",
       backgroundSize: "cover",
       backgroundPosition: "center",
       width: "100%",
       height: "100vh",
     }}>
       <div className="w-full max-w-md bg-white-200 rounded-lg shadow-md p-8"  style={{ opacity: 0.9 }}>
-        <h2 className="text-2xl font-bold mb-1 text-center text-white">Resort Owner Signup</h2>
+        <h2 className="text-2xl font-bold mb-1 text-center text-black">Resort Owner Signup</h2>
         {message && (
-  <div className="flex items-center font-bold text-center text-yellow-500 mb-4">
+  <div className="flex items-center font-bold text-center text-black mb-4">
     <svg className="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
     </svg>
@@ -94,7 +90,7 @@ const StaffReg = () => {
           <div className="mb-4">
             <label
               htmlFor="name"
-              className="block text-white text-sm font-bold mb-2"
+              className="block text-black text-sm font-bold mb-2"
             >
               Name
             </label>
@@ -106,7 +102,7 @@ const StaffReg = () => {
               placeholder="Enter your name"
               onChange={(e)=>setstaffname(e.target.value)}
               
-              required
+              
             />
             {/* <span className='text-white font-semibold'>Name should be 3-10 characters</span> */}
           </div>
@@ -114,7 +110,7 @@ const StaffReg = () => {
           <div className="mb-4">
             <label
               htmlFor="email"
-              className="block text-white text-sm font-bold mb-2"
+              className="block text-black text-sm font-bold mb-2"
             >
               Email
             </label>
@@ -127,14 +123,14 @@ const StaffReg = () => {
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter your email"
               onChange={(e) =>setstaffemail(e.target.value)}
-              required
+              
             />
           </div>
           <div className="mb-4">
             <label
               htmlFor="phone"
              
-              className="block text-white text-sm font-bold mb-2"
+              className="block text-black text-sm font-bold mb-2"
             >
               Phone
             </label>
@@ -158,7 +154,7 @@ const StaffReg = () => {
           <div className="mb-6">
             <label
               htmlFor="password"
-              className="block text-white text-sm font-bold mb-2"
+              className="block text-black text-sm font-bold mb-2"
             >
               Password
             </label>
@@ -169,13 +165,13 @@ const StaffReg = () => {
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter your password"
               onChange={(e) => setstaffpassword(e.target.value )}
-              required
+              
             />
           </div>
           <div className="mb-6">
             <label
               htmlFor="password"
-              className="block text-white text-sm font-bold mb-2"
+              className="block text-black text-sm font-bold mb-2"
             >
               Confirm Password
             </label>
@@ -186,7 +182,7 @@ const StaffReg = () => {
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               placeholder="Confirm password"
               onChange={(e) =>staffsetrepassword(e.target.value )}
-              required
+              
             />
           </div>
           <button
@@ -198,7 +194,7 @@ const StaffReg = () => {
         </form>
         <ToastContainer />
         <button className="link-btn  hover:text-white font-bold">
-  Already have an account? <Link to="/staff/stafflogin" className="text-white font-bold">Login here</Link>
+  Already have an account? <Link to="/staff/stafflogin" className="text-black font-bold">Login here</Link>
 </button>
       </div>
     </div>

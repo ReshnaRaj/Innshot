@@ -84,14 +84,14 @@ const UserLogin = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen" style={{
-      backgroundImage: "url('https://res.cloudinary.com/dsyln8j3g/image/upload/v1686661233/banner3_ckamoa.jpg')",
+      backgroundImage: "url('https://res.cloudinary.com/dsyln8j3g/image/upload/v1687606220/hermansyah-7uXn7nudorc-unsplash_1_udk8xq.jpg')",
       backgroundSize: "cover",
       backgroundPosition: "center",
       width: "100%",
       height: "100vh",
     }}>
     <div className="w-full max-w-md bg-white-200 rounded-lg shadow-md p-8" style={{ opacity: 0.9 }} >
-      <h2 className="text-2xl font-bold mb-6 text-center text-white">User Login</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center text-black">User Login</h2>
      
       <form onSubmit={handleSubmit}>
         
@@ -99,7 +99,7 @@ const UserLogin = () => {
         <div className="mb-4">
           <label
             htmlFor="email"
-            className="block text-white text-sm font-bold mb-2"
+            className="block text-black text-sm font-bold mb-2"
           >
             Email
           </label>
@@ -118,7 +118,7 @@ const UserLogin = () => {
         <div className="mb-6">
           <label
             htmlFor="password"
-            className="block text-white text-sm font-bold mb-2"
+            className="block text-black text-sm font-bold mb-2"
           >
             Password
           </label>
@@ -138,8 +138,8 @@ const UserLogin = () => {
           Login
         </button>
       </form>
-      <p className=" font-bold text-blue-700 mt-4">Not registered? <Link to="/register" className="text-blue-700 font-bold">Signup here</Link></p>
-      <p className=" font-bold text-blue-700 mt-4">Login As A staff?<Link to="/staff/stafflogin" className="text-blue-700 font-bold"> SignIn</Link></p>
+      <p className=" font-bold text-black mt-4">Not registered? <Link to="/register" className="text-black font-bold">Signup here</Link></p>
+      <p className=" font-bold text-black mt-4">Login As A staff?<Link to="/staff/stafflogin" className="text-black font-bold"> SignIn</Link></p>
       <ToastContainer />
       {/* <button className="link-btn">
 Already have an account? <Link to="/stafflogin" className="text-blue-500">Login here</Link>
