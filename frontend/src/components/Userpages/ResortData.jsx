@@ -32,7 +32,7 @@ const ResortData = () => {
   const fetchSimilarStays = async () => {
     try {
       let { data } = await getsimiliarstay(resortdata.place);
-      console.log(data, "similar stays data get");
+      console.log(resortdata.place, "similar stays data get");
       if (data.success) {
         setSimilarStays(data.similarStays);
       }
@@ -60,12 +60,16 @@ const ResortData = () => {
           <div className="mb-4 lg:mb-0 flex gap-x-2 text-sm">
             <div className="text-3xl font-semibold text-sky-300">
               {resortdata.price}
-              <button className="btn btn-ghost ml-4 text-black" onClick={(e)=>{
-                console.log(resortdata,"full detials..")
-              }}>Book Now</button>
+              <button
+                className="btn btn-ghost ml-4 text-black"
+                onClick={(e) => {
+                  console.log(resortdata, "full detials..");
+                }}
+              >
+                Book Now
+              </button>
             </div>
           </div>
-         
         </div>
         {/* <div className="flex flex-col items-start  lg:flex-col ">
           <div className="max-w-[768px]">
@@ -95,63 +99,76 @@ const ResortData = () => {
           </div>
         </div> */}
         <div className="flex flex-col items-start lg:flex-row">
-  <div className="max-w-[768px]">
-    <div className="mb-8 grid grid-cols-2 gap-11">
-      {images &&images.length>0?(
- <figure>
- <img src={images[0].src} alt={`Image ${images[0].id}`} className="h-96" />
-</figure>
-      ):null}
-     
-      <div className="col-span-1 grid grid-rows-2 gap-4">
-      {images && images.length > 1 ? (
-        images.slice(1).map((image) => (
-          <figure key={image.id}>
-            <img src={image.src} alt={`Image ${image.id}`} className="h-28" />
-          </figure>
-      ))
-      ):null
-        }
-      </div>
-    </div>
-    <div>
-      <div>
-        <div className="flex gap-x-6">
-          <FaBed className="text-2xl" />
-          <div>{resortdata.number_room}</div>
-        </div>
-        <div className="font-semibold">
-          Services: {resortdata.service ? resortdata.service.join(', ') : ''}
-        </div>
-        <div className="text-justify font-serif">{resortdata.description}</div>
-      </div>
-    </div>
-  </div>
-  
-  <div className="flex-1 bg-sky-100 w-full mb-8 border border-gray-300 rounded-lg px-6 py-8">
-  <h4 className="font-extrabold">Resort Owner</h4>
-    <div className="flex items-center gap-x-4 mb-8">
-      <div className="w-20 h-20  p-1 border border-gray-300 rounded-none">
-        <img src="https://res.cloudinary.com/dsyln8j3g/image/upload/v1687521072/bij_dbcv5b.jpg" alt="owner_profile"/>
-      </div>
-    </div>
-    <div className="font-bold text-lg">{resortdata?.resortowner?.name}</div>
-    <div className="text-gray-600 mt-2">
-    Iam 12 years experienced with this platform if you need any help select any one of the button given below
-  </div>
-    <button className="btn btn-outline btn-info">Chat</button>
-   {/* <button className="btn btn-outline btn-info ml-4">Video Call</button> */}
-  
-  </div>
-  
-</div>
+          <div className="max-w-[768px]">
+            <div className="mb-8 grid grid-cols-2 gap-11">
+              {images && images.length > 0 ? (
+                <figure>
+                  <img
+                    src={images[0].src}
+                    alt={`Image ${images[0].id}`}
+                    className="h-96"
+                  />
+                </figure>
+              ) : null}
 
+              <div className="col-span-1 grid grid-rows-2 gap-4">
+                {images && images.length > 1
+                  ? images.slice(1).map((image) => (
+                      <figure key={image.id}>
+                        <img
+                          src={image.src}
+                          alt={`Image ${image.id}`}
+                          className="h-28"
+                        />
+                      </figure>
+                    ))
+                  : null}
+              </div>
+            </div>
+            <div>
+              <div>
+                <div className="flex gap-x-6">
+                  <FaBed className="text-2xl" />
+                  <div>{resortdata.number_room}</div>
+                </div>
+                <div className="font-semibold">
+                  Services:{" "}
+                  {resortdata.service ? resortdata.service.join(", ") : ""}
+                </div>
+                <div className="text-justify font-serif">
+                  {resortdata.description}
+                </div>
+              </div>
+            </div>
+          </div>
 
+          <div className="flex-1 bg-sky-100 w-full mb-8 border border-gray-300 rounded-lg px-6 py-8">
+            <h4 className="font-extrabold">Resort Owner</h4>
+            <div className="flex items-center gap-x-4 mb-8">
+              <div className="w-20 h-20  p-1 border border-gray-300 rounded-none">
+                <img
+                  src="https://res.cloudinary.com/dsyln8j3g/image/upload/v1687521072/bij_dbcv5b.jpg"
+                  alt="owner_profile"
+                />
+              </div>
+            </div>
+            <div className="font-bold text-lg">
+              {resortdata?.resortowner?.name}
+            </div>
+            <div className="text-gray-600 mt-2">
+              Iam 12 years experienced with this platform if you need any help
+              select any one of the button given below
+            </div>
+            <button className="btn btn-outline btn-info">Chat</button>
+            {/* <button className="btn btn-outline btn-info ml-4">Video Call</button> */}
+          </div>
+        </div>
       </div>
-      {similarStays.length > 0 && (
+      {similarStays.length > 0 ? (
         <div className="container mt-5">
           <h2 className="text-center text-black">Similar Stays</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            
             {similarStays.map((stay) => (
               <div key={stay._id} className="card">
                 {resortdata._id === stay._id ? null : (
@@ -175,6 +192,10 @@ const ResortData = () => {
               </div>
             ))}
           </div>
+        </div>
+      ) : (
+        <div className="container mt-5">
+          <h2 className="text-center text-black">No similar stays available</h2>
         </div>
       )}
 

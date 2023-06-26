@@ -10,6 +10,7 @@ import ResortData from '../components/Userpages/ResortData';
 import Adventure from '../components/Userpages/Adventure';
 import AdventureData from '../components/Userpages/AdventureData';
 import Destination from '../components/Userpages/Destination';
+import DestinationData from '../components/Userpages/DestinationData'
 const UserRoute = () => {
   return (
     <>
@@ -23,6 +24,7 @@ const UserRoute = () => {
     <Route exact path='/adventure' element={<Adventure/>}/>
     <Route exact path='/viewadventure/:id' element={<AdventureData/>}/>
     <Route eaxct path='/destinations' element={<Destination/>}/>
+    <Route exact path='/viewdestination/:id' element={<DestinationData/>}/>
     <Route element={<PrivateRoute role={'user'} route={'/login'}/>}>
    
    

@@ -1,50 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Header from "./Layout/Header";
-import { getadvData } from "../../services/Userapi";
+import Header from './Layout/Header'
+import {getDestinationData} from '../../services/Userapi'
 import { baseUrl } from "../../files/file";
 
-const AdventureData = () => {
-  const [adventdata, setAdventdata] = useState([]);
-  let { id } = useParams();
-
-  useEffect(() => {
-    getAdvData();
-  }, []);
-  const getAdvData = async () => {
-    try {
-      let { data } = await getadvData(id);
-
-      setAdventdata(data.oneadvdata);
-    } catch (error) {
-      console.log(error);
+const DestinationData = () => {
+    const [destdata,setDestdata]=useState([])
+    let {id}=useParams()
+    useEffect(()=>{
+      getdestData()
+    },[])
+    const getdestData=async()=>{
+        try {
+            let {data}=await getDestinationData(id)
+            setDestdata(data.onedestdata)
+        } catch (error) {
+            console.log(error)
+        }
     }
-  };
-  const images =adventdata?.image?.map((image, index) => ({
-    id: index + 1,
-    src: `${baseUrl}${image}`,
-    isLarge: index === 0,
-  }));
-  // console.log(adventdata,"advneture data")
+    const images =destdata?.dest_img?.map((image, index) => ({
+        id: index + 1,
+        src: `${baseUrl}${image}`,
+        isLarge: index === 0,
+      }));
+    console.log(destdata,"destination details of one destinaton")
   return (
-    <div>
-      <Header />
-      <div className="container mx-auto min-h-[800px] mb-14">
+   <div>
+    <Header/>
+    <div className="container mx-auto min-h-[800px] mb-14">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <h2 className="text-2xl font-semibold">{adventdata.activity}</h2>
+            <h2 className="text-2xl font-semibold">{destdata.name}</h2>
             <h3 className="text-lg mb-4">
-              Conducted By:{adventdata.resortName}
+              Near To:{destdata.resortName}
             </h3>
           </div>
 
           <div className="mb-4 lg:mb-0 flex gap-x-2 text-sm">
             <div className="text-3xl font-semibold text-sky-300">
-              {adventdata.price}
+              {/* {destdata.price} */}
               <button
                 className="btn btn-ghost ml-4 text-black"
                 onClick={(e) => {
-                  console.log(adventdata, "full detials..");
+                  console.log(destdata, "full detials..");
                 }}
               >
                 Contact Now
@@ -82,12 +80,10 @@ const AdventureData = () => {
             </div>
             <div>
               
-                <div className="text-justify font-semibold">
-                 Total Time Allowed:  {adventdata.time}hours
-                </div>
+              
                 <div className="text-justify font-normal">
                   <h2 className="font-medium">OverView Of Activity</h2>
-                  {adventdata.description}
+                  {destdata.about}
                 </div>
               
             </div>
@@ -95,8 +91,8 @@ const AdventureData = () => {
         </div>
         
       </div>
-    </div>
-  );
-};
+   </div>
+  )
+}
 
-export default AdventureData;
+export default DestinationData

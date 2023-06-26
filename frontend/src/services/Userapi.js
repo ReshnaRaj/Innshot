@@ -31,6 +31,15 @@ const getuseradventure=()=>{
 const  getuserdestination=()=>{
     return userAxiosInstance.get('/destinations')
 }
-
-
-export {userregister,userlogin,userverify,getuserresort,authUser,getresortdata,getsimiliarstay,getuseradventure,getuserdestination}
+const getadvData=(id)=>{
+    // console.log(id,"id getting...")
+    return userAxiosInstance.get(`/oneadv/${id}`)
+}
+const getDestinationData=(id)=>{
+    console.log(id,"getting..")
+    return userAxiosInstance.get(`/onedest/${id}`)
+}
+export {userregister,
+    userlogin,userverify,getuserresort,authUser,
+    getresortdata,getsimiliarstay,getuseradventure,
+    getuserdestination,getadvData,getDestinationData}

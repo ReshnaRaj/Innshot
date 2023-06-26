@@ -3,11 +3,20 @@ import Header from './Layout/Header';
 import { MdPlace } from "react-icons/md";
 import { baseUrl } from "../../files/file";
 import { getuserdestination} from '../../services/Userapi'
+import { useNavigate } from 'react-router-dom';
 const Destination = () => {
     const [destination,setDestination]=useState([])
     useEffect(()=>{
 userdestination()
     },[])
+    const navigate = useNavigate();
+    const  handleView=async(item)=>{
+      try {
+        navigate(`/viewdestination/${item}`,{state:{item}})
+      } catch (error) {
+        
+      }
+    }
     const userdestination=async()=>{
         try {
             let {data}=await getuserdestination()
@@ -43,7 +52,9 @@ userdestination()
           </div>
               
                <div className="card-actions justify-end">
-                 <button  className="btn btn-primary">View Details</button>
+                 <button onClick={()=>{
+                  handleView(item._id)
+                 }}  className="btn btn-primary">View Details</button>
                </div>
              </div>
            </div>

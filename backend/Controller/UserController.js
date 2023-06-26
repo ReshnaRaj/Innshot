@@ -32,6 +32,7 @@ module.exports.getsimilarstay=async(req,res,next)=>{
     // const {excludedResortId} = req.body;
     // console.log(excludedResortId,"hhhhhhh")
     const similarStays = await ResortModel.find({
+      verify:true,
       place,
       // _id: { $ne: excludedResortId },
     });
@@ -57,6 +58,16 @@ module.exports.UserAdventure = async (req, res, next) =>
       
     }
   };
+  module.exports.getoneAdv=async(req,res)=>{
+    try {
+      console.log("getting...")
+      let advId=req.params.id
+      let oneadvdata=await AdventureModel.findById(advId).populate('resortowner')
+      res.status(200).json({oneadvdata,success:true})
+    } catch (error) {
+      
+    }
+  }
   module.exports.UserDestinations = async (req, res, next) =>
  {
     try {
@@ -69,6 +80,18 @@ module.exports.UserAdventure = async (req, res, next) =>
       
     }
   };
+  module.exports.getonedest=async(req,res)=>{
+    console.log("one destination data")
+    try {
+      console.log("getting...")
+      let destId=req.params.id
+      let onedestdata=await DestinationModel.findById(destId).populate('resortowner')
+      res.status(200).json({onedestdata,success:true})
+    } catch (error) {
+      
+    }
+  }
   
+
 
 

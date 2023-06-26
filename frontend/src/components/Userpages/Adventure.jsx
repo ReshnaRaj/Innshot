@@ -55,7 +55,7 @@ const Adventure = () => {
               
                <div className="card-actions justify-end">
                  <button  onClick={()=>{
-                  console.log(item,"uuuuuu")
+                
                   handleView(item._id)}}className="btn btn-primary">View Details</button>
                </div>
              </div>
