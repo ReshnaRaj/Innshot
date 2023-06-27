@@ -56,6 +56,7 @@ const Resort = () => {
       console.log(error, "Error");
     }
   };
+  console.log(checkInDate,"teena.....")
   // console.log(selectedPlace,"selected place is coming....")
   // console.log(resort,"rrrrrrrrrrrr")
   const filteredResorts = selectedPlace
@@ -132,6 +133,7 @@ const Resort = () => {
           <button onClick={() => { 
             console.log(item,"servicess")
             handleView(item._id); }} className="btn btn-primary">View Details</button>
+            {/* <button className="mt-3 btn btn-info">Book Now</button> */}
         </div>
         </div>
       

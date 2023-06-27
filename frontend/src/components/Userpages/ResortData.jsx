@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Layout/Header";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import { FaBed } from "react-icons/fa";
 import { getresortdata, getsimiliarstay } from "../../services/Userapi";
 
@@ -8,6 +8,7 @@ const ResortData = () => {
   const [resortdata, setResortdata] = useState([]);
   const [similarStays, setSimilarStays] = useState([]);
   let { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getResortData();
@@ -29,6 +30,15 @@ const ResortData = () => {
       console.log(error);
     }
   };
+  const handleBookView=async(bookeddata)=>{
+    try {
+      navigate(`/viewbook/`,{state:{bookeddata}})
+      
+    } catch (error) {
+      console.log(error)
+      
+    }
+  }
   const fetchSimilarStays = async () => {
     try {
       let { data } = await getsimiliarstay(resortdata.place);
@@ -63,6 +73,7 @@ const ResortData = () => {
               <button
                 className="btn btn-ghost ml-4 text-black"
                 onClick={(e) => {
+                 handleBookView(resortdata)
                   console.log(resortdata, "full detials..");
                 }}
               >
