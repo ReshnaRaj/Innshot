@@ -17,7 +17,7 @@ const AllStaff = () => {
             
         }
     }
-    const  handleBlock=async(staffId)=>{
+    const  handleBlockUnblock=async(staffId)=>{
         try {
             let {data}=await blockstaff(staffId)
             toast.success(data.message,{
@@ -55,25 +55,19 @@ console.log(staff,"staff displayin...")
       <td>{index + 1}</td>
       <td>{user.name}</td>
       <td>{user.email}</td>
-      <td>
-        {user.admin_approval === 'Unblock' ? (
-          <button
-            onClick={() => handleBlock(user._id)}
-            className="btn btn-xs btn-success"
-            style={{ marginRight: '10px' }}
-          >
-            Block
-          </button>
-        ) : (
-          <button
-            onClick={() => handleBlock(user._id)}
-            className="btn btn-xs btn-error"
-            style={{ marginRight: '10px' }}
-          >
+     <td>{user.admin_approval=='Unblock' ? 'Block':'Unblock'}</td>
+    {user.admin_approval=='Unblock' ? (
+        <button onClick={()=>handleBlockUnblock(user._id)}
+        className='btn btn-xs btn-success'>
             Unblock
-          </button>
-        )}
-      </td>
+
+        </button>
+    ):(
+        <button onClick={()=>handleBlockUnblock(user._id)}
+        className='btn btn-xs btn-error'>
+            Block
+        </button>
+    )}
     </tr>
   ))}
 </tbody>

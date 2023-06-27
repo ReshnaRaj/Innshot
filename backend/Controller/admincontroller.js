@@ -138,7 +138,7 @@ module.exports.approveDestination=async(req,res)=>{
 module.exports.getAllstaffData = async (req, res) => {
   try {
     const staffs = await StaffModel.find({verified:true});
-    console.log(staffs,"all staff displaying...")
+    // console.log(staffs,"all staff displaying...")
     res.status(200).json({staffs,success:true})
   } catch (error) {
     console.error(error);
@@ -148,7 +148,18 @@ module.exports.getAllstaffData = async (req, res) => {
 
 module.exports.blockStaff=async(req,res)=>{
   try {
+    console.log("blocking working...")
+    const staffId=req.params.id
+    console.log(staffId,"id of staff")
+    let StafBlock=await StaffModel.findById(staffId)
+    console.log(StafBlock,"blocking success...")
+    const newStatus=StafBlock.admin_approval==='Unblock' ? 'Block':'Unblock'
+    let message=newStatus ? 'Staff Blocked' : 'Staff Unblocked'
+    StaffModel.findOneAndUpdate({_id:staffId}, {$set:{admin_approval:newStatus}}).then((response)=>{
+      res.status(200).json({message:message,success:true})
+    })
     
+  
   } catch (error) {
     
   }

@@ -49,7 +49,7 @@ console.log("getting data....")
     return adminAxiosInstance.get("getallstaff")
 }
 const blockstaff=(id)=>{
-    console.log("blocking working...")
-    return adminAxiosInstance.get(`/blockstaff/${id}`)
+    console.log(id,"blocking working...")
+    return adminAxiosInstance.post(`/blockstaff/${id}`)
 }
 export {adminlogin,getAllData,approveresort,authAdmin,getuniqueresort,getalladvData,getuniqadv,approveadvent,getalldestData,getuniqdest,approvedest,getAllstaff,blockstaff}
