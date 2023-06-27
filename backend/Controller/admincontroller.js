@@ -1,6 +1,7 @@
 const AdventureModel = require('../Model/AdventureModel');
 const DestinationModel = require('../Model/DestinationModel');
 const ResortModel=require('../Model/ResorttModel')
+const StaffModel=require('../Model/StaffModel')
 const sendMail = require("../Service/approved");
 module.exports.approveresort = async (req, res, next) => {
     try {
@@ -132,3 +133,16 @@ module.exports.approveDestination=async(req,res)=>{
     
   }
 }
+// Assuming you have imported the necessary dependencies and staffModel
+
+module.exports.getAllstaffData = async (req, res) => {
+  try {
+    const staffs = await StaffModel.find({verified:true});
+    console.log(staffs,"all staff displaying...")
+    res.status(200).json({staffs,success:true})
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+

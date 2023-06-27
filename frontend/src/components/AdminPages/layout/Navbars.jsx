@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MdHomeWork,MdDashboard,MdBookmarkAdded,MdLogout,MdDataThresholding } from "react-icons/md";
+import {FaUsers} from 'react-icons/fa'
 import { useSelector } from 'react-redux';
 
 const Navbars = () => {
@@ -24,6 +25,7 @@ const Navbars = () => {
           <Link to="/admin/pendingrequest" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdHomeWork /></span>All Resorts</Link>
           <Link to="/admin/adminadventure" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDataThresholding/></span> All Adventure</Link>
           <Link to="/admin/admindestination" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDataThresholding/></span> All Destination</Link>
+          <Link to="/admin/allstaff" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><FaUsers/></span>All ResortOwners</Link>
           {/* <Link to="/admin/bookings" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdBookmarkAdded/></span>Booking</Link> */}
           {admin.email &&(
             <>

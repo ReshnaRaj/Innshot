@@ -23,6 +23,11 @@ const staffSchema=new mongoose.Schema({
         default:false
         
     },
+    admin_approval:{
+        type:String,
+        default:'Unblock'
+    }
+    
     // blocked:{
     //     type:Boolean,
     //     default:false

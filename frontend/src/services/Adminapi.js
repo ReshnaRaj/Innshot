@@ -44,4 +44,8 @@ const approvedest=(id)=>{
     // console.log("approve or reject")
     return adminAxiosInstance.post(`/approvedest/${id}`)
 }
-export {adminlogin,getAllData,approveresort,authAdmin,getuniqueresort,getalladvData,getuniqadv,approveadvent,getalldestData,getuniqdest,approvedest}
+const getAllstaff=()=>{
+console.log("getting data....")
+    return adminAxiosInstance.get("getallstaff")
+}
+export {adminlogin,getAllData,approveresort,authAdmin,getuniqueresort,getalladvData,getuniqadv,approveadvent,getalldestData,getuniqdest,approvedest,getAllstaff}

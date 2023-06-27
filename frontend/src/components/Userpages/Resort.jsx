@@ -89,15 +89,18 @@ const Resort = () => {
         <div className="ml-2">
           <DatePicker
             selected={checkInDate}
+            dateFormat={'dd MMMM yyyy'}
             onChange={handleCheckInDateChange}
             placeholderText="Check-in"
             className="w-64 h-10 max-w-xs"
+            
           />
         </div>
 
         <div className="ml-4">
           <DatePicker
             selected={checkOutDate}
+            dateFormat={'dd MMMM yyyy'}
             onChange={handleCheckOutDateChange}
             placeholderText="Check-out"
             className="w-64 h-10 max-w-xs"
