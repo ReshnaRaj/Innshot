@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Navbars from './layout/Navbars'
 import Headers from './layout/Headers'
-import {getAllstaff} from '../../services/Adminapi'
+import {getAllstaff,blockstaff} from '../../services/Adminapi'
+import { ToastContainer, toast } from "react-toastify";
 
 const AllStaff = () => {
     const [staff,Setstaff]=useState([])
@@ -12,6 +13,18 @@ const AllStaff = () => {
         try {
             let {data}=await getAllstaff()
             Setstaff(data.staffs)
+        } catch (error) {
+            
+        }
+    }
+    const  handleBlock=async(staffId)=>{
+        try {
+            let {data}=await blockstaff(staffId)
+            toast.success(data.message,{
+                position:'top-center'
+            })
+            getStaffData();
+
         } catch (error) {
             
         }
@@ -37,28 +50,38 @@ console.log(staff,"staff displayin...")
               </tr>
             </thead>
             <tbody>
-             {staff.map((user,index)=>(
-                <tr  key={index}>
-                <td>{index+1}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>
-                    {user.admin_approval=='Unblock'}
-                </td>
-            
+  {staff.map((user, index) => (
+    <tr key={index}>
+      <td>{index + 1}</td>
+      <td>{user.name}</td>
+      <td>{user.email}</td>
+      <td>
+        {user.admin_approval === 'Unblock' ? (
+          <button
+            onClick={() => handleBlock(user._id)}
+            className="btn btn-xs btn-success"
+            style={{ marginRight: '10px' }}
+          >
+            Block
+          </button>
+        ) : (
+          <button
+            onClick={() => handleBlock(user._id)}
+            className="btn btn-xs btn-error"
+            style={{ marginRight: '10px' }}
+          >
+            Unblock
+          </button>
+        )}
+      </td>
+    </tr>
+  ))}
+</tbody>
 
-               
-                
-              </tr>
-
-             ))}
-                
-            
-            </tbody>
           </table>
         </div>
       </div>
-     
+      <ToastContainer />
     </div>
   )
 }

@@ -146,3 +146,10 @@ module.exports.getAllstaffData = async (req, res) => {
   }
 };
 
+module.exports.blockStaff=async(req,res)=>{
+  try {
+    
+  } catch (error) {
+    
+  }
+}
