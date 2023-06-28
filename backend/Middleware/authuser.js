@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../Model/UserModel");
 const Staff = require("../Model/StaffModel");
 const Admin = require("../Model/AdminModel");
+const StaffModel = require("../Model/StaffModel");
 // module.exports.checkUser = (req, res, next) => {
 //   const token = req.headers.authorization.split(" ")[1];
 //   jwt.verify(token, process.env.SECRET, async (err, decodedToken) => {
@@ -48,18 +49,29 @@ module.exports.checkStaff = (req, res, next) => {
     if (!token) {
       res.send({ status: false, message: "failed no token" });
     } else {
-      jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decodedToken) => {
+      jwt.verify(token, process.env.JWT_SECRET_KEY, async(err, decodedToken) => {
         if (err) {
           console.log(err);
           res.json({ status: false, message: "failed at verifying" });
         } else {
           req.staffId = decodedToken.staffId;
+          next()
+          // const staff=await StaffModel.findById({_id:req.staffId})
+          // console.log(staff,"coold")
+          // if(staff.admin_approval){
+          //   res.json({status:false,message:'admin Blocked'})
+          // }
+          // else{
+          //   req.staffId = decodedToken.staffId;
+          //   next();
+          // }
+          
           // console.log(req.staffId, "staff id...");
           // const staff = await Staff.findById({_id:decodedToken.id})
           // req.staff=staff._id
 
           // req.staff =decoded.staff
-          next();
+         
         }
       });
     }

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 
 const Navbar = () => {
   const staffs=useSelector((state)=>state.staff)
+  console.log(staffs,"checking blocking or not..,")
   const handleLogout=()=>{
     localStorage.removeItem('stafftoken')
   }
