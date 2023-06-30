@@ -16,6 +16,7 @@ const Resort = () => {
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState("");
+  
 
   const navigate = useNavigate();
 
@@ -43,7 +44,31 @@ const Resort = () => {
 
   useEffect(() => {
     userresort();
+    // const checkInDateFromStorage = localStorage.getItem("checkinDate");
+    // const checkOutDateFromStorage = localStorage.getItem("checkoutDate");
+    //  if (checkInDateFromStorage) {
+    //   setCheckInDate(new Date(checkInDateFromStorage));
+    // }
+
+    // if (checkOutDateFromStorage) {
+    //   setCheckOutDate(new Date(checkOutDateFromStorage));
+    // }
   }, []);
+  useEffect(() => {
+    if (checkInDate) {
+      localStorage.setItem("checkinDate", checkInDate.toISOString());
+    } else {
+      localStorage.removeItem("checkinDate");
+    }
+  }, [checkInDate]);
+
+  useEffect(() => {
+    if (checkOutDate) {
+      localStorage.setItem("checkoutDate", checkOutDate.toISOString());
+    } else {
+      localStorage.removeItem("checkoutDate");
+    }
+  }, [checkOutDate]);
 
   const userresort = async () => {
     try {

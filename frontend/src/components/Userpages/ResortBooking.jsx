@@ -7,6 +7,8 @@ import { FaRupeeSign } from "react-icons/fa";
 import {RxCalendar} from 'react-icons/rx'
 const ResortBooking = () => {
   const [resortdata, setResortdata] = useState([]);
+  const [checkInDate, setCheckInDate] = useState(null);
+  const [checkOutDate, setCheckOutDate] = useState(null);
 
   const location = useLocation();
   const booked = location.state?.bookeddata;
@@ -17,8 +19,18 @@ const ResortBooking = () => {
     setResortdata(booked.image);
     setResortdata(booked.number_room);
     setResortdata(booked.place);
+     const checkInDateFromStorage = localStorage.getItem("checkinDate");
+     console.log(checkInDateFromStorage,"check in date getting...")
+    const checkOutDateFromStorage = localStorage.getItem("checkoutDate");
+     if (checkInDateFromStorage) {
+      setCheckInDate(new Date(checkInDateFromStorage));
+    }
+
+    if (checkOutDateFromStorage) {
+      setCheckOutDate(new Date(checkOutDateFromStorage));
+    }
   }, []);
-  console.log(resortdata, "updated...");
+  console.log(checkInDate, "updated...");
   return (
     <div>
       <Header />
@@ -76,7 +88,7 @@ const ResortBooking = () => {
               <h2 className="font-semibold">{booked?.resortname}</h2>
               <h2 className="font-semibold flex items-center">
                 <RxCalendar className="text-lg mb-6" />
-                <span className="ml-2 mb-6">Date from-To</span>
+                <span className="ml-2 mb-6">{checkInDate?.toLocaleDateString("en-GB")}-{checkOutDate?.toLocaleDateString("en-GB")}</span>
               </h2>
               <img
                 src={`${booked.image[0]}`}
