@@ -76,17 +76,18 @@ const AddResort = () => {
       //   formData.append("resort_services", formattedServices[i]);
       // }
       formData.append("number_room", resortData.number_room);
+      formData.append('document',resortData.document)
       // show a messaage only uplaod pdf format
-      const certificateFile = resortData.document;
-      const allowedFormats = ["pdf"];
+      // const certificateFile = resortData.document;
+      // const allowedFormats = ["pdf"];
 
-      const fileExtension = certificateFile.name.split(".").pop().toLowerCase();
-      if (!allowedFormats.includes(fileExtension)) {
-        alert("Please upload a PDF document for the certificate.");
-        return;
-      }
+      // const fileExtension = certificateFile.name.split(".").pop().toLowerCase();
+      // if (!allowedFormats.includes(fileExtension)) {
+      //   alert("Please upload a PDF document for the certificate.");
+      //   return;
+      // }
 
-      formData.append("document", certificateFile);
+      // formData.append("document", certificateFile);
       // console.log(resortData.document,"sssssssssssss")
 
       // Add logic to handle the form submission (e.g., sending data to the server)
@@ -225,7 +226,7 @@ const AddResort = () => {
                       setResortData({ ...resortData, price: Pricee });
                     }
                   }}
-                  placeholder="$"
+                  placeholder=""
                   className="input input-bordered input-md w-full max-w-xs"
                 />
               </div>
@@ -238,12 +239,24 @@ const AddResort = () => {
                 <input
                   type="file"
                   // name='file'
-                  onChange={(e) =>
-                    setResortData({
-                      ...resortData,
-                      document: e.target.files[0],
-                    })
-                  }
+                  onChange={(e) =>{
+                    const file = e.target.files[0];
+                    const allowedFormats = ['application/pdf'];
+              
+                    if (file && allowedFormats.includes(file.type)) {
+                      setResortData({
+                        ...resortData,
+                        document: file,
+                      });
+                    } else {
+                      // File format not allowed, handle the error
+                      setResortData({...resortData,document:null})
+                      alert('Only PDF files are allowed.');
+                      e.target.type = 'text';
+                      e.target.type = 'file';
+                     
+                    }
+                  }}
                   className="file-input w-full max-w-xs"
                 />
               </div>

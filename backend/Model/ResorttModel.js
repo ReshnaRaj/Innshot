@@ -56,6 +56,10 @@ const resortSchema=new mongoose.Schema({
         type:[String],
         required: [true, 'services are required'],
 
+    },
+    reject_reason:{
+        type:String,
+        
     }
    
 

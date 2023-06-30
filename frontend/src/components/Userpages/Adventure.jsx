@@ -44,7 +44,7 @@ const Adventure = () => {
           </div>
           <div className="flex items-center">
             <MdPlace className="text-lg mr-2" />
-            <div className="text-black">{item.place}</div>
+            <div className="text-lg font-semibold">{item.place}</div>
             
           </div>
           <div className="flex items-center">

@@ -18,27 +18,65 @@ const nodemailer = require("nodemailer");
     },
   });
 
-async function sendMail(email,subject,msg,isApproved){
-  let approvalStatus = isApproved ? 'Approved' : 'Rejected';
-  let approvalMessage = isApproved ? 'Congrats! Your resort is approved.' : 'We regret to inform you that your resort is rejected.';
-  let info = await transporter.sendMail({
-    from:process.env.email,  // sender address
-    to: email, // list of receivers
-    subject: `Innshot ${approvalStatus} - ${subject}`, // Subject line
-    text: msg, // plain text body
-    html: `<p>${approvalMessage}</p>`
+// async function sendMail(email,subject,msg,isApproved){
+//   let approvalStatus = isApproved ? 'Approved' : 'Rejected';
+//   let approvalMessage = isApproved ? 'Congrats! Your resort is approved.' : 'We regret to inform you that your resort is rejected.';
+//   let info = await transporter.sendMail({
+//     from:process.env.email,  // sender address
+//     to: email, // list of receivers
+//     subject: `Innshot ${approvalStatus} - ${subject}`, // Subject line
+//     text: msg, // plain text body
+//     html: `<p>${approvalMessage}</p>`
     
 
     
-  });
-  
-  return info
-
-
-
-
+//   });
+let sendMail=(name,email,reason)=>{
+  return new Promise((resolve,reject)=>{
+    let mailOptions;
+    if(reason){
+      mailOptions={
+        to:email,
+        from:process.env.email,
+        subject:"Regarding the Resort Approval Confirmation from  Innshot",
+        html:
+        "<h2> Hi" +name + ",</h2>" +
+        "<h3> Sorry to inform you that, your resort is not accepted</h3>"+
+        "<h3 style='font-weight:bold;'> It is because"+
+        reason +
+        "</h3>"
+      }
+    }
+    else{
+      mailOptions={
+        to:email,
+        from:process.env.email,
+        subject:"Regarding the Resort Approval Confirmation from Innshot",
+        html:
+        "<h2> Hi" +name + ",</h2>" +
+        "<h2 style='font-weight:bold;'>Congratulations!</h2>" +
+        "<h3 >Your Resort is approved.</h3>" +
+        "<h3 style='font-weight:bold;'>The team wishing you a happy Business</h3>" 
+      } 
+    }
+    transporter.sendMail(mailOptions,(error,info)=>{
+      if(error){
+        reject({status:'error',error:error})
+      }
+      else{
+        resolve({status:'success'})
+      }
+    })
+  })
 }
-module.exports=sendMail
+  
+//   return info
+
+
+
+
+// }
+// module.exports=sendMail
 
 
 

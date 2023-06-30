@@ -71,7 +71,7 @@ const ResortData = () => {
             <div className="text-3xl font-semibold text-sky-300">
               {resortdata.price}
               <button
-                className="btn btn-ghost ml-4 text-black"
+                className="btn btn-info ml-4 text-black"
                 onClick={(e) => {
                  handleBookView(resortdata)
                   console.log(resortdata, "full detials..");
@@ -162,7 +162,7 @@ const ResortData = () => {
             </div>
           </div>
 
-          <div className="flex-1 bg-sky-100 w-full mb-8 border border-gray-300 rounded-lg px-6 py-8">
+          {/* <div className="flex-1 bg-sky-100 w-full mb-8 border border-gray-300 rounded-lg px-6 py-8">
             <h4 className="font-extrabold">Resort Owner</h4>
             <div className="flex items-center gap-x-4 mb-8">
               <div className="w-20 h-20  p-1 border border-gray-300 rounded-none">
@@ -180,8 +180,8 @@ const ResortData = () => {
               select any one of the button given below
             </div>
             <button className="btn btn-outline btn-info">Chat</button>
-            {/* <button className="btn btn-outline btn-info ml-4">Video Call</button> */}
-          </div>
+            <button className="btn btn-outline btn-info ml-4">Video Call</button>
+          </div> */}
         </div>
       </div>
       {similarStays.length > 0 ? (

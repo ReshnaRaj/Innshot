@@ -52,4 +52,12 @@ const blockstaff=(id)=>{
     console.log(id,"blocking working...")
     return adminAxiosInstance.post(`/blockstaff/${id}`)
 }
-export {adminlogin,getAllData,approveresort,authAdmin,getuniqueresort,getalladvData,getuniqadv,approveadvent,getalldestData,getuniqdest,approvedest,getAllstaff,blockstaff}
+const rejectresort=(id,data)=>{
+    console.log(id,"ffffff")
+    console.log(data,"rejection reason getting in services...")
+    return adminAxiosInstance.post(`/rejectresort/${id}`,{data})
+}
+const approveresortt=(id)=>{
+    return adminAxiosInstance.post(`/approvedresort/${id}`)
+}
+export {adminlogin,getAllData,approveresort,authAdmin,getuniqueresort,getalladvData,getuniqadv,approveadvent,getalldestData,getuniqdest,approvedest,getAllstaff,blockstaff,rejectresort,approveresortt}
