@@ -1,6 +1,7 @@
 const AdventureModel = require('../Model/AdventureModel');
 const ResortModel=require('../Model/ResorttModel')
-const DestinationModel=require('../Model/DestinationModel')
+const DestinationModel=require('../Model/DestinationModel');
+const BookingModel = require('../Model/BookingModel');
 module.exports.UserResort = async (req, res, next) =>
  {
     try {
@@ -87,6 +88,26 @@ module.exports.UserAdventure = async (req, res, next) =>
       let destId=req.params.id
       let onedestdata=await DestinationModel.findById(destId).populate('resortowner')
       res.status(200).json({onedestdata,success:true})
+    } catch (error) {
+      
+    }
+  }
+
+  module.exports.resort_booking=async(req,res)=>{
+    try {
+      console.log(req.body,"reuest data getting...")
+      const {name,email,phone}=req.body
+      // await BookingsModel.create({"name": name,'email': email,'phone' : phone})
+
+    } catch (error) {
+      
+    }
+  }
+  module.exports.resort_book=async(req,res)=>{
+    try {
+      console.log(req.body,"uuuuuuuuuuuuu")
+    
+    
     } catch (error) {
       
     }

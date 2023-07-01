@@ -106,7 +106,7 @@ const Header = () => {
               </Link>
             </li>
             <li>
-            <Link to ='/login'><a onClick={handleLogout}>Logout</a></Link>
+            <Link to ='/'><a onClick={handleLogout}>Logout</a></Link>
             </li>
           </ul>
         </div>

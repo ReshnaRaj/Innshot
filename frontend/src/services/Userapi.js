@@ -39,7 +39,15 @@ const getDestinationData=(id)=>{
     console.log(id,"getting..")
     return userAxiosInstance.get(`/onedest/${id}`)
 }
+const resort_book=(data)=>{
+    console.log(data,"hhhhhh")
+    return userAxiosInstance.post('/booking',data)
+}
+const booked_resort=(data)=>{
+    console.log(data,"datttttttttt")
+    return userAxiosInstance.post('/bookedresort',data)
+}
 export {userregister,
     userlogin,userverify,getuserresort,authUser,
     getresortdata,getsimiliarstay,getuseradventure,
-    getuserdestination,getadvData,getDestinationData}
+    getuserdestination,getadvData,getDestinationData,resort_book,booked_resort}

@@ -34,9 +34,16 @@ const Resort = () => {
   };
 
   const handleCheckOutDateChange = (date) => {
-    console.log(date,"check out date...")
-    setCheckOutDate(date);
+    console.log(date, "check out date...");
+  
+    if (checkInDate && date <= checkInDate) {
+      // Reset the checkout date if it's earlier than the check-in date
+      setCheckOutDate(null);
+    } else {
+      setCheckOutDate(date);
+    }
   };
+  
 
   // const handlePlaceChange = (event) => {
   //   setSelectedPlace(event.target.value);
@@ -90,6 +97,7 @@ const Resort = () => {
   const uniquePlaces = [...new Set(resort.map((item) => item.place))];
   // console.log(uniquePlaces,"ioooooo")
   // console.log(filteredResorts,"iiiiiiiiiiiiiiii")
+  const today = new Date();
   return (
     <div>
       <Header />
@@ -118,6 +126,7 @@ const Resort = () => {
             onChange={handleCheckInDateChange}
             placeholderText="Check-in"
             className="w-64 h-10 max-w-xs"
+            minDate={today}
             
           />
         </div>
@@ -129,6 +138,7 @@ const Resort = () => {
             onChange={handleCheckOutDateChange}
             placeholderText="Check-out"
             className="w-64 h-10 max-w-xs"
+            
           />
         </div>
         {/* <span className="loading loading-spinner loading-lg"></span> */}
