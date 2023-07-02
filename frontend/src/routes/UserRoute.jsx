@@ -13,6 +13,7 @@ import Destination from '../components/Userpages/Destination';
 import DestinationData from '../components/Userpages/DestinationData'
 import ResortBooking from '../components/Userpages/ResortBooking';
 import Hotelpaying from '../components/Userpages/Hotelpaying';
+import Booking from '../components/Userpages/Booking';
 const UserRoute = () => {
   return (
     <>
@@ -30,7 +31,8 @@ const UserRoute = () => {
    
     <Route element={<PrivateRoute role={'user'} route={'/login'}/>}>
     <Route exact path='/viewbook' element={<ResortBooking/>}/>
-    <Route exact path='/hotelbooking/:id' element={<Hotelpaying/>}/>
+    <Route exact path='/hotelbooking' element={<Hotelpaying/>}/>
+    <Route exact path='/mybooking' element={<Booking/>}/>
    
    
     

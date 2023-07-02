@@ -33,20 +33,24 @@ const bookingSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    // payment_method:{
-    //     type:String,
-    //     required:true
-    // },
-    transactionId:{
-        type:String,
-        // required:true
+    Booked_at:{
+        type:Date,
+        
     },
+    payment:{
+        payment_method:{type:String},
+        payment_id:{type:String},
+        payment_order_id:{type:String},
+        payment_status:{type:String, default:'pending'},
+    },
+    // transactionId:{
+    //     type:String,
+    //     // required:true
+    // },
     status:{
         type:String,
         required:true,
         default:'booked'
     },
-},{
-    timestamps:true
 })
 module.exports=mongoose.model('Booking',bookingSchema)

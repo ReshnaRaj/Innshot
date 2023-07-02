@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 // import {resort_book} from '../../services/Userapi'
 import { useSelector } from 'react-redux';
 import {booked_resort} from '../../services/Userapi'
+import { ToastContainer, toast } from "react-toastify";
 
 const ResortBooking = () => {
     const users = useSelector((state) => state.user);
@@ -18,13 +19,14 @@ const ResortBooking = () => {
   const [resortdata, setResortdata] = useState([]);
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
+  const [payment,setPayment]=useState("")
   // const [name, setName] = useState("");
   // const [phone, setPhone] = useState("");
   // const [email, setEmail] = useState("");
 
   const location = useLocation();
   const booked = location.state?.bookeddata;
-  console.log(booked,"booked data of resort...")
+  // console.log(booked,"booked data of resort...")
 
   const handleSubmitt = async (e) => {
     e.preventDefault();
@@ -41,20 +43,24 @@ const ResortBooking = () => {
   const handlebookingHotel=async(resortQuery)=>{
    
     try {
-      console.log(resortQuery,"ppppp")
+      // console.log(resortQuery,"ppppp")
       // console.log("paying booking")
       const data=await booked_resort({
         resortId:resortQuery,
         traveler:users,
         fromDate:checkInDate ,
-        toDate:checkOutDate
+        toDate:checkOutDate,
+        
+      
       
       })
-      console.log(data,"fffff")
-      
-    navigate(`/hotelbooking/`,{state:{resortQuery}})
+      // console.log(data,"fffff")
+    navigate(`/hotelbooking/`)
       
     } catch (error) {
+      toast.error('Resort already booked for the selected dates', {
+        position: toast.POSITION.TOP_CENTER,
+      });
       
     }
   }
@@ -152,14 +158,15 @@ console.log(checkInDate,"from date....")
               <FaRupeeSign className="text-sm" />
               <span className="ml-2">{booked?.price}</span>
             </h2>
-            <button className="btn btn-success mr-4" >Stripe Now</button>
-            <button  onClick={()=>
+            <button  disabled={!checkInDate || !checkOutDate}className="btn btn-success mr-4" >Stripe Now</button>
+            <button  disabled={!checkInDate || !checkOutDate} onClick={()=>
               { 
                 // console.log(booked,"id of resort...")
                 handlebookingHotel(booked)}} className="btn btn-success">Pay Hotel</button>
           </div>
         </div>
       </div>
+      <ToastContainer /> 
     </div>
   );
 };
