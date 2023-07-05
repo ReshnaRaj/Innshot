@@ -38,9 +38,10 @@ const bookingSchema=new mongoose.Schema({
         
     },
     payment:{
+        payment_amount:{type:Number},
         payment_method:{type:String},
         payment_id:{type:String},
-        payment_order_id:{type:String},
+        // payment_order_id:{type:String},
         payment_status:{type:String, default:'pending'},
     },
     // transactionId:{

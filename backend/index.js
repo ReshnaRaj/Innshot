@@ -10,6 +10,7 @@ const cookieParser=require('cookie-parser')
 const userouter=require('./Routes/UserRoute')
 const staffrouter=require('./Routes/StaffRoute')
 const adminrouter=require('./Routes/AdminRoute')
+// const stripe=require('stripe')
 dbConnection();
 app.use('/', express.static(path.join(__dirname, 'public')))  
 

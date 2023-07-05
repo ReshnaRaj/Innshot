@@ -18,7 +18,7 @@ function PrivateRoute({role,route}) {
     if(role==='user'){
       // console.log(role,"real role...")
       authUser().then((response)=>{
-        console.log(response.data,"ressss")
+        // console.log(response.data,"ressss")
         if(!response.data.auth){
           // little bit confusion
           localStorage.removeItem('usertoken')

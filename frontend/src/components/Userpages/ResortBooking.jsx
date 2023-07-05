@@ -1,69 +1,109 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Layout/Header";
-import { useLocation } from "react-router-dom";
+import { json, useLocation } from "react-router-dom";
 import { FaBed } from "react-icons/fa";
 import { MdPlace } from "react-icons/md";
 import { FaRupeeSign } from "react-icons/fa";
 import { RxCalendar } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 // import {resort_book} from '../../services/Userapi'
-import { useSelector } from 'react-redux';
-import {booked_resort} from '../../services/Userapi'
+import { useSelector } from "react-redux";
+import { booked_resort,verifyrazorpay} from "../../services/Userapi";
 import { ToastContainer, toast } from "react-toastify";
+// import  StripeCheckout  from "react-stripe-checkout";
 
 const ResortBooking = () => {
-    const users = useSelector((state) => state.user);
-    const navigate = useNavigate();
-    // console.log(users,"tooooo")
-    // const dispatch = useDispatch();
+  const users = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  // console.log(users,"tooooo")
+  // const dispatch = useDispatch();
   const [resortdata, setResortdata] = useState([]);
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
-  const [payment,setPayment]=useState("")
+  const [paymentt, setPaymentt] = useState("");
   // const [name, setName] = useState("");
   // const [phone, setPhone] = useState("");
   // const [email, setEmail] = useState("");
 
   const location = useLocation();
   const booked = location.state?.bookeddata;
-  // console.log(booked,"booked data of resort...")
+  console.log(booked,"booked data of resort...")
 
-  const handleSubmitt = async (e) => {
-    e.preventDefault();
-    console.log("submitting ")
-    // const data=await resort_book({
-    //   name:name,
-    //   email:email,
-    //   phone:phone,
-    // })
-    // console.log(data,"submission working...")
-    // Your form submission logic here
-  };
- 
-  const handlebookingHotel=async(resortQuery)=>{
-   
+  // const handleSubmitt = async (e) => {
+  //   e.preventDefault();
+  //   console.log("submitting ");
+  // };
+
+  const handlebookingHotel = async (bookedd) => {
     try {
       // console.log(resortQuery,"ppppp")
       // console.log("paying booking")
-      const data=await booked_resort({
-        resortId:resortQuery,
-        traveler:users,
-        fromDate:checkInDate ,
-        toDate:checkOutDate,
-        
-      
-      
-      })
-      // console.log(data,"fffff")
-    navigate(`/hotelbooking/`)
-      
-    } catch (error) {
-      toast.error('Resort already booked for the selected dates', {
-        position: toast.POSITION.TOP_CENTER,
+      const data = await booked_resort({
+        resortId: bookedd,
+        traveler: users,
+        fromDate: checkInDate,
+        toDate: checkOutDate,
+        payment: paymentt,
       });
+      localStorage.removeItem("checkinDate");
+      localStorage.removeItem("checkoutDate");
+      // console.log(data,"fffff")
+      navigate('/hotelbooking/');
+    } catch (error) {
+      console.log(error, "i8i8i8i");
+      // toast.error("Resort already booked for the selected dates", {
+      //   position: toast.POSITION.TOP_CENTER,
+      // });
+    }
+  };
+  const handleOnlinePayment=async()=>{
+    try {
       
+      const data=await booked_resort({
+        resortId: booked,
+        traveler: users,
+        fromDate: checkInDate,
+        toDate: checkOutDate,
+        payment: paymentt,
+      })
+      console.log(data,"uuuu")
+      initPayment(data.data)
+      console.log(data,"data apply")
+      localStorage.removeItem("checkinDate");
+      localStorage.removeItem("checkoutDate");
+    } catch (error) {
+      console.log(error,"222222")
     }
   }
+  const initPayment=(data)=>{
+    const options={
+      key:'rzp_test_PbltfzpnGtYEOk',
+      name:booked.resortname,
+      amount:booked.price*100,
+      order_id:data.id,
+     handler:async(response)=>{
+      try {
+        const {razorpay_order_id,razorpay_payment_id,razorpay_signature}=response;
+        const {data}=await verifyrazorpay({
+          razorpay_order_id,
+          razorpay_payment_id,
+          razorpay_signature,
+        })
+        
+      } catch (error) {
+        console.log(error,"----")
+        
+      }
+     },
+     theme:{
+      color:'#3499cc',
+     }
+    }
+    const rzp1=new window.Razorpay(options)
+    rzp1.open()
+
+  }
+ 
 
   useEffect(() => {
     setResortdata(booked.resortname);
@@ -71,8 +111,8 @@ const ResortBooking = () => {
     setResortdata(booked.image);
     setResortdata(booked.number_room);
     setResortdata(booked.place);
-    
-    const checkInDateFromStorage = localStorage.getItem("checkinDate")
+
+    const checkInDateFromStorage = localStorage.getItem("checkinDate");
     const checkOutDateFromStorage = localStorage.getItem("checkoutDate");
     if (checkInDateFromStorage) {
       setCheckInDate(new Date(checkInDateFromStorage));
@@ -82,8 +122,48 @@ const ResortBooking = () => {
       setCheckOutDate(new Date(checkOutDateFromStorage));
     }
   }, []);
-  
-console.log(checkInDate,"from date....")
+  //  async function onToken(token){
+  //   console.log(booked,"token getting... ")
+  //   try {
+  //     // console.log(resortQuery,"ppppp")
+  //     // console.log("paying booking")
+  //     const data = await booked_resort({
+  //       resortId: booked,
+  //       traveler: users,
+  //       fromDate: checkInDate,
+  //       toDate: checkOutDate,
+  //       payment: payment,
+  //       token
+  //     });
+  //     localStorage.removeItem("checkinDate");
+  //     localStorage.removeItem("checkoutDate");
+  //     navigate('/hotelbooking/');
+  //   } catch (error) {
+  //     console.log(error,"error...")
+  //   }
+  //  }
+  // const checkOut=async ()=>{
+  //   console.log("checking..")
+  //   const data =await booked_resort({
+  //     resortId: booked,
+  //     traveler: users,
+  //     fromDate: checkInDate,
+  //     toDate: checkOutDate,
+  //     payment: payment,
+
+  //   }).then(res=>{
+  //     if(res.ok) return res.json
+  //     return res.json().then(json=>Promise.reject(json))
+  //   })
+  //   .then(({url})=>{
+  //     window.location=url
+  //   })
+  //   .catch(e=>{
+  //     console.log(e.error)
+  //   })
+  // }
+
+  console.log(paymentt, "00000....");
   return (
     <div>
       <Header />
@@ -94,7 +174,10 @@ console.log(checkInDate,"from date....")
             <h3 className="text-lg mb-4">
               Please provide your details for Booking:
             </h3>
-            <form onSubmit={handleSubmitt} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <form
+              // onSubmit={handleSubmitt}
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
+            >
               <div className="form-group">
                 <label htmlFor="fullname">Full Name</label>
                 <input
@@ -143,7 +226,11 @@ console.log(checkInDate,"from date....")
               </span>
             </h2>
 
-            <img src={`${booked.image[0]}`} alt="Resort" className="w-72 h-56" />
+            <img
+              src={`${booked.image[0]}`}
+              alt="Resort"
+              className="w-72 h-56"
+            />
 
             <h2 className="font-semibold flex items-center">
               <FaBed className="text-sm" />
@@ -158,15 +245,76 @@ console.log(checkInDate,"from date....")
               <FaRupeeSign className="text-sm" />
               <span className="ml-2">{booked?.price}</span>
             </h2>
-            <button  disabled={!checkInDate || !checkOutDate}className="btn btn-success mr-4" >Stripe Now</button>
-            <button  disabled={!checkInDate || !checkOutDate} onClick={()=>
-              { 
+            <div className="form-group">
+              <label>Payment Method:</label>
+              <div>
+                <input
+                  type="radio"
+                  id="cod"
+                  value="cod"
+                  checked={paymentt === "cod"}
+                  onChange={(e) => setPaymentt(e.target.value)}
+                  required
+                />
+                <label htmlFor="cod" className="ml-2">
+                  Cash on Reach
+                </label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  id="online"
+                  value="online"
+                  checked={paymentt === "online"}
+                  onChange={(e) => setPaymentt(e.target.value)}
+                  required
+                />
+                <label htmlFor="online" className="ml-2">
+                  Online Payment
+                </label>
+              </div>
+            </div>
+            <button
+              onClick={() => {
+                handleOnlinePayment(booked);
+              }}
+              className="btn btn-success mr-4"
+            >
+              Pay Now
+            </button>
+
+            {/* <StripeCheckout
+            amount={booked?.price*100}
+            currency="INR"
+        token={onToken}
+        stripeKey="pk_test_51NPVEoSCd62kI4oXPSJiZEVTITYH76H4UAOBRKz6Hxw3oUEgg6dp921VrRtiqHTQqkMSpWzHCTMyHa7avKWVsj4b00ilrTn2Np">
+        <button
+        disabled={!checkInDate || !checkOutDate}
+        // onClick={()=>{
+        //   handleStripeNow()
+        // }}
+        
+        className="btn btn-success mr-4"
+      >
+        Stripe Now
+      </button>
+
+
+      </StripeCheckout> */}
+            <button
+              disabled={!checkInDate || !checkOutDate}
+              onClick={() => {
                 // console.log(booked,"id of resort...")
-                handlebookingHotel(booked)}} className="btn btn-success">Pay Hotel</button>
+                handlebookingHotel(booked);
+              }}
+              className="btn btn-success"
+            >
+              Pay Hotel
+            </button>
           </div>
         </div>
       </div>
-      <ToastContainer /> 
+      <ToastContainer />
     </div>
   );
 };

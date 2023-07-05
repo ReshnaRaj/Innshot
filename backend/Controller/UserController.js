@@ -3,6 +3,12 @@ const ResortModel = require("../Model/ResorttModel");
 const DestinationModel = require("../Model/DestinationModel");
 const BookingModel = require("../Model/BookingModel");
 const UserModel = require("../Model/UserModel");
+// const stripe=require('stripe')(process.env.STRIPE_SECRET_KEY)
+// const {v4:uuidv4}=require('uuid')
+const Razorpay=require('razorpay')
+const crypto=require('crypto')
+const key_id=process.env.KEY_ID
+const key_secret=process.env.KEY_SECRET
 module.exports.UserResort = async (req, res, next) => {
   try {
     const resortt = await ResortModel.find({ verify: true });
@@ -84,67 +90,363 @@ module.exports.getonedest = async (req, res) => {
     res.status(200).json({ onedestdata, success: true });
   } catch (error) {}
 };
-
-// module.exports.resort_booking = async (req, res) => {
+// module.exports.resort_book=async(req,res)=>{
+//   console.log(req.body,"request body")
 //   try {
-//     console.log(req.body, "reuest data getting...");
-//     const { name, email, phone } = req.body;
-//     // await BookingsModel.create({"name": name,'email': email,'phone' : phone})
-//   } catch (error) {}
+//      const {resortId,traveler,fromDate,toDate,payment}=req.body
+//      const traveller = await UserModel.findOne({ email: traveler.email });
+//      const resortt = await ResortModel.findOne({ _id: resortId });
+//       const formatDate = (dateString) => {
+//       const date = new Date(dateString);
+//       const day = date.getDate();
+//       const month = date.getMonth() + 1; // Months are zero-based
+//       const year = date.getFullYear();
+//       return `${day}/${month}/${year}`;
+//     };
+//          const newBooking = new BookingModel({
+//       resortId: resortt,
+//       traveler: traveller,
+//       fromDate: formatDate(fromDate),
+//       toDate: formatDate(toDate),
+//       Booked_at: new Date(),
+    
+//       // Add other properties from req.body as needed
+//     });
+//     newBooking.save().then(async (bookResponse)=>{
+//       const session=await stripe.checkout.sessions.create({
+//         payment_method_types:['card'],
+        
+//         line_items: [
+//           {
+//             currency:'inr',
+//             name:resortId.resortname,
+//             amount:resortId.price*100,
+            
+//             // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+            
+//           },
+//         ],
+//         mode: 'payment',
+//         success_url: `${YOUR_DOMAIN}/success.html`,
+//         cancel_url: `${YOUR_DOMAIN}/cancel.html`,
+  
+//       })
+//       re.json({url:session.url})
+
+//     })
+   
+    
+//   } catch (error) {
+//     res.status(500).json({error:error.message})
+    
+//   }
+// }
+
+
+// module.exports.resort_book = async (req, res) => {
+//   try {
+//     console.log(req.body,"request body consoling...")
+//     const { resortId, traveler, fromDate, toDate,payment } = req.body;
+//     const traveller = await UserModel.findOne({ email: traveler.email });
+//     const resortt = await ResortModel.findOne({ _id: resortId });
+
+//     // Check if there is an existing booking for the same resort, traveler, and date range
+//     const existingBooking = await BookingModel.findOne({
+//       resortId: resortt,
+//       traveler: traveller,
+      
+//     });
+
+//     if (existingBooking) {
+//       return res.status(400).json({ error: "Resort already booked for the selected dates" });
+//     }
+
+//     const formatDate = (dateString) => {
+//       const date = new Date(dateString);
+//       const day = date.getDate();
+//       const month = date.getMonth() + 1; // Months are zero-based
+//       const year = date.getFullYear();
+//       return `${day}/${month}/${year}`;
+//     };
+
+//     const newBooking = new BookingModel({
+//       resortId: resortt,
+//       traveler: traveller,
+//       fromDate: formatDate(fromDate),
+//       toDate: formatDate(toDate),
+//       Booked_at: new Date(),
+//       payment:payment
+    
+//       // Add other properties from req.body as needed
+//     });
+
+//     const savedBooking = await newBooking.save();
+//     console.log(savedBooking, "saved in database/..");
+//     res.json(savedBooking);
+//   } catch (error) {
+//     console.log(error, "error in saving...");
+//     res.status(500).json({ error: "Error in saving booking" });
+//   }
 // };
-module.exports.resort_book = async (req, res) => {
+// module.exports.resort_book=async(req,res)=>{
+//   console.log(req.body,"rrrrrrr")
+//   // const { resortId,traveler,fromDate,toDate,payment,token } = req.body;
+
+//   try {
+//    const customer=await stripe.customers.create({
+//     email:token.email,
+//     source:token.id
+//    })
+//    const paymentt=await stripe.paymentIntents.create({
+//     amount:resortId.price*100,
+//     customer:customer.id,
+//     currency:'inr',
+//     receipt_email:token.email
+//    },{
+//     idempotencyKey:uuidv4()
+//    }
+//    )
+//    console.log(paymentt,"00000")
+//    if(paymentt){
+
+//           console.log(req.body,"request body consoling...")
+//           const { resortId, traveler, fromDate,payment ,toDate } = req.body;
+//           const traveller = await UserModel.findOne({ email: traveler.email });
+//           const resortt = await ResortModel.findOne({ _id: resortId });
+      
+//           // Check if there is an existing booking for the same resort, traveler, and date range
+//           const existingBooking = await BookingModel.findOne({
+//             resortId: resortt,
+//             traveler: traveller,
+            
+//           });
+      
+//           if (existingBooking) {
+//             return res.status(400).json({ error: "Resort already booked for the selected dates" });
+//           }
+      
+//           const formatDate = (dateString) => {
+//             const date = new Date(dateString);
+//             const day = date.getDate();
+//             const month = date.getMonth() + 1; // Months are zero-based
+//             const year = date.getFullYear();
+//             return `${day}/${month}/${year}`;
+//           };
+      
+//           const newBooking = new BookingModel({
+//             resortId: resortt,
+//             traveler: traveller,
+//             fromDate: formatDate(fromDate),
+//             toDate: formatDate(toDate),
+//             Booked_at: new Date(),
+//             'payment.payment_method':payment
+          
+//             // Add other properties from req.body as needed
+//           });
+      
+//           const savedBooking = await newBooking.save();
+//           res.send("payment successfully your resort is booked")
+//           // console.log(savedBooking, "saved in database/..");
+//           // res.json(savedBooking);
+        
+//    }
+  
+  
+
+    
+//   } catch (error) {
+//     console.log(error,"error...")
+//     return res.status(400).json({error})
+    
+//   }
+// }
+// module.exports.resort_book = async (req, res) => {
+//   console.log(req.body, "rrrrrrr");
+
+//   try {
+//     const { resortId, traveler, fromDate, toDate, payment, token } = req.body;
+//     const traveller = await UserModel.findOne({ email: traveler.email });
+//     const resortt = await ResortModel.findOne({ _id: resortId });
+
+//     // Check if there is an existing booking for the same resort, traveler, and date range
+//     const existingBooking = await BookingModel.findOne({
+//       resortId: resortt,
+//       traveler: traveller,
+//     });
+
+//     if (existingBooking) {
+//       return res.status(400).json({ error: "Resort already booked for the selected dates" });
+//     }
+
+//     if (payment === "cod") {
+//       // Handle Cash on Delivery payment
+//       const formatDate = (dateString) => {
+//         const date = new Date(dateString);
+//         const day = date.getDate();
+//         const month = date.getMonth() + 1; // Months are zero-based
+//         const year = date.getFullYear();
+//         return `${day}/${month}/${year}`;
+//       };
+
+//       const newBooking = new BookingModel({
+//         resortId: resortt,
+//         traveler: traveller,
+//         fromDate: formatDate(fromDate),
+//         toDate: formatDate(toDate),
+//         Booked_at: new Date(),
+//         payment: {
+//           payment_method: payment,
+//         },
+//         // Add other properties from req.body as needed
+//       });
+
+//       const savedBooking = await newBooking.save();
+//       res.send("Payment successful. Your resort is booked.");
+//     } else if (payment === "online") {
+//       // Handle Online Payment using Stripe
+//       const customer = await stripe.customers.create({
+//         email: token.email,
+//         source: token.id,
+//       });
+
+//       const paymentIntent = await stripe.paymentIntents.create(
+//         {
+//           amount: resortt.price * 100,
+//           customer: customer.id,
+//           currency: "inr",
+//           receipt_email: token.email,
+//         },
+//         {
+//           idempotencyKey: uuidv4(),
+//         }
+//       );
+
+//       console.log(paymentIntent, "Stripe payment intent");
+
+//       if (paymentIntent) {
+//         const formatDate = (dateString) => {
+//           const date = new Date(dateString);
+//           const day = date.getDate();
+//           const month = date.getMonth() + 1; // Months are zero-based
+//           const year = date.getFullYear();
+//           return `${day}/${month}/${year}`;
+//         };
+
+//         const newBooking = new BookingModel({
+//           resortId: resortt,
+//           traveler: traveller,
+//           fromDate: formatDate(fromDate),
+//           toDate: formatDate(toDate),
+//           Booked_at: new Date(),
+//           payment: {
+//             payment_method: payment,
+//             payment_intent: paymentIntent.id,
+//           },
+//           // Add other properties from req.body as needed
+//         });
+
+//         const savedBooking = await newBooking.save();
+//         res.send("Payment successful. Your resort is booked.");
+//       }
+//     } else {
+//       return res.status(400).json({ error: "Invalid payment method" });
+//     }
+//   } catch (error) {
+//     console.log(error, "error...");
+//     return res.status(400).json({ error });
+//   }
+// };
+
+module.exports.resort_book=async(req,res)=>{
   try {
-    console.log(req.body,"request body consoling...")
-    const { resortId, traveler, fromDate, toDate } = req.body;
+    console.log(req.body,"ooooo")
+   const {resortId,traveler,fromDate,toDate,payment}=req.body
     const traveller = await UserModel.findOne({ email: traveler.email });
     const resortt = await ResortModel.findOne({ _id: resortId });
 
-    // Check if there is an existing booking for the same resort, traveler, and date range
-    const existingBooking = await BookingModel.findOne({
-      resortId: resortt,
-      traveler: traveller,
-      
-    });
+    if(payment==='cod'){
+      const formatDate=(dateString)=>{
+        const date=new Date(dateString);
+        const day = date.getDate();
+        const month = date.getMonth() + 1; // Months are zero-based
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
 
-    if (existingBooking) {
-      return res.status(400).json({ error: "Resort already booked for the selected dates" });
+      }
+      const newBooking=new BookingModel({
+        resortId:resortt,
+        traveler:traveller,
+        fromDate:formatDate(fromDate),
+        toDate:formatDate(toDate),
+        Booked_at:new_Date(),
+        'payment.payment_method':payment
+
+      })
+      const savedBooking=await newBooking.save()
+      res.json({savedBooking,success:true})
+    }
+    else {
+      try {
+        console.log(resortt.price,"thhhhhh")
+          const instance=new Razorpay({
+           key_id,
+           key_secret
+          })
+          const options={
+           amount:resortt.price*100,
+           currency:'INR',
+           receipt:crypto.randomBytes(10).toString('hex')
+   
+          }
+          instance.orders.create(options,(error,order)=>{
+           if(error){
+             console.log(error,"909099")
+             return res.status(500).json({message:"something went wrong"})
+           }
+           
+        
+           res.status(200).json({data:order})
+          })
+       
+        
+      } catch (error) {
+        console.log(error,"7777")
+        res.status(500).json({message:'INTERNAL SERVER ERROR'})
+        
+      }
+    }
+  } catch (error) {
+    console.log(error,"123456")
+    
+  }
+}
+module.exports.verifyPayment=async(req,res)=>{
+  try {
+    console.log(req.body,"teena comes")
+    const {razorpay_order_id,razorpay_payment_id,razorpay_signature}=req.body
+    const sign=razorpay_order_id + "|" +razorpay_payment_id;
+    const expectedSign=crypto
+    .createHmac('sha256',key_secret)
+    .update(sign.toString())
+    .digest('hex')
+    if(razorpay_signature===expectedSign){
+        return res.status(200).json({message:'Payment Verified Successfully'})
+    }
+    else{
+      return res.status(400).json({message:'Invalid Signature sent'})
     }
 
-    const formatDate = (dateString) => {
-      const date = new Date(dateString);
-      const day = date.getDate();
-      const month = date.getMonth() + 1; // Months are zero-based
-      const year = date.getFullYear();
-      return `${day}/${month}/${year}`;
-    };
-
-    const newBooking = new BookingModel({
-      resortId: resortt,
-      traveler: traveller,
-      fromDate: formatDate(fromDate),
-      toDate: formatDate(toDate),
-      Booked_at: new Date(),
-    
-      // Add other properties from req.body as needed
-    });
-
-    const savedBooking = await newBooking.save();
-    console.log(savedBooking, "saved in database/..");
-    res.json(savedBooking);
   } catch (error) {
-    console.log(error, "error in saving...");
-    res.status(500).json({ error: "Error in saving booking" });
+    
   }
-};
-
-
+}
 module.exports.getbookeddata=async(req,res)=>{
   try {
     // console.log("getting data....")
     const id=req.userId;
     // console.log(id,"id getting booked")
     let bookedresort=await BookingModel.find({traveler:id})
-    .populate('resortId', 'resortname address price')
+    .populate('resortId', 'resortname address price place')
     .populate('traveler', 'name email phone');
 
     console.log(bookedresort,"ppppp")

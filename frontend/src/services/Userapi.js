@@ -15,7 +15,7 @@ const getuserresort=()=>{
     return userAxiosInstance.get('/resortlist')
 }
 const authUser=()=>{
-    console.log("private root user root is going to backend...")
+    // console.log("private root user root is going to backend...")
     return userAxiosInstance.get('/isUserAuth')
 }
 const getresortdata=(id)=>{
@@ -47,6 +47,9 @@ const booked_resort=(data)=>{
     // console.log(data,"datttttttttt")
     return userAxiosInstance.post('/bookedresort',data)
 }
+const verifyrazorpay=(data)=>{
+    return userAxiosInstance.post('/verifypayment',data)
+}
 const get_booked_data=()=>{
     console.log("getiinhhhh")
     return userAxiosInstance.get('/getbookeddata')
@@ -54,4 +57,4 @@ const get_booked_data=()=>{
 export {userregister,
     userlogin,userverify,getuserresort,authUser,
     getresortdata,getsimiliarstay,getuseradventure,
-    getuserdestination,getadvData,getDestinationData,booked_resort,get_booked_data}
+    getuserdestination,getadvData,getDestinationData,booked_resort,get_booked_data,verifyrazorpay}

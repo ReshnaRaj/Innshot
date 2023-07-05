@@ -31,6 +31,7 @@ const Booking = () => {
             <h2 className="card-title">Booked Resort:{resort.resortId.resortname}</h2>
             <p>Address:{resort.resortId.address}</p>
             <p>Price:{resort.resortId.price}</p>
+            <p>Place:{resort.resortId.place}</p>
             <p>Status:{resort.status}</p>
             <p>Booked Date:{resort.Booked_at}</p>
             <p>CheckIn date:{resort.fromDate}-Check OutDate:{resort.toDate}</p>

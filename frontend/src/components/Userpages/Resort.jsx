@@ -94,6 +94,7 @@ const Resort = () => {
   const filteredResorts = selectedPlace
     ? resort.filter((item) => item.place === selectedPlace)
     : resort;
+    
   const uniquePlaces = [...new Set(resort.map((item) => item.place))];
   // console.log(uniquePlaces,"ioooooo")
   // console.log(filteredResorts,"iiiiiiiiiiiiiiii")
