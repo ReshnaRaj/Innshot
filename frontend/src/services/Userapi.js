@@ -54,7 +54,11 @@ const get_booked_data=()=>{
     console.log("getiinhhhh")
     return userAxiosInstance.get('/getbookeddata')
 }
+const CancelBook=(BookingId)=>{
+    console.log("cancel api call working..")
+    return userAxiosInstance.post(`/cancelbooking/${BookingId}`)
+}
 export {userregister,
     userlogin,userverify,getuserresort,authUser,
     getresortdata,getsimiliarstay,getuseradventure,
-    getuserdestination,getadvData,getDestinationData,booked_resort,get_booked_data,verifyrazorpay}
+    getuserdestination,getadvData,getDestinationData,booked_resort,get_booked_data,verifyrazorpay,CancelBook}

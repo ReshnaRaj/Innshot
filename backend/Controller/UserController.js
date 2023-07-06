@@ -378,7 +378,7 @@ module.exports.resort_book=async(req,res)=>{
         traveler:traveller,
         fromDate:formatDate(fromDate),
         toDate:formatDate(toDate),
-        Booked_at:new_Date(),
+        Booked_at:new Date(),
         'payment.payment_method':payment
 
       })
@@ -404,7 +404,7 @@ module.exports.resort_book=async(req,res)=>{
              return res.status(500).json({message:"something went wrong"})
            }
            
-        
+         console.log("hhyjj")
            res.status(200).json({data:order})
           })
        
@@ -423,20 +423,48 @@ module.exports.resort_book=async(req,res)=>{
 module.exports.verifyPayment=async(req,res)=>{
   try {
     console.log(req.body,"teena comes")
-    const {razorpay_order_id,razorpay_payment_id,razorpay_signature}=req.body
+    console.log(req.userId,"yuyuyyu") 
+    const {razorpay_order_id,razorpay_payment_id,razorpay_signature,resortdat,checkInDate,checkOutDate,paymentt}=req.body
     const sign=razorpay_order_id + "|" +razorpay_payment_id;
     const expectedSign=crypto
     .createHmac('sha256',key_secret)
     .update(sign.toString())
     .digest('hex')
     if(razorpay_signature===expectedSign){
-        return res.status(200).json({message:'Payment Verified Successfully'})
+      const user=req.userId
+      const bookedresort=resortdat
+      const price=resortdat.price
+      console.log(price,"price of the resort")
+      const formatDate=(dateString)=>{
+        const date=new Date(dateString);
+        const day = date.getDate();
+        const month = date.getMonth() + 1; // Months are zero-based
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+
+      }
+      const newBooking=new BookingModel({
+        resortId:bookedresort,
+        traveler:user,
+        fromDate:formatDate(checkInDate),
+        toDate:formatDate(checkOutDate),
+        Booked_at:new Date(),
+        'payment.payment_method':paymentt,
+        'payment.payment_amount':price,
+        "payment.payment_status": "completed",
+        'payment.payment_id':razorpay_payment_id
+         
+      })
+      const savedBooking=await newBooking.save()
+      res.json({savedBooking,success:true,message:'Payment Verified Successfully'})
+        // return res.status(200).json({message:'Payment Verified Successfully'})
     }
     else{
       return res.status(400).json({message:'Invalid Signature sent'})
     }
 
   } catch (error) {
+    console.log(error,"ioioioioioiio")
     
   }
 }
@@ -447,11 +475,39 @@ module.exports.getbookeddata=async(req,res)=>{
     // console.log(id,"id getting booked")
     let bookedresort=await BookingModel.find({traveler:id})
     .populate('resortId', 'resortname address price place')
-    .populate('traveler', 'name email phone');
+  
 
     console.log(bookedresort,"ppppp")
+    console.log(bookedresort[0]._id,"p")
     res.status(200).json({result:bookedresort})
   } catch (error) {
   }
 }
+module.exports.CancelBooking = async (req, res, next) => {
+  try {
+    const BookId = req.params.id;
+    const BookedData = await BookingModel.findById(BookId);
+
+    if (BookedData.payment.payment_method === 'cod') {
+      const updatedBooking = await BookingModel.findByIdAndUpdate(
+        BookId,
+        { $set: { 'status': 'cancelled' } },
+        { new: true }
+      );
+      console.log(updatedBooking,"status updated")
+
+      if (updatedBooking) {
+        // Additional logic or actions after successful cancellation
+        res.json({ message: 'Booking cancelled successfully', data: updatedBooking });
+      } else {
+        res.status(404).json({ message: 'Booking not found' });
+      }
+    } else {
+      res.status(400).json({ message: 'Cancellation is not available for this payment method' });
+    }
+  } catch (error) {
+    console.log(error, 'error consoling....');
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
 

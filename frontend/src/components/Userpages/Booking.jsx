@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { get_booked_data } from '../../services/Userapi';
+import { get_booked_data,CancelBook} from '../../services/Userapi';
 import Header from "./Layout/Header";
-
+import { ToastContainer, toast } from "react-toastify";
 const Booking = () => {
   const [resortbooked, setResortbooked] = useState([]);
 
@@ -13,11 +13,27 @@ const Booking = () => {
     try {
       console.log('getting..');
       let data = await get_booked_data();
+      
       setResortbooked(data.data.result);
     } catch (error) {
       console.log(error, 'error getting...');
     }
   };
+  console.log(resortbooked,"tttt")
+  const CancelBooking=async(BookingId)=>{
+    try {
+const data=await CancelBook(BookingId)
+  console.log(data,"Working of cancel")
+  if(data){
+    toast.success(data.data.message,{
+      position:'top-center'
+    })
+  }
+      
+    } catch (error) {
+      
+    }
+  }
 
   console.log(resortbooked, 'oooo');
 
@@ -36,10 +52,14 @@ const Booking = () => {
             <p>Booked Date:{resort.Booked_at}</p>
             <p>CheckIn date:{resort.fromDate}-Check OutDate:{resort.toDate}</p>
             <p>Payment Method: {resort.payment.payment_status}</p>
-            {/* <div className="card-actions justify-end">
-              <button className="btn btn-error">Cancel</button>
-            </div> */}
+            <div className="card-actions justify-end">
+              <button className="btn btn-error" onClick={()=>{
+                console.log(resort._id,"data of cancel")
+              
+              CancelBooking(resort._id)}}>Cancel</button>
+            </div>
           </div>
+          <ToastContainer />
         </div>
       ))}
     </div>

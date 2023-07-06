@@ -59,7 +59,7 @@ const ResortBooking = () => {
       // });
     }
   };
-  const handleOnlinePayment=async()=>{
+  const handleOnlinePayment=async(resortdat)=>{
     try {
       
       const data=await booked_resort({
@@ -68,31 +68,49 @@ const ResortBooking = () => {
         fromDate: checkInDate,
         toDate: checkOutDate,
         payment: paymentt,
+
       })
       console.log(data,"uuuu")
-      initPayment(data.data)
+      console.log(resortdat,"yyyy")
+      initPayment(data.data,resortdat, checkInDate,checkOutDate,paymentt)
       console.log(data,"data apply")
       localStorage.removeItem("checkinDate");
       localStorage.removeItem("checkoutDate");
+      
     } catch (error) {
       console.log(error,"222222")
     }
   }
-  const initPayment=(data)=>{
-    // console.log(keyId,"oooo")
+  const initPayment=(data,resortdat,checkInDate,checkOutDate,paymentt)=>{
+    console.log(data.data.id,"oooo")
     const options={
       key:keyid,
       name:booked.resortname,
+      description:"Test Payment",
       amount:booked.price*100,
-      order_id:data.id,
+      currency:data.currency,
+      order_id:data.data.id,
      handler:async(response)=>{
       try {
+        console.log(response,"resonse..")
         const {razorpay_order_id,razorpay_payment_id,razorpay_signature}=response;
         const {data}=await verifyrazorpay({
           razorpay_order_id,
           razorpay_payment_id,
           razorpay_signature,
+          resortdat,
+          checkInDate,checkOutDate,paymentt
+          
+        
+        
         })
+        if(data.success){
+          navigate('/hotelbooking/');
+        }
+        else{
+          alert('payment failed')
+        }
+        console.log(data,"data coming...")
         
       } catch (error) {
         console.log(error,"----")
@@ -280,6 +298,7 @@ const ResortBooking = () => {
             </div>
             <button
               onClick={() => {
+                console.log(booked,"789")
                 handleOnlinePayment(booked);
               }}
               className="btn btn-success mr-4"
