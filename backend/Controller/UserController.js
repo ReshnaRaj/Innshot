@@ -488,7 +488,7 @@ module.exports.CancelBooking = async (req, res, next) => {
     const BookId = req.params.id;
     const BookedData = await BookingModel.findById(BookId);
 
-    if (BookedData.payment.payment_method === 'cod') {
+    if (BookedData) {
       const updatedBooking = await BookingModel.findByIdAndUpdate(
         BookId,
         { $set: { 'status': 'cancelled' } },

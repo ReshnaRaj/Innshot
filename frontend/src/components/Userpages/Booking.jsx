@@ -23,12 +23,15 @@ const Booking = () => {
   const CancelBooking=async(BookingId)=>{
     try {
 const data=await CancelBook(BookingId)
+
   console.log(data,"Working of cancel")
   if(data){
     toast.success(data.data.message,{
       position:'top-center'
     })
+    setResortbooked(resortbooked.filter((resort) => resort._id !== BookingId));
   }
+
       
     } catch (error) {
       
