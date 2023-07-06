@@ -10,11 +10,14 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { booked_resort,verifyrazorpay} from "../../services/Userapi";
 import { ToastContainer, toast } from "react-toastify";
+import  {keyId}  from "../../files/file";
 // import  StripeCheckout  from "react-stripe-checkout";
 
 const ResortBooking = () => {
   const users = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const keyid=keyId
+  console.log(keyid,"ppp")
   // console.log(users,"tooooo")
   // const dispatch = useDispatch();
   const [resortdata, setResortdata] = useState([]);
@@ -76,8 +79,9 @@ const ResortBooking = () => {
     }
   }
   const initPayment=(data)=>{
+    // console.log(keyId,"oooo")
     const options={
-      key:'rzp_test_PbltfzpnGtYEOk',
+      key:keyid,
       name:booked.resortname,
       amount:booked.price*100,
       order_id:data.id,
