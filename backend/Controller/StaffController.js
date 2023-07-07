@@ -8,7 +8,9 @@ const DestinationModel = require("../Model/DestinationModel");
 
 module.exports.addresort = async (req, res, next) => {
   try {
-    console.log(req.body, "adding working....");
+    console.log(req.staffId,"staff Id")
+    
+    // console.log(req.body, "adding working....");
     // console.log(req.staff.admin_approval,"checking .....")
       let files = Object.values(req.files).flatMap((val) => val);
 

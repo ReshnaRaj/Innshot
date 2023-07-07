@@ -4,10 +4,10 @@ import Header from "./Layout/Header";
 import { ToastContainer, toast } from "react-toastify";
 const Booking = () => {
   const [resortbooked, setResortbooked] = useState([]);
-
+  const [cancel,setCancel]=useState("")
   useEffect(() => {
     getbooked_data();
-  }, []);
+  }, [cancel]);
 
   const getbooked_data = async () => {
     try {
@@ -26,10 +26,11 @@ const data=await CancelBook(BookingId)
 
   console.log(data,"Working of cancel")
   if(data){
+    setCancel(data)
     toast.success(data.data.message,{
       position:'top-center'
     })
-    setResortbooked(resortbooked.filter((resort) => resort._id !== BookingId));
+    // setResortbooked(resortbooked.filter((resort) => resort._id !== BookingId));
   }
 
       
@@ -55,11 +56,10 @@ const data=await CancelBook(BookingId)
             <p>Booked Date:{resort.Booked_at}</p>
             <p>CheckIn date:{resort.fromDate}-Check OutDate:{resort.toDate}</p>
             <p>Payment Method: {resort.payment.payment_status}</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-error" onClick={()=>{
-                console.log(resort._id,"data of cancel")
-              
-              CancelBooking(resort._id)}}>Cancel</button>
+             <div className="card-actions justify-end">
+              {resort.status !== "cancelled" && (
+                <button className="btn btn-error" onClick={() => CancelBooking(resort._id)}>Cancel</button>
+              )}
             </div>
           </div>
           <ToastContainer />

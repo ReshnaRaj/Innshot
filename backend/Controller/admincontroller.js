@@ -237,7 +237,7 @@ module.exports.blockStaff=async(req,res)=>{
   try {
     // console.log("blocking working...")
     const staffId=req.params.id
-    // console.log(staffId,"id of staff")
+    console.log(staffId,"id of staff")
     let StafBlock=await StaffModel.findById(staffId)
     console.log(StafBlock,"blocking success...")
     const newStatus=StafBlock.admin_approval==='Unblock' ? 'Block':'Unblock'

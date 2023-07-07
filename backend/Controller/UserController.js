@@ -5,10 +5,10 @@ const BookingModel = require("../Model/BookingModel");
 const UserModel = require("../Model/UserModel");
 // const stripe=require('stripe')(process.env.STRIPE_SECRET_KEY)
 // const {v4:uuidv4}=require('uuid')
-const Razorpay=require('razorpay')
-const crypto=require('crypto')
-const key_id=process.env.KEY_ID
-const key_secret=process.env.KEY_SECRET
+const Razorpay = require("razorpay");
+const crypto = require("crypto");
+const key_id = process.env.KEY_ID;
+const key_secret = process.env.KEY_SECRET;
 module.exports.UserResort = async (req, res, next) => {
   try {
     const resortt = await ResortModel.find({ verify: true });
@@ -109,39 +109,37 @@ module.exports.getonedest = async (req, res) => {
 //       fromDate: formatDate(fromDate),
 //       toDate: formatDate(toDate),
 //       Booked_at: new Date(),
-    
+
 //       // Add other properties from req.body as needed
 //     });
 //     newBooking.save().then(async (bookResponse)=>{
 //       const session=await stripe.checkout.sessions.create({
 //         payment_method_types:['card'],
-        
+
 //         line_items: [
 //           {
 //             currency:'inr',
 //             name:resortId.resortname,
 //             amount:resortId.price*100,
-            
+
 //             // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-            
+
 //           },
 //         ],
 //         mode: 'payment',
 //         success_url: `${YOUR_DOMAIN}/success.html`,
 //         cancel_url: `${YOUR_DOMAIN}/cancel.html`,
-  
+
 //       })
 //       re.json({url:session.url})
 
 //     })
-   
-    
+
 //   } catch (error) {
 //     res.status(500).json({error:error.message})
-    
+
 //   }
 // }
-
 
 // module.exports.resort_book = async (req, res) => {
 //   try {
@@ -154,7 +152,7 @@ module.exports.getonedest = async (req, res) => {
 //     const existingBooking = await BookingModel.findOne({
 //       resortId: resortt,
 //       traveler: traveller,
-      
+
 //     });
 
 //     if (existingBooking) {
@@ -176,7 +174,7 @@ module.exports.getonedest = async (req, res) => {
 //       toDate: formatDate(toDate),
 //       Booked_at: new Date(),
 //       payment:payment
-    
+
 //       // Add other properties from req.body as needed
 //     });
 
@@ -213,18 +211,18 @@ module.exports.getonedest = async (req, res) => {
 //           const { resortId, traveler, fromDate,payment ,toDate } = req.body;
 //           const traveller = await UserModel.findOne({ email: traveler.email });
 //           const resortt = await ResortModel.findOne({ _id: resortId });
-      
+
 //           // Check if there is an existing booking for the same resort, traveler, and date range
 //           const existingBooking = await BookingModel.findOne({
 //             resortId: resortt,
 //             traveler: traveller,
-            
+
 //           });
-      
+
 //           if (existingBooking) {
 //             return res.status(400).json({ error: "Resort already booked for the selected dates" });
 //           }
-      
+
 //           const formatDate = (dateString) => {
 //             const date = new Date(dateString);
 //             const day = date.getDate();
@@ -232,7 +230,7 @@ module.exports.getonedest = async (req, res) => {
 //             const year = date.getFullYear();
 //             return `${day}/${month}/${year}`;
 //           };
-      
+
 //           const newBooking = new BookingModel({
 //             resortId: resortt,
 //             traveler: traveller,
@@ -240,24 +238,21 @@ module.exports.getonedest = async (req, res) => {
 //             toDate: formatDate(toDate),
 //             Booked_at: new Date(),
 //             'payment.payment_method':payment
-          
+
 //             // Add other properties from req.body as needed
 //           });
-      
+
 //           const savedBooking = await newBooking.save();
 //           res.send("payment successfully your resort is booked")
 //           // console.log(savedBooking, "saved in database/..");
 //           // res.json(savedBooking);
-        
-//    }
-  
-  
 
-    
+//    }
+
 //   } catch (error) {
 //     console.log(error,"error...")
 //     return res.status(400).json({error})
-    
+
 //   }
 // }
 // module.exports.resort_book = async (req, res) => {
@@ -357,132 +352,221 @@ module.exports.getonedest = async (req, res) => {
 //   }
 // };
 
-module.exports.resort_book=async(req,res)=>{
+module.exports.resort_book = async (req, res) => {
   try {
-    console.log(req.body,"ooooo")
-   const {resortId,traveler,fromDate,toDate,payment}=req.body
+    // console.log(req.body,"ooooo")
+    console.log(req.userId,"userId")
+    const { resortId, traveler, fromDate, toDate, payment } = req.body;
+    console.log(traveler,"popopop")
     const traveller = await UserModel.findOne({ email: traveler.email });
+    console.log(traveller,"travller Id")
+
     const resortt = await ResortModel.findOne({ _id: resortId });
+    // console.log(resortt,"resort Id")
+    // console.log(fromDate, typeof fromDate, "from date....");
+    // console.log(resortt,"resort data...")
+    const existingBooking = await BookingModel.findOne({
+      resortId: resortt,
+      traveler: req.userId,
+      fromDate,toDate
+    });
 
-    if(payment==='cod'){
-      const formatDate=(dateString)=>{
-        const date=new Date(dateString);
+    if (existingBooking) {
+      return res
+        .status(400)
+        .json({ error: "Resort already booked for the selected dates" });
+    }
+
+    if (payment === "cod") {
+      const formatDate = (dateString) => {
+        const date = new Date(dateString);
         const day = date.getDate();
         const month = date.getMonth() + 1; // Months are zero-based
         const year = date.getFullYear();
         return `${day}/${month}/${year}`;
+      };
 
-      }
-      const newBooking=new BookingModel({
-        resortId:resortt,
-        traveler:traveller,
-        fromDate:formatDate(fromDate),
-        toDate:formatDate(toDate),
-        Booked_at:new Date(),
-        'payment.payment_method':payment
+      const update_from = formatDate(fromDate);
+      console.log(update_from, typeof update_from, "tttt");
+      const update_to = formatDate(toDate);
+      const fromDateParts = update_from.split("/");
+      const toDateParts = update_to.split("/");
+      const fromDateObj = new Date(
+        fromDateParts[2],
+        fromDateParts[1] - 1,
+        fromDateParts[0]
+      );
+      const toDateObj = new Date(
+        toDateParts[2],
+        toDateParts[1] - 1,
+        toDateParts[0]
+      );
 
-      })
-      const savedBooking=await newBooking.save()
-      res.json({savedBooking,success:true})
-    }
-    else {
+      const timeDifference = toDateObj.getTime() - fromDateObj.getTime();
+      const dayCount = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+      console.log(dayCount, "count of days");
+
+      const newBooking = new BookingModel({
+        resortId: resortt,
+        traveler: traveller,
+        fromDate: formatDate(fromDate),
+        toDate: formatDate(toDate),
+        Booked_at: new Date(),
+        "payment.payment_method": payment,
+        "payment.payment_amount": resortt.price*dayCount,
+      });
+      // console.log(newBooking,"from date and to date....")
+      const savedBooking = await newBooking.save();
+      res.json({ savedBooking, success: true });
+    } else {
       try {
-        console.log(resortt.price,"thhhhhh")
-          const instance=new Razorpay({
-           key_id,
-           key_secret
-          })
-          const options={
-           amount:resortt.price*100,
-           currency:'INR',
-           receipt:crypto.randomBytes(10).toString('hex')
-   
-          }
-          instance.orders.create(options,(error,order)=>{
-           if(error){
-             console.log(error,"909099")
-             return res.status(500).json({message:"something went wrong"})
-           }
-           
-         console.log("hhyjj")
-           res.status(200).json({data:order})
-          })
-       
-        
-      } catch (error) {
-        console.log(error,"7777")
-        res.status(500).json({message:'INTERNAL SERVER ERROR'})
-        
-      }
-    }
-  } catch (error) {
-    console.log(error,"123456")
-    
-  }
-}
-module.exports.verifyPayment=async(req,res)=>{
-  try {
-    console.log(req.body,"teena comes")
-    console.log(req.userId,"yuyuyyu") 
-    const {razorpay_order_id,razorpay_payment_id,razorpay_signature,resortdat,checkInDate,checkOutDate,paymentt}=req.body
-    const sign=razorpay_order_id + "|" +razorpay_payment_id;
-    const expectedSign=crypto
-    .createHmac('sha256',key_secret)
-    .update(sign.toString())
-    .digest('hex')
-    if(razorpay_signature===expectedSign){
-      const user=req.userId
-      const bookedresort=resortdat
-      const price=resortdat.price
-      console.log(price,"price of the resort")
-      const formatDate=(dateString)=>{
-        const date=new Date(dateString);
+        const formatDate = (dateString) => {
+        const date = new Date(dateString);
         const day = date.getDate();
         const month = date.getMonth() + 1; // Months are zero-based
         const year = date.getFullYear();
         return `${day}/${month}/${year}`;
+      };      
+      const update_from = formatDate(fromDate);
+      console.log(update_from, typeof update_from, "tttt");
+      const update_to = formatDate(toDate);
+      const fromDateParts = update_from.split("/");
+      const toDateParts = update_to.split("/");
+      const fromDateObj = new Date(
+        fromDateParts[2],
+        fromDateParts[1] - 1,
+        fromDateParts[0]
+      );
+      const toDateObj = new Date(
+        toDateParts[2],
+        toDateParts[1] - 1,
+        toDateParts[0]
+      );
 
+      const timeDifference = toDateObj.getTime() - fromDateObj.getTime();
+      const dayCount = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+      console.log(dayCount, "count of days");
+        console.log(resortt.price, "thhhhhh");
+        const instance =new Razorpay({
+          key_id,
+          key_secret,
+        });
+        const options = {
+          amount: resortt.price*dayCount*100,
+          currency: "INR",
+          receipt: crypto.randomBytes(10).toString("hex"),
+        };
+        instance.orders.create(options, (error, order) => {
+          if (error) {
+            console.log(error, "909099");
+            return res.status(500).json({ message: "something went wrong" });
+          }
+
+          console.log("hhyjj");
+          res.status(200).json({ data: order });
+        });
+      } catch (error) {
+        console.log(error, "7777");
+        res.status(500).json({ message: "INTERNAL SERVER ERROR" });
       }
-      const newBooking=new BookingModel({
-        resortId:bookedresort,
-        traveler:user,
-        fromDate:formatDate(checkInDate),
-        toDate:formatDate(checkOutDate),
-        Booked_at:new Date(),
-        'payment.payment_method':paymentt,
-        'payment.payment_amount':price,
-        "payment.payment_status": "completed",
-        'payment.payment_id':razorpay_payment_id
-         
-      })
-      const savedBooking=await newBooking.save()
-      res.json({savedBooking,success:true,message:'Payment Verified Successfully'})
-        // return res.status(200).json({message:'Payment Verified Successfully'})
     }
-    else{
-      return res.status(400).json({message:'Invalid Signature sent'})
-    }
-
   } catch (error) {
-    console.log(error,"ioioioioioiio")
-    
+    console.log(error, "123456");
   }
-}
-module.exports.getbookeddata=async(req,res)=>{
+};
+module.exports.verifyPayment = async (req, res) => {
+  try {
+    console.log(req.body, "teena comes");
+    console.log(req.userId, "yuyuyyu");
+    const {
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+      resortdat,
+      checkInDate,
+      checkOutDate,
+      paymentt,
+    } = req.body;
+    const sign = razorpay_order_id + "|" + razorpay_payment_id;
+    const expectedSign = crypto
+      .createHmac("sha256", key_secret)
+      .update(sign.toString())
+      .digest("hex");
+    if (razorpay_signature === expectedSign) {
+      const user = req.userId;
+      const bookedresort = resortdat;
+      const price = resortdat.price;
+  
+      // this is written for saving the day of count in database and the day should be stored in database
+      const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = date.getDate();
+        const month = date.getMonth() + 1; // Months are zero-based
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+      };      
+      const update_from = formatDate(checkInDate);
+      console.log(update_from, typeof update_from, "tttt");
+      const update_to = formatDate(checkOutDate);
+      const fromDateParts = update_from.split("/");
+      const toDateParts = update_to.split("/");
+      const fromDateObj = new Date(
+        fromDateParts[2],
+        fromDateParts[1] - 1,
+        fromDateParts[0]
+      );
+      const toDateObj = new Date(
+        toDateParts[2],
+        toDateParts[1] - 1,
+        toDateParts[0]
+      );
+
+      const timeDifference = toDateObj.getTime() - fromDateObj.getTime();
+      const dayCount = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+      console.log(dayCount, "count of days");
+     
+      const newBooking = new BookingModel({
+        resortId: bookedresort,
+        traveler: user,
+        fromDate: formatDate(checkInDate),
+        toDate: formatDate(checkOutDate),
+        Booked_at: new Date(),
+        "payment.payment_method": paymentt,
+        "payment.payment_amount": price*dayCount,
+        "payment.payment_status": "completed",
+        "payment.payment_id": razorpay_payment_id,
+      });
+      const savedBooking = await newBooking.save();
+      res.json({
+        savedBooking,
+        success: true,
+        message: "Payment Verified Successfully",
+      });
+      // return res.status(200).json({message:'Payment Verified Successfully'})
+    } else {
+      return res.status(400).json({ message: "Invalid Signature sent" });
+    }
+  } catch (error) {
+    console.log(error, "ioioioioioiio");
+  }
+};
+module.exports.getbookeddata = async (req, res) => {
   try {
     // console.log("getting data....")
-    const id=req.userId;
+    const id = req.userId;
     // console.log(id,"id getting booked")
-    let bookedresort=await BookingModel.find({traveler:id})
-    .populate('resortId', 'resortname address price place')
-  
+    let bookedresort = await BookingModel.find({ traveler: id })
+      .populate("resortId", "resortname address price place")
+      .sort({ Booked_at: -1 });
 
-    console.log(bookedresort,"ppppp")
-    console.log(bookedresort[0]._id,"p")
-    res.status(200).json({result:bookedresort})
-  } catch (error) {
-  }
-}
+    console.log(bookedresort, "ppppp");
+    console.log(bookedresort[0]._id, "p");
+    res.status(200).json({ result: bookedresort });
+  } catch (error) {}
+};
 module.exports.CancelBooking = async (req, res, next) => {
   try {
     const BookId = req.params.id;
@@ -491,23 +575,27 @@ module.exports.CancelBooking = async (req, res, next) => {
     if (BookedData) {
       const updatedBooking = await BookingModel.findByIdAndUpdate(
         BookId,
-        { $set: { 'status': 'cancelled' } },
+        { $set: { status: "cancelled" } },
         { new: true }
       );
-      console.log(updatedBooking,"status updated")
+      console.log(updatedBooking, "status updated");
 
       if (updatedBooking) {
         // Additional logic or actions after successful cancellation
-        res.json({ message: 'Booking cancelled successfully', data: updatedBooking });
+        res.json({
+          message: "Booking cancelled successfully",
+          data: updatedBooking,
+        });
       } else {
-        res.status(404).json({ message: 'Booking not found' });
+        res.status(404).json({ message: "Booking not found" });
       }
     } else {
-      res.status(400).json({ message: 'Cancellation is not available for this payment method' });
+      res.status(400).json({
+        message: "Cancellation is not available for this payment method",
+      });
     }
   } catch (error) {
-    console.log(error, 'error consoling....');
-    res.status(500).json({ message: 'Internal Server Error' });
+    console.log(error, "error consoling....");
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
-

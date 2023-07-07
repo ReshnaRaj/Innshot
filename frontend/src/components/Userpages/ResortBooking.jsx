@@ -30,13 +30,17 @@ const ResortBooking = () => {
 
   const location = useLocation();
   const booked = location.state?.bookeddata;
-  console.log(booked,"booked data of resort...")
+  // console.log(booked,"booked data of resort...")
 
   // const handleSubmitt = async (e) => {
   //   e.preventDefault();
   //   console.log("submitting ");
   // };
-
+  console.log(checkInDate,"check in date...")
+  console.log(checkOutDate,"checkout date..")
+  const timeDifference = checkOutDate?.getTime() - checkInDate?.getTime();
+const dayCount = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+console.log(dayCount,"counting...")
   const handlebookingHotel = async (bookedd) => {
     try {
       // console.log(resortQuery,"ppppp")
@@ -50,13 +54,16 @@ const ResortBooking = () => {
       });
       localStorage.removeItem("checkinDate");
       localStorage.removeItem("checkoutDate");
+      console.log(data,"ffff")
+      if(data.data.success){
       // console.log(data,"fffff")
       navigate('/hotelbooking/');
+      }
     } catch (error) {
       console.log(error, "i8i8i8i");
-      // toast.error("Resort already booked for the selected dates", {
-      //   position: toast.POSITION.TOP_CENTER,
-      // });
+      toast.error("Resort already booked for the selected dates", {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   };
   const handleOnlinePayment=async(resortdat)=>{
@@ -79,15 +86,19 @@ const ResortBooking = () => {
       
     } catch (error) {
       console.log(error,"222222")
+      // toast.error("Resort already booked for the selected dates", {
+      //   position: toast.POSITION.TOP_CENTER,
+      // });
     }
   }
   const initPayment=(data,resortdat,checkInDate,checkOutDate,paymentt)=>{
     console.log(data.data.id,"oooo")
+    console.log(dayCount,"count of days..")
     const options={
       key:keyid,
       name:booked.resortname,
       description:"Test Payment",
-      amount:booked.price*100,
+      amount:booked.price*dayCount*100,
       currency:data.currency,
       order_id:data.data.id,
      handler:async(response)=>{
@@ -135,7 +146,10 @@ const ResortBooking = () => {
     setResortdata(booked.place);
 
     const checkInDateFromStorage = localStorage.getItem("checkinDate");
+    // console.log(checkInDateFromStorage,"check in date..")
     const checkOutDateFromStorage = localStorage.getItem("checkoutDate");
+    // console.log(checkOutDateFromStorage,"checkout")
+    // updating the state of date 
     if (checkInDateFromStorage) {
       setCheckInDate(new Date(checkInDateFromStorage));
     }
@@ -144,6 +158,7 @@ const ResortBooking = () => {
       setCheckOutDate(new Date(checkOutDateFromStorage));
     }
   }, []);
+
   //  async function onToken(token){
   //   console.log(booked,"token getting... ")
   //   try {
@@ -185,7 +200,14 @@ const ResortBooking = () => {
   //   })
   // }
 
-  console.log(paymentt, "00000....");
+  // console.log(paymentt, "00000....");
+ 
+
+  // console.log(from,to,"number")
+
+
+  
+
   return (
     <div>
       <Header />
@@ -265,7 +287,8 @@ const ResortBooking = () => {
 
             <h2 className="font-semibold flex items-center">
               <FaRupeeSign className="text-sm" />
-              <span className="ml-2">{booked?.price}</span>
+              <span className="ml-2">{booked?.price}*{dayCount} =</span>
+              <span className="ml-2">{booked?.price*dayCount}</span>
             </h2>
             <div className="form-group">
               <label>Payment Method:</label>
