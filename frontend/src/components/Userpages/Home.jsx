@@ -1,19 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Layout/Header";
 import Footer from "./Layout/Footer";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-
+import { MdPlace } from "react-icons/md";
+import { FaRupeeSign } from "react-icons/fa";
+import { baseUrl } from "../../files/file";
+import {
+  getuserresort,
+  getuseradventure,
+  getuserdestination,
+} from "../../services/Userapi";
 const Home = () => {
-  // const [checkInDate, setCheckInDate] = useState(null);
-  // const [checkOutDate, setCheckOutDate] = useState(null);
-  // const handleCheckInDateChange = (date) => {
-  //   setCheckInDate(date);
-  // };
+  const [resort, setuserresort] = useState([]);
+  const [adventure, setAdventure] = useState([]);
+  const [destination, setDestination] = useState([]);
+  useEffect(() => {
+    userdestination();
+  }, []);
+  useEffect(() => {
+    useradventure();
+  }, []);
+  const useradventure = async () => {
+    try {
+      let { data } = await getuseradventure();
+      if (data.success) {
+        setAdventure(data.adventure.slice(0, 3));
+      }
+    } catch (error) {}
+  };
+  const userresort = async () => {
+    try {
+      let { data } = await getuserresort();
+      // console.log(data, "data from user side...");
+      if (data.success) {
+        setuserresort(data.resortt.slice(0, 3));
+      }
+    } catch (error) {
+      console.log(error, "Error");
+    }
+  };
+  const userdestination = async () => {
+    try {
+      let { data } = await getuserdestination();
+      if (data.success) {
+        setDestination(data.destination.slice(0, 3));
+      }
+    } catch (error) {}
+  };
+  useEffect(() => {
+    userresort();
+  }, []);
 
-  // const handleCheckOutDateChange = (date) => {
-  //   setCheckOutDate(date);
-  // };
   const images = [
     {
       id: 1,
@@ -32,10 +68,9 @@ const Home = () => {
       src: "https://res.cloudinary.com/dsyln8j3g/image/upload/v1686677184/4_izdg7c.jpg",
     },
   ];
-
+  console.log(resort, "updated");
   return (
- 
-    <div className='mx-auto max-w-screen-2xl'>
+    <div className="mx-auto max-w-screen-2xl">
       <Header />
       <div className="carousel">
         {images.map((img) => (
@@ -78,10 +113,177 @@ const Home = () => {
           </div>
         ))}
       </div>
-   
-<Footer/>
+      <div className="stats stats-vertical mt-4 border border-sky-400 flex justify-between lg:stats-horizontal shadow">
+        <div className="stat">
+          <div className="stat-value">5+</div>
+          <div className="text-2xl font-sans">Year experience</div>
+        </div>
+
+        <div className="stat">
+          <div className="stat-value">50+</div>
+          <div className="text-2xl font-sans">Resorts</div>
+        </div>
+
+        <div className="stat">
+          <div className="stat-value">2+</div>
+          <div className="text-2xl font-sans">Countries</div>
+        </div>
+      </div>
+      <div className=" my-10 card border border-stone-400 rounded-2xl shadow-2xl bg-opacity-80 bg-sky-100 mx-2">
+        <div className="card-body">
+          <h1 className="p-5 font-extrabold md:text-2xl text-center  underline-offset-8">
+            Our Featured Resorts
+          </h1>
+          <div className="flex flex-wrap">
+            {resort.map((item) => (
+              <div
+                className="bg-white shadow-2xl p-4  w-full max-w-[352px]  mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105 border-sky-300 "
+                key={item.resortname}
+              >
+                <figure>
+                  <img
+                    src={`${item.image[0]}`}
+                    alt="resort image"
+                    className="mb-1"
+                  />
+                </figure>
+                <div className="flex flex-col">
+                  <div className="flex items-center ">
+                    <div className="text-lg font-semibold">
+                      {item.resortname}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center">
+                    <MdPlace className="text-lg mr-2" />
+                    <div className="text-black">{item.place}</div>
+                  </div>
+                  <div className="flex items-center">
+                    <FaRupeeSign className="text-sm" />
+                    <div className="text-black">{item.price}</div>
+                  </div>
+
+                  <button className="btn btn-primary">View Details</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="card-body">
+          <h1 className="p-5 font-extrabold md:text-2xl text-center  underline-offset-8">
+            Recommended Adventures
+          </h1>
+          <div className="flex flex-wrap">
+            {adventure.map((item) => (
+              <div className="bg-white shadow-2xl p-4  w-full max-w-[352px]  mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105 border-sky-300 ">
+                <figure>
+                  <img
+                    src={`${baseUrl}${item?.image[0]}`}
+                    className="mb-8"
+                    alt="Movie"
+                  />
+                </figure>
+                <div className="mb-4 flex flex-col">
+                  <div className="flex items-center mb-2">
+                    <div className="text-lg mr-2" />
+                    <div className="text-lg font-semibold">{item.activity}</div>
+                  </div>
+                  <div className="flex items-center">
+                    <MdPlace className="text-lg mr-2" />
+                    <div className="text-lg font-semibold">{item.place}</div>
+                  </div>
+
+                  <div className="card-actions justify-end">
+                    <button>Viewdetails</button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="card-body">
+          <h1 className="p-5 font-extrabold md:text-2xl text-center  underline-offset-8">
+            Popular Destination
+          </h1>
+          <div className="flex flex-wrap">
+            {destination.map((item) => (
+              <div className="bg-white shadow-1 p-5 rounded-tl-[20px] w-full max-w-[352px] mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105 ">
+                <figure>
+                  <img
+                    src={`${baseUrl}${item?.dest_img[0]}`}
+                    className="rounded-tl-[20px] mb-8"
+                    alt="Movie"
+                  />
+                </figure>
+                <div className="mb-4 flex flex-col">
+                  <div className="flex items-center mb-2">
+                    <div className="text-lg mr-2" />
+                    <div className="text-lg font-semibold">
+                      {item.dest_name}
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <MdPlace className="text-lg mr-2" />
+                    <div className="text-black">{item.place}</div>
+                  </div>
+                  <div className="flex items-center">
+                    <div className="text-lg mr-2" />
+                    <div className="text-black">{item.resortName}</div>
+                  </div>
+
+                  <div className="card-actions justify-end">
+                    <button>View Details</button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <h1 className="p-5 font-extrabold md:text-2xl text-center  underline-offset-8">
+        Visit our customers gallery
+      </h1>
+      <div className="carousel carousel-center rounded-box">
+        <div className="carousel-item">
+          <img
+            src="https://res.cloudinary.com/dsyln8j3g/image/upload/v1687673666/v6oroggh6vs5dtgha7u9.webp"
+            alt="Pizza"
+          />
+        </div>
+        <div className="carousel-item">
+          <img
+            src="https://res.cloudinary.com/dsyln8j3g/image/upload/v1687437266/dhepcxq9jp5uvau3g266.webp"
+            alt="Pizza"
+          />
+        </div>
+        <div className="carousel-item">
+          <img
+            src="https://res.cloudinary.com/dsyln8j3g/image/upload/v1688814516/fjntav4opxwjyxbb0kaw.webp"
+            alt="Pizza"
+          />
+        </div>
+        <div className="carousel-item">
+          <img
+            src="https://res.cloudinary.com/dsyln8j3g/image/upload/v1688814515/hjrhzteniy1cvtenicyk.webp"
+            alt="Pizza"
+          />
+        </div>
+        <div className="carousel-item">
+          <img
+            src="https://res.cloudinary.com/dsyln8j3g/image/upload/v1688814516/prnwhzc0yken9fz2ginb.webp"
+            alt="Pizza"
+          />
+        </div>
+        <div className="carousel-item">
+          <img
+            src="https://res.cloudinary.com/dsyln8j3g/image/upload/v1688814516/fmzdujolqroarwtntfw3.webp"
+            alt="Pizza"
+          />
+        </div>
+      </div>
+
+      <Footer />
     </div>
-    
   );
 };
 

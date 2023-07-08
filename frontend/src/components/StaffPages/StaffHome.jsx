@@ -2,23 +2,35 @@ import React, {useEffect,useState} from "react";
 import Navbar from "./layout/Navbar";
 import Headerr from "./layout/Headerr";
 import {
-  getResortData,
+  getResortData,getStaffAdv
 } from "../../services/Staffapi";
 
 const StaffHome = () => {
   const [count,setCount]=useState("")
+  const [countadv,setCountAdvent]=useState("")
 
   
   useEffect(() => {
     getresortData();
   }, []);
+  useEffect(()=>{
+    getAdvData();
+  })
+  const getAdvData = async () => {
+    try {
+      let { data } = await getStaffAdv();
+      console.log(data, "77777777777777");
+      const approvedadventure = data.result.filter(advent => advent.verify === true);
+      setCountAdvent(approvedadventure.length)
+    } catch (error) {}
+  };
   const getresortData = async () => {
     try {
       let {data} = await getResortData();
-      console.log(data, "data of resort ");
+      // console.log(data, "data of resort ");
       const approvedResorts = data.result.filter(resort => resort.verify === true);
       setCount(approvedResorts.length)
-      console.log(approvedResorts,"ffff")
+      // console.log(approvedResorts,"ffff")
      
     } catch (error) {
       console.log(error);
@@ -49,7 +61,7 @@ const StaffHome = () => {
             <h4 className="text-lg font-semibold mb-2">
               Number of Approved Adventure:
             </h4>
-            <p className="text-gray-600">10</p>{" "}
+            <p className="text-gray-600">{countadv}</p>{" "}
             {/* Replace '10' with the actual number of resorts */}
           </div>
           <div className="bg-gray-100 p-4 rounded-lg mb-4 max-w-xs">
