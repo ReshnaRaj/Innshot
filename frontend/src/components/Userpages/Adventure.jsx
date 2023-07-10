@@ -1,6 +1,7 @@
 import React, { useEffect,useState } from 'react'
 import {getuseradventure} from '../../services/Userapi'
 import Header from './Layout/Header';
+import Footer from "./Layout/Footer";
 import { MdPlace } from "react-icons/md";
 import { baseUrl } from "../../files/file";
 import { useNavigate } from "react-router-dom";
@@ -53,17 +54,19 @@ const Adventure = () => {
             
           </div>
               
-               <div className="card-actions justify-end">
+               
                  <button  onClick={()=>{
                 
                   handleView(item._id)}}className="btn btn-primary">View Details</button>
-               </div>
+               
              </div>
            </div>
         
 
         ))}
         </div>
+        <Footer />
+
     </div>
        
   )

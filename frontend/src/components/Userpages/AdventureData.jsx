@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Header from "./Layout/Header";
+import Footer from "./Layout/Footer";
 import { getadvData } from "../../services/Userapi";
 import { baseUrl } from "../../files/file";
 
@@ -20,6 +21,8 @@ const AdventureData = () => {
       console.log(error);
     }
   };
+ 
+ 
   const images =adventdata?.image?.map((image, index) => ({
     id: index + 1,
     src: `${baseUrl}${image}`,
@@ -42,12 +45,10 @@ const AdventureData = () => {
             <div className="text-3xl font-semibold text-sky-300">
               {adventdata.price}
               <button
-                className="btn btn-ghost ml-4 text-black"
-                onClick={(e) => {
-                  console.log(adventdata, "full detials..");
-                }}
+                className="btn  ml-4 btn-info"
+                
               >
-                Contact Now
+                Contact  Now
               </button>
             </div>
           </div>
@@ -95,6 +96,7 @@ const AdventureData = () => {
         </div>
         
       </div>
+      <Footer/>
     </div>
   );
 };

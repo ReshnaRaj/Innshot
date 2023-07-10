@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Header from './Layout/Header';
 import { MdPlace } from "react-icons/md";
+import Footer from "./Layout/Footer";
 import { baseUrl } from "../../files/file";
 import { getuserdestination} from '../../services/Userapi'
 import { useNavigate } from 'react-router-dom';
@@ -51,17 +52,18 @@ userdestination()
             
           </div>
               
-               <div className="card-actions justify-end">
+              
                  <button onClick={()=>{
                   handleView(item._id)
                  }}  className="btn btn-primary">View Details</button>
-               </div>
+               
              </div>
            </div>
         
 
         ))}
         </div>
+        <Footer/>
     </div>
   )
 }

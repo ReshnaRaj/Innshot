@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Layout/Header";
+
 import { useParams,useNavigate } from "react-router-dom";
 import { FaBed } from "react-icons/fa";
 import { getresortdata, getsimiliarstay } from "../../services/Userapi";
+import Footer from "./Layout/Footer";
 
 const ResortData = () => {
   const [resortdata, setResortdata] = useState([]);
@@ -149,7 +151,7 @@ const ResortData = () => {
                 <div className="text-justify font-serif">
                   {resortdata.description}
                 </div>
-                <div>
+                {/* <div>
                   <h3 className="text-2xl">Hotel Policies</h3>
                   <ul>
                     <li>Check In Time is 12 PM.</li>
@@ -157,7 +159,7 @@ const ResortData = () => {
                     <li>No smoking in rooms or public areas.</li>
                   </ul>
 
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -184,40 +186,7 @@ const ResortData = () => {
           </div> */}
         </div>
       </div>
-      {similarStays.length > 0 ? (
-        <div className="container mt-5">
-          <h2 className="text-center text-black">Similar Stays</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            
-            {similarStays.map((stay) => (
-              <div key={stay._id} className="card">
-                {resortdata._id === stay._id ? null : (
-                  <>
-                    {stay.image && stay.image.length > 0 ? (
-                      <img
-                        src={`${stay.image[0]}`}
-                        alt={`Image ${stay.id}`}
-                        className="w-full h-32 object-cover"
-                      />
-                    ) : (
-                      <p>No image available</p>
-                    )}
-                    <div className="card-body">
-                      <h2 className="card-title">{stay.resortname}</h2>
-                      <p>{stay.address}</p>
-                      {/* Render any other details of the similar stays */}
-                    </div>
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      ) : (
-        <div className="container mt-5">
-          <h2 className="text-center text-black">No similar stays available</h2>
-        </div>
-      )}
+      
 
       {/* <div className="container mt-5">
         <div className="card lg:card-side bg-sky-300 mt-9 shadow-xl">
@@ -229,6 +198,7 @@ const ResortData = () => {
           </div>
         </div>
       </div> */}
+      <Footer/>
     </div>
   );
 };

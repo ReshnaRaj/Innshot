@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Layout/Header";
+import Footer from "./Layout/Footer";
 import { MdPlace } from "react-icons/md";
 import { FaBed } from "react-icons/fa";
 import { BiHomeAlt } from "react-icons/bi";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
-import { getuserresort } from "../../services/Userapi";
+import { getuserresort, get_booked_data } from "../../services/Userapi";
 // import { baseUrl } from '../../files/file';
 import { useNavigate } from "react-router-dom";
 // import Footer from './Layout/Footer';
 
 const Resort = () => {
+  const [resortbooked, setResortbooked] = useState([]);
   const [resort, setuserresort] = useState([]);
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
@@ -43,21 +45,8 @@ const Resort = () => {
     }
   };
 
-  // const handlePlaceChange = (event) => {
-  //   setSelectedPlace(event.target.value);
-  // };
-
   useEffect(() => {
     userresort();
-    // const checkInDateFromStorage = localStorage.getItem("checkinDate");
-    // const checkOutDateFromStorage = localStorage.getItem("checkoutDate");
-    //  if (checkInDateFromStorage) {
-    //   setCheckInDate(new Date(checkInDateFromStorage));
-    // }
-
-    // if (checkOutDateFromStorage) {
-    //   setCheckOutDate(new Date(checkOutDateFromStorage));
-    // }
   }, []);
   useEffect(() => {
     if (checkInDate) {
@@ -74,6 +63,20 @@ const Resort = () => {
       localStorage.removeItem("checkoutDate");
     }
   }, [checkOutDate]);
+  useEffect(() => {
+    getbooked_data();
+  }, []);
+
+  const getbooked_data = async () => {
+    try {
+      // console.log('getting..');
+      let data = await get_booked_data();
+      console.log(data, "booked resort");
+      setResortbooked(data.data.result);
+    } catch (error) {
+      console.log(error, "error getting...");
+    }
+  };
 
   const userresort = async () => {
     try {
@@ -185,6 +188,7 @@ const Resort = () => {
           </div>
         ))}
       </div>
+      <Footer />
     </div>
   );
 };

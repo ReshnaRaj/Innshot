@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Layout/Header";
+import Footer from "./Layout/Footer";
 import { json, useLocation } from "react-router-dom";
 import { FaBed } from "react-icons/fa";
 import { MdPlace } from "react-icons/md";
@@ -59,9 +60,10 @@ console.log(dayCount,"counting...")
       // console.log(data,"fffff")
       navigate('/hotelbooking/');
       }
+      
     } catch (error) {
-      console.log(error, "i8i8i8i");
-      toast.error("Resort already booked for the selected dates", {
+      console.log(error.response.data.error, "i8i8i8i");
+      toast.error(error.response.data.error, {
         position: toast.POSITION.TOP_CENTER,
       });
     }
@@ -86,9 +88,9 @@ console.log(dayCount,"counting...")
       
     } catch (error) {
       console.log(error,"222222")
-      // toast.error("Resort already booked for the selected dates", {
-      //   position: toast.POSITION.TOP_CENTER,
-      // });
+      toast.error("Resort already booked for the selected dates", {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   }
   const initPayment=(data,resortdat,checkInDate,checkOutDate,paymentt)=>{
@@ -361,6 +363,7 @@ console.log(dayCount,"counting...")
         </div>
       </div>
       <ToastContainer />
+      <Footer/>
     </div>
   );
 };

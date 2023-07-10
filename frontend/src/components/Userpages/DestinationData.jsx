@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Header from './Layout/Header'
+import Footer from "./Layout/Footer";
 import {getDestinationData} from '../../services/Userapi'
 import { baseUrl } from "../../files/file";
 
@@ -91,6 +92,7 @@ const DestinationData = () => {
         </div>
         
       </div>
+      <Footer/>
    </div>
   )
 }

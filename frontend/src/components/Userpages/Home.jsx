@@ -13,6 +13,7 @@ const Home = () => {
   const [resort, setuserresort] = useState([]);
   const [adventure, setAdventure] = useState([]);
   const [destination, setDestination] = useState([]);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false); 
   useEffect(() => {
     userdestination();
   }, []);
@@ -171,21 +172,21 @@ const Home = () => {
         </div>
         <div className="card-body">
           <h1 className="p-5 font-extrabold md:text-2xl text-center  underline-offset-8">
-            Recommended Adventures
+            Enjoy your favourite Activities with Innshot
           </h1>
           <div className="flex flex-wrap">
             {adventure.map((item) => (
-              <div className="bg-white shadow-2xl p-4  w-full max-w-[352px]  mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105 border-sky-300 ">
+              <div className="bg-white shadow-2xl p-4  w-full max-w-[352px]  mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105 border-sky-300">
                 <figure>
                   <img
                     src={`${baseUrl}${item?.image[0]}`}
-                    className="mb-8"
+                    className="mb-1"
                     alt="Movie"
                   />
                 </figure>
-                <div className="mb-4 flex flex-col">
-                  <div className="flex items-center mb-2">
-                    <div className="text-lg mr-2" />
+                <div className="flex flex-col">
+                  <div className="flex items-center">
+                 
                     <div className="text-lg font-semibold">{item.activity}</div>
                   </div>
                   <div className="flex items-center">
@@ -193,9 +194,9 @@ const Home = () => {
                     <div className="text-lg font-semibold">{item.place}</div>
                   </div>
 
-                  <div className="card-actions justify-end">
-                    <button>Viewdetails</button>
-                  </div>
+                 
+                  <button className="btn btn-primary">View Details</button>
+                  
                 </div>
               </div>
             ))}
@@ -203,19 +204,19 @@ const Home = () => {
         </div>
         <div className="card-body">
           <h1 className="p-5 font-extrabold md:text-2xl text-center  underline-offset-8">
-            Popular Destination
+          Keep calm and travel on....
           </h1>
           <div className="flex flex-wrap">
             {destination.map((item) => (
-              <div className="bg-white shadow-1 p-5 rounded-tl-[20px] w-full max-w-[352px] mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105 ">
+              <div className="bg-white shadow-2xl p-4  w-full max-w-[352px]  mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105 border-sky-300">
                 <figure>
                   <img
                     src={`${baseUrl}${item?.dest_img[0]}`}
-                    className="rounded-tl-[20px] mb-8"
+                    className="mb-1"
                     alt="Movie"
                   />
                 </figure>
-                <div className="mb-4 flex flex-col">
+                <div className="flex flex-col">
                   <div className="flex items-center mb-2">
                     <div className="text-lg mr-2" />
                     <div className="text-lg font-semibold">
@@ -226,14 +227,14 @@ const Home = () => {
                     <MdPlace className="text-lg mr-2" />
                     <div className="text-black">{item.place}</div>
                   </div>
-                  <div className="flex items-center">
+                  {/* <div className="flex items-center">
                     <div className="text-lg mr-2" />
                     <div className="text-black">{item.resortName}</div>
-                  </div>
+                  </div> */}
 
-                  <div className="card-actions justify-end">
-                    <button>View Details</button>
-                  </div>
+                 
+                  <button className="btn btn-primary">View Details</button>
+                  
                 </div>
               </div>
             ))}
@@ -283,6 +284,7 @@ const Home = () => {
       </div>
 
       <Footer />
+      
     </div>
   );
 };

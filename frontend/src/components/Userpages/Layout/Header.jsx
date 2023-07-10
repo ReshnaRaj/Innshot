@@ -73,9 +73,9 @@ const Header = () => {
           {/* <li>
             <Link to="/about">About</Link>
           </li> */}
-          <li>
+          {/* <li>
             <Link to="/contact">Contact</Link>
-          </li>
+          </li> */}
         </ul>
       </div>
       {users.name?
@@ -92,14 +92,14 @@ const Header = () => {
             tabIndex={0}
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-sky-500 rounded-box w-52 text-white"
           >
-            <li>
+            {/* <li>
               <Link to='/profile'>
               <a className="justify-between">
                 {users.name}
                
               </a>
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link to='/mybooking'>
               <a>My Booking</a>

@@ -44,18 +44,19 @@ const data=await CancelBook(BookingId)
   return (
     <div className='min-h screen'>
       <Header />
-      <h1>Your Booking</h1>
+      <h1 className='p-5 font-extrabold md:text-2xl text-center  underline-offset-8' >Your Booking Details</h1>
       {resortbooked?.map((resort, index) => (
         <div key={index} className="card card-side bg-transparent-400 shadow-xl">
           <div className="card-body">
             <h2 className="card-title">Booked Resort:{resort.resortId.resortname}</h2>
             <p>Address:{resort.resortId.address}</p>
-            <p>Price:{resort.resortId.price}</p>
+            <p>Price:{resort.payment.payment_amount}</p>
             <p>Place:{resort.resortId.place}</p>
             <p>Status:{resort.status}</p>
             <p>Booked Date:{resort.Booked_at}</p>
             <p>CheckIn date:{resort.fromDate}-Check OutDate:{resort.toDate}</p>
-            <p>Payment Method: {resort.payment.payment_status}</p>
+            <p>Payment Method: {resort?.payment?.payment_method}</p>
+            <p>Payment Status:{resort?.payment?.payment_status}</p>
              <div className="card-actions justify-end">
               {resort.status !== "cancelled" && (
                 <button className="btn btn-error" onClick={() => CancelBooking(resort._id)}>Cancel</button>
