@@ -8,9 +8,7 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { getuserresort, get_booked_data } from "../../services/Userapi";
-// import { baseUrl } from '../../files/file';
 import { useNavigate } from "react-router-dom";
-// import Footer from './Layout/Footer';
 
 const Resort = () => {
   const [resortbooked, setResortbooked] = useState([]);
@@ -18,8 +16,23 @@ const Resort = () => {
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState("");
+  const [filteredResorts, setFilteredResorts] = useState();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    userresort();
+    getbooked_data();
+  }, []);
+
+  const getbooked_data = async () => {
+    try {
+      let data = await get_booked_data();
+      setResortbooked(data.data.result);
+    } catch (error) {
+      console.log(error, "error getting booked resorts");
+    }
+  };
 
   const handleView = async (item) => {
     try {
@@ -30,24 +43,16 @@ const Resort = () => {
   };
 
   const handleCheckInDateChange = (date) => {
-    console.log(date, "checkin date");
     setCheckInDate(date);
   };
 
   const handleCheckOutDateChange = (date) => {
-    console.log(date, "check out date...");
-
     if (checkInDate && date <= checkInDate) {
-      // Reset the checkout date if it's earlier than the check-in date
       setCheckOutDate(null);
     } else {
       setCheckOutDate(date);
     }
   };
-
-  useEffect(() => {
-    userresort();
-  }, []);
   useEffect(() => {
     if (checkInDate) {
       localStorage.setItem("checkinDate", checkInDate.toISOString());
@@ -63,25 +68,10 @@ const Resort = () => {
       localStorage.removeItem("checkoutDate");
     }
   }, [checkOutDate]);
-  useEffect(() => {
-    getbooked_data();
-  }, []);
-
-  const getbooked_data = async () => {
-    try {
-      // console.log('getting..');
-      let data = await get_booked_data();
-      console.log(data, "booked resort");
-      setResortbooked(data.data.result);
-    } catch (error) {
-      console.log(error, "error getting...");
-    }
-  };
 
   const userresort = async () => {
     try {
       let { data } = await getuserresort();
-      // console.log(data, 'data from user side...');
       if (data.success) {
         setuserresort(data.resortt);
       }
@@ -89,17 +79,42 @@ const Resort = () => {
       console.log(error, "Error");
     }
   };
-  console.log(checkInDate, "teena.....");
-  // console.log(selectedPlace,"selected place is coming....")
-  // console.log(resort,"rrrrrrrrrrrr")
-  const filteredResorts = selectedPlace
-    ? resort.filter((item) => item.place === selectedPlace)
-    : resort;
+  const handleSearch = () => {
+    if (selectedPlace && checkInDate && checkOutDate) {
+      const filterResorts = resort.filter((item) => {
+        // console.log(item._id,"all resotss")
+        const isBooked = resortbooked.some((bookedItem) => {
+          // console.log(bookedItem.resortId._id,"ooooooooooo");
+          if (bookedItem.resortId._id === item._id && bookedItem.status === 'booked') {
+            return true;
+          }
+          return false;
+        });
+        // console.log(isBooked,"checking ")
+        const isPlaceMatched = item.place === selectedPlace;
+        const isDateAvailable = !resortbooked.some((bookedItem) => {
+          return (
+            bookedItem.resortId._id === item._id &&
+            bookedItem.status === 'booked' &&
+            checkInDate <= bookedItem.checkOutDate &&
+            checkOutDate >= bookedItem.checkInDate
+          );
+        });
+        return !isBooked && isPlaceMatched && isDateAvailable;
+      });
+      // console.log(filterResorts, "Filtered Resorts");
+      setFilteredResorts(filterResorts);
+    }
+    // else{
+    //   setFilteredResorts(resort)
+    // }
+   
+  };
+  console.log(resort,"all resort datas...")
 
-  const uniquePlaces = [...new Set(resort.map((item) => item.place))];
-  // console.log(uniquePlaces,"ioooooo")
-  // console.log(filteredResorts,"iiiiiiiiiiiiiiii")
   const today = new Date();
+  const uniquePlaces = [...new Set(resort.map((item) => item.place))];
+
   return (
     <div>
       <Header />
@@ -108,10 +123,7 @@ const Resort = () => {
         <select
           className="w-64 h-10 max-w-xs"
           value={selectedPlace}
-          onChange={(e) => {
-            console.log(selectedPlace, "ooooooooo");
-            setSelectedPlace(e.target.value);
-          }}
+          onChange={(e) => setSelectedPlace(e.target.value)}
         >
           <option disabled value="">
             Select your Stay
@@ -124,7 +136,7 @@ const Resort = () => {
         <div className="ml-2">
           <DatePicker
             selected={checkInDate}
-            dateFormat={"dd MMMM yyyy"}
+            dateFormat="dd MMMM yyyy"
             onChange={handleCheckInDateChange}
             placeholderText="Check-in"
             className="w-64 h-10 max-w-xs"
@@ -135,19 +147,23 @@ const Resort = () => {
         <div className="ml-4">
           <DatePicker
             selected={checkOutDate}
-            dateFormat={"dd MMMM yyyy"}
+            dateFormat="dd MMMM yyyy"
             onChange={handleCheckOutDateChange}
             placeholderText="Check-out"
             className="w-64 h-10 max-w-xs"
           />
         </div>
-        {/* <span className="loading loading-spinner loading-lg"></span> */}
-        <button className="btn join-item ">Search</button>
+
+        <button className="btn join-item" onClick={handleSearch}>
+          Search
+        </button>
       </div>
+      
+
       <div className="flex flex-wrap">
-        {filteredResorts.map((item) => (
+      {(filteredResorts?.length > 0 ? filteredResorts : resort).map((item) => (
           <div
-            className="bg-white shadow-1 p-5 rounded-tl-[20px] w-full max-w-[352px] mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105 "
+            className="bg-white shadow-1 p-5 rounded-tl-[20px] w-full max-w-[352px] mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105"
             key={item.resortname}
           >
             <figure>
@@ -172,22 +188,18 @@ const Resort = () => {
                 <FaBed className="text-lg mr-2" />
                 <div className="text-lg font-semibold">{item.number_room}</div>
               </div>
-              {/* <div className="text-lg font-semibold text-sky-300 mb-2">{item.price}</div> */}
 
               <button
-                onClick={() => {
-                  console.log(item, "servicess");
-                  handleView(item._id);
-                }}
+                onClick={() => handleView(item._id)}
                 className="btn btn-primary"
               >
                 View Details
               </button>
-              {/* <button className="mt-3 btn btn-info">Book Now</button> */}
             </div>
           </div>
         ))}
       </div>
+
       <Footer />
     </div>
   );

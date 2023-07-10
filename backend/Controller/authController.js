@@ -59,7 +59,7 @@ module.exports.login=async (req,res,next)=>{
                 const validpassword=await bcrypt.compare(password,user.password)
                 if(validpassword){
                     const userId=user._id
-                   const token=jwt.sign({userId},process.env.JWT_SECRET_KEY,{expiresIn:30000})
+                   const token=jwt.sign({userId},process.env.JWT_SECRET_KEY,{expiresIn:'1d'})
                    
             console.log(token,"tyuy")
               res
