@@ -31,13 +31,13 @@ const StaffHome = () => {
         label:'Resorts',
         data:[totalcount,count],
         backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
+          'rgba(0, 255, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
         
         ],
         borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
+          'rgba(0, 255, 0, 1)', 
+          'rgba(255, 0, 0, 1)', 
         
         ],
         borderWidth: 1,
@@ -51,13 +51,13 @@ const StaffHome = () => {
         label:'Adventures',
         data:[totaladv,countadv],
         backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
+          'rgba(0, 255, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
         
         ],
         borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
+          'rgba(0, 255, 0, 1)', 
+          'rgba(255, 0, 0, 1)', 
         
         ],
         borderWidth: 1,
@@ -71,13 +71,14 @@ const StaffHome = () => {
         label:'Resorts',
         data:[countbook,countcancel],
         backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
+          'rgba(0, 255, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
         
         ],
         borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
+          'rgba(0, 255, 0, 1)', 
+          'rgba(255, 0, 0, 1)', 
+        
         
         ],
         borderWidth: 1,
