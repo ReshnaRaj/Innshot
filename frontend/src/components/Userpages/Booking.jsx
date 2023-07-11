@@ -53,7 +53,7 @@ const data=await CancelBook(BookingId)
             <p>Price:{resort.payment.payment_amount}</p>
             <p>Place:{resort.resortId.place}</p>
             <p>Status:{resort.status}</p>
-            <p>Booked Date:{resort.Booked_at}</p>
+            <p>Booked Date:{new Date(resort.Booked_at).toLocaleDateString('en-US')}</p>
             <p>CheckIn date:{resort.fromDate}-Check OutDate:{resort.toDate}</p>
             <p>Payment Method: {resort?.payment?.payment_method}</p>
             <p>Payment Status:{resort?.payment?.payment_status}</p>

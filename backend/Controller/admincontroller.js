@@ -1,4 +1,5 @@
 const AdventureModel = require('../Model/AdventureModel');
+const BookingModel = require('../Model/BookingModel');
 const DestinationModel = require('../Model/DestinationModel');
 const ResortModel=require('../Model/ResorttModel')
 const StaffModel=require('../Model/StaffModel')
@@ -247,6 +248,17 @@ module.exports.blockStaff=async(req,res)=>{
       res.status(200).json({message:message,success:true})
     })
   } catch (error) {
+    
+  }
+}
+module.exports.getallbookings=async(req,res)=>{
+  try {
+    
+    const resortbookings=await BookingModel.find({}).populate('traveler').populate('resortId')
+    console.log(resortbookings,"booking all data")
+    res.status(200).json({result:resortbookings,success:true})
+  } catch (error) {
+    console.log(error,"error while booking")
     
   }
 }

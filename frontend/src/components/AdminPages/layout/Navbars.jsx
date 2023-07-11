@@ -26,13 +26,14 @@ const Navbars = () => {
           <Link to="/admin/adminadventure" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDataThresholding/></span> All Adventure</Link>
           <Link to="/admin/admindestination" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDataThresholding/></span> All Destination</Link>
           <Link to="/admin/allstaff" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><FaUsers/></span>All ResortOwners</Link>
-          {/* <Link to="/admin/bookings" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdBookmarkAdded/></span>Booking</Link> */}
+          
+          <Link to="/admin/allbookings" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdBookmarkAdded/></span>Booking</Link>
           {admin.email &&(
             <>
             <div className='dropdown dropdown-hover'>
             <label tabIndex={0} className="py-2 px-4"><span className='hover:text-white-300'>{admin.email}</span></label>
             <ul tabIndex={0} className="dropdown-content menu shadow w-22 bg-slate-900">
-            <li className=''><a>Profile</a></li>
+           
             <Link to='/admin/adlogin'><a onClick={handleLogout} className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdLogout /></span>Logout</a></Link>
               </ul>
             </div>

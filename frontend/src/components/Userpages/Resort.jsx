@@ -83,7 +83,7 @@ const Resort = () => {
     if (selectedPlace && checkInDate && checkOutDate) {
       const filterResorts = resort.filter((item) => {
         // console.log(item._id,"all resotss")
-        const isBooked = resortbooked.some((bookedItem) => {
+        const isBooked = resortbooked?.some((bookedItem) => {
           // console.log(bookedItem.resortId._id,"ooooooooooo");
           if (bookedItem.resortId._id === item._id && bookedItem.status === 'booked') {
             return true;

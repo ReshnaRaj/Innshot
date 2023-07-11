@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const {adminlogin,isAdminAuth}=require('../Controller/authController')
 const {getallresortdata}=require('../Controller/StaffController')
-const {approveresort,getuniqueresortdata,getalladvdata,getuniqadvdata,approveAdvent,getalldestdata,getuniquedest,approveDestination,getAllstaffData,blockStaff,rejectResort,approvedresort}=require('../Controller/adminController')
+const {approveresort,getuniqueresortdata,getalladvdata,getuniqadvdata,approveAdvent,getalldestdata,getuniquedest,approveDestination,getAllstaffData,blockStaff,rejectResort,approvedresort,getallbookings}=require('../Controller/adminController')
 const {checkAdmin}=require('../Middleware/authuser')
 router.post('/adlogin',adminlogin)
 router.get('/getallresortdata',getallresortdata)
@@ -19,6 +19,6 @@ router.get('/getAllstaff',checkAdmin,getAllstaffData)
 router.post('/blockstaff/:id',checkAdmin,blockStaff)
 router.post('/rejectresort/:id',checkAdmin,rejectResort)
 router.post('/approvedresort/:id',checkAdmin,approvedresort)
-
+router.get('/getallbookings',checkAdmin,getallbookings)
 
 module.exports=router;

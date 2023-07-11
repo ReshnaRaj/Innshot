@@ -12,6 +12,7 @@ import EmailVerifystaff from '../components/LoginPages/EmailVerifystaff';
 import PrivateRoute from '../Protectedroute/PrivateRoute';
 import AddDestination from '../components/StaffPages/AddDestination';
 import EditDest from '../components/StaffPages/EditDest';
+import Booking from '../components/StaffPages/Booking';
 const StaffRoute = () => {
   return (
     <>
@@ -28,6 +29,7 @@ const StaffRoute = () => {
     <Route exact path='/staffdestination' element={<StaffDest/>}/>
     <Route exact path='/add-dest' element={<AddDestination/>}/>
     <Route exact path='/editdest' element={<EditDest/>}/>
+    <Route exact path='/bookings' element={<Booking/>}/>
     
     </Route>
     </Routes>

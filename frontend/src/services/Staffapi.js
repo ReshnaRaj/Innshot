@@ -83,8 +83,10 @@ const editdestination=(data,id)=>{
     })
 
 }
+const get_book_data=()=>{
+    return staffAxiosInstance.get('/getbookedresortdata')
+}
 
 
 
-
-export {staffregister,stafflogin,staffresort,staffverify,getResortData,editpostresortdatas,disableresort,authStaff,staffadv,getStaffAdv,editadvpost,AddDest,getDest,editdestination}
+export {staffregister,stafflogin,staffresort,staffverify,getResortData,editpostresortdatas,disableresort,authStaff,staffadv,getStaffAdv,editadvpost,AddDest,getDest,editdestination,get_book_data}

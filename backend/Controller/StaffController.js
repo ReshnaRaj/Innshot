@@ -5,6 +5,7 @@ const cloudinary = require("./config/cloudConfigure");
 const AdventureModel = require("../Model/AdventureModel");
 const { ObjectId } = require("mongodb");
 const DestinationModel = require("../Model/DestinationModel");
+const BookingModel = require("../Model/BookingModel");
 
 module.exports.addresort = async (req, res, next) => {
   try {
@@ -403,5 +404,19 @@ module.exports.editdestination=async(req,res)=>{
   } catch (error) {
     res.status(500).json({message:'internal ser er error'})
     
+  }
+}
+module.exports.getbookedresort=async(req,res)=>{
+  console.log("booking page backend")
+  try {
+    let id = req.staffId;
+    console.log(id,"staff Id....")
+    const resortId=await ResortModel.find({resortowner:id})
+    // console.log(resortId,"resort Id getting....")
+    const booked=await BookingModel.find({resortId}).populate('traveler').populate('resortId')
+    console.log(booked,"booked...")
+    res.status(200).json({result:booked,success:true})
+  } catch (error) {
+    console.log(error)
   }
 }

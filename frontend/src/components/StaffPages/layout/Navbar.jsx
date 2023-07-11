@@ -30,7 +30,7 @@ const Navbar = () => {
             <div className='dropdown dropdown-hover'>
             <label tabIndex={0} className="py-2 px-4"><span className='hover:text-white-300'>{staffs.name}</span></label>
             <ul tabIndex={0} className="dropdown-content menu shadow w-22 bg-slate-900">
-            <li className=''><a>Profile</a></li>
+            {/* <li className=''><a>Profile</a></li> */}
             <Link to='/staff/stafflogin'><a onClick={handleLogout} className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdLogout /></span>Logout</a></Link>
               </ul>
             </div>

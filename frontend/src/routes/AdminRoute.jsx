@@ -11,6 +11,7 @@ import AllDestination from "../components/AdminPages/AllDestination";
 import ViewAdventure from "../components/AdminPages/ViewAdventure";
 import ViewDestination from '../components/AdminPages/ViewDest'
 import AllResorters from '../components/AdminPages/AllStaff'
+import AllBookings from "../components/AdminPages/AllBookings";
 
 const AdminRoute = () => {
   return (
@@ -28,7 +29,8 @@ const AdminRoute = () => {
           <Route exact path='/viewactivity/:id' element={<ViewAdventure/>}/>
           <Route exact path='/admindestination' element={<AllDestination/>}/>
           <Route exact path='/viewdestination/:id' element={<ViewDestination/>}/>
-          <Route exact path="allstaff" element={<AllResorters/>}/>
+          <Route exact path="/allstaff" element={<AllResorters/>}/>
+          <Route exact path='/allbookings'element={<AllBookings/>}/>
           {/* <Route exact path='/allresort' element={<Resort/>}/> */}
         </Route>
       </Routes>

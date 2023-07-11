@@ -2,12 +2,88 @@ import React, {useEffect,useState} from "react";
 import Navbar from "./layout/Navbar";
 import Headerr from "./layout/Headerr";
 import {
-  getResortData,getStaffAdv
+  getResortData,getStaffAdv,get_book_data
 } from "../../services/Staffapi";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+} from "chart.js";
+import { Doughnut, Pie ,Bar} from "react-chartjs-2";
+ChartJS.register(ArcElement,Tooltip,Legend,CategoryScale,LinearScale,BarElement,Title)
 
 const StaffHome = () => {
   const [count,setCount]=useState("")
+  const [totalcount,setTotalcount]=useState("")
   const [countadv,setCountAdvent]=useState("")
+  const [totaladv,setTotaladv]=useState("")
+  const [countbook,setCountbook]=useState("")
+  const [countcancel,setCountcancel]=useState("")
+  const data={
+    labels:['Total_Resorts','Approved_Resorts'],
+    datasets:[
+      {
+        label:'Resorts',
+        data:[totalcount,count],
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(54, 162, 235, 0.2)",
+        
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+        
+        ],
+        borderWidth: 1,
+      },
+    ]
+  }
+  const adv={
+    labels:['Total_Adv','Approved_Adv'],
+    datasets:[
+      {
+        label:'Adventures',
+        data:[totaladv,countadv],
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(54, 162, 235, 0.2)",
+        
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+        
+        ],
+        borderWidth: 1,
+      },
+    ]
+  }
+  const booked={
+    labels:['Booked','Cancelled'],
+    datasets:[
+      {
+        label:'Resorts',
+        data:[countbook,countcancel],
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(54, 162, 235, 0.2)",
+        
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+        
+        ],
+        borderWidth: 1,
+      },
+    ]
+  }
 
   
   useEffect(() => {
@@ -16,10 +92,31 @@ const StaffHome = () => {
   useEffect(()=>{
     getAdvData();
   })
+  useEffect(() => {
+    getbookdata();
+  }, []);
+  const getbookdata = async () => {
+    try {
+      let { data } = await get_book_data();
+      let confirmbooking=data.result.filter(book=>book.status==='booked')
+      setCountbook(confirmbooking.length);
+      let cancelbooking=data.result.filter(book=>book.status==='cancelled')
+      setCountcancel(cancelbooking.length)
+     
+     
+       
+      
+    } catch (error) {
+      console.log(error, "error booking");
+    }
+  };
+
   const getAdvData = async () => {
     try {
       let { data } = await getStaffAdv();
       console.log(data, "77777777777777");
+      const alladv=data.result.length
+      setTotaladv(alladv)
       const approvedadventure = data.result.filter(advent => advent.verify === true);
       setCountAdvent(approvedadventure.length)
     } catch (error) {}
@@ -27,7 +124,12 @@ const StaffHome = () => {
   const getresortData = async () => {
     try {
       let {data} = await getResortData();
+
       // console.log(data, "data of resort ");
+      const allresort=data.result.length
+      console.log(allresort,"count of all resorts")
+      setTotalcount(allresort)
+
       const approvedResorts = data.result.filter(resort => resort.verify === true);
       setCount(approvedResorts.length)
       // console.log(approvedResorts,"ffff")
@@ -36,7 +138,7 @@ const StaffHome = () => {
       console.log(error);
     }
   };
- 
+ console.log(totalcount,"total counting...")
   return (
     <div className="flex">
       <Navbar />
@@ -52,24 +154,31 @@ const StaffHome = () => {
           
           <div className="bg-gray-100 p-4 rounded-lg mb-4 max-w-xs">
             <h4 className="text-lg font-semibold mb-2">
-              Number of Approved Resorts:
+              Number of Resorts:
             </h4>
-            <p className="text-gray-600">{count}</p>{" "}
+            <p className="text-gray-600">
+            <Pie data={data} />
+            </p>
             {/* Replace '10' with the actual number of resorts */}
+          </div>
+          
+          <div className="bg-gray-100 p-4 rounded-lg mb-4 max-w-xs">
+            <h4 className="text-lg font-semibold mb-2">
+              Number of ResortBooking:
+            </h4>
+            <p className="text-gray-600">
+            <Bar data={booked} />
+            </p>
+           
           </div>
           <div className="bg-gray-100 p-4 rounded-lg mb-4 max-w-xs">
             <h4 className="text-lg font-semibold mb-2">
               Number of Approved Adventure:
             </h4>
-            <p className="text-gray-600">{countadv}</p>{" "}
-            {/* Replace '10' with the actual number of resorts */}
-          </div>
-          <div className="bg-gray-100 p-4 rounded-lg mb-4 max-w-xs">
-            <h4 className="text-lg font-semibold mb-2">
-              Number of ResortBooking:
-            </h4>
-            <p className="text-gray-600">10</p>{" "}
-            {/* Replace '10' with the actual number of resorts */}
+            <p className="text-gray-600">
+            <Doughnut data={adv} />
+            </p>
+        
           </div>
 
           {/* Your additional dashboard content goes here */}

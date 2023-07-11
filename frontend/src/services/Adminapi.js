@@ -46,7 +46,7 @@ const approvedest=(id)=>{
 }
 const getAllstaff=()=>{
 console.log("getting data....")
-    return adminAxiosInstance.get("getallstaff")
+    return adminAxiosInstance.get("/getallstaff")
 }
 const blockstaff=(id)=>{
     console.log(id,"blocking working...")
@@ -60,4 +60,8 @@ const rejectresort=(id,data)=>{
 const approveresortt=(id)=>{
     return adminAxiosInstance.post(`/approvedresort/${id}`)
 }
-export {adminlogin,getAllData,approveresort,authAdmin,getuniqueresort,getalladvData,getuniqadv,approveadvent,getalldestData,getuniqdest,approvedest,getAllstaff,blockstaff,rejectresort,approveresortt}
+const getall_bookings=()=>{
+    console.log("something going ")
+    return adminAxiosInstance.get('/getallbookings')
+}
+export {adminlogin,getAllData,approveresort,authAdmin,getuniqueresort,getalladvData,getuniqadv,approveadvent,getalldestData,getuniqdest,approvedest,getAllstaff,blockstaff,rejectresort,approveresortt,getall_bookings}
