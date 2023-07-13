@@ -168,55 +168,50 @@ module.exports.staffreg=async(req,res,next)=>{
         
     }
 }
-module.exports.stafflogin=async (req,res,next)=>{
-   
+module.exports.stafflogin = async (req, res, next) => {
     try {
-        console.log("staff login page")
-        const {email,password}=req.body;
-        const staff=await StaffModel.findOne({email})
-
-        if(staff){
-            if(staff.verified){
-                console.log("staff verified working")
-                const auth=await bcrypt.compare(password,staff.password)
-                console.log(auth,'authentication working')
-                if(auth){
-                    const staffId=staff._id
-                    console.log(staff._id,"staff id")
-                   const token=jwt.sign({staffId},process.env.JWT_SECRET_KEY,{expiresIn:30000})
-                //    i getting doubt
-                console.log(token,"token coming.....")
-                   
-            
+      console.log("staff login page");
+      const { email, password } = req.body;
+      const staff = await StaffModel.findOne({ email });
+  
+      if (staff) {
+        if (staff.verified) {
+          if (staff.admin_approval === "Unblock") {
+            console.log("staff verified working");
+            const auth = await bcrypt.compare(password, staff.password);
+            console.log(auth, 'authentication working');
+            if (auth) {
+              const staffId = staff._id;
+              console.log(staff._id, "staff id");
+              const token = jwt.sign({ staffId }, process.env.JWT_SECRET_KEY, { expiresIn: 30000 });
+              console.log(token, "token coming.....");
+  
               res
-              .status(200)
-              .json({ staff,token,created: true });
+                .status(200)
+                .json({ staff, token, created: true });
             } else {
-                const errors={password:"password is incorrect"}
-                res.json({errors,created:false})
+              const errors = { password: "Password is incorrect" };
+              res.json({ errors, created: false });
             }
-
-            }
-            else{
-                const errors={email:"not verified"}
-                res.json({errors})
-            }
-            
-           
-    }
-    else {
-        const errors = { email: "No user with the entered mail id" };
+          } else {
+            const errors = { message: "Sorry You cannot  access this page" };
+            res.json({ errors, created: false });
+          }
+        } else {
+          const errors = { email: "Email not verified" };
+          res.json({ errors, created: false });
+        }
+      } else {
+        const errors = { email: "No user with the entered email address" };
         res.json({ errors, created: false });
       }
+    } catch (error) {
+      console.log(error);
+      const errors = handleErrors(error);
+      res.json({ errors, created: false });
     }
-  catch (error) {
-        
-        console.log(error);
-        const errors=handleErrors(error)
-        res.json({errors,created:false})
-    }
-
-};
+  };
+  
 module.exports.verifystaff=async(req,res)=>{
     console.log("verify staff ")
     try {

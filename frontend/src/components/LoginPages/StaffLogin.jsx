@@ -54,13 +54,14 @@ const StaffLogin = () => {
       email:staffemail,
       password:staffpass
       })
-      // console.log("staff login working",data)
+      console.log(data,"login staff data...")
       if(data){
         console.log("in",data.data)
         if(data.data.errors){
-          const {email,password}=data.data.errors;
+          const {email,password,message}=data.data.errors;
           if(email) generateError (email)
           else if(password) generateError(password)
+          else if(message) generateError(message)
         }
         else{
           dispatch(setStaffDetails({

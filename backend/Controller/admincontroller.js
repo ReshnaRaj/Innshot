@@ -238,16 +238,17 @@ module.exports.blockStaff=async(req,res)=>{
   try {
     // console.log("blocking working...")
     const staffId=req.params.id
-    console.log(staffId,"id of staff")
+    // console.log(staffId,"id of staff")
     let StafBlock=await StaffModel.findById(staffId)
-    console.log(StafBlock,"blocking success...")
-    const newStatus=StafBlock.admin_approval==='Unblock' ? 'Block':'Unblock'
+    console.log(StafBlock,"blocking ...")
+    const newStatus=(StafBlock.admin_approval==='Unblock' ? 'Block':'Unblock')
     console.log(newStatus,"new status is checking...")
-    let message=newStatus==='Block' ? 'Staff UnBlocked' : 'Staff Blocked'
+    let message=newStatus==='Unblock' ?  'Staff UnBlocked' : 'Staff Blocked'
     StaffModel.findOneAndUpdate({_id:staffId}, {$set:{admin_approval:newStatus}}).then((response)=>{
       res.status(200).json({message:message,success:true})
     })
   } catch (error) {
+    console.log(error)
     
   }
 }
@@ -255,7 +256,7 @@ module.exports.getallbookings=async(req,res)=>{
   try {
     
     const resortbookings=await BookingModel.find({}).populate('traveler').populate('resortId')
-    console.log(resortbookings,"booking all data")
+    // console.log(resortbookings,"booking all data")
     res.status(200).json({result:resortbookings,success:true})
   } catch (error) {
     console.log(error,"error while booking")

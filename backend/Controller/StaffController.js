@@ -295,9 +295,9 @@ module.exports.getAdv = async (req, res) => {
     const objectId = new ObjectId(id);
     console.log(objectId, "object id...");
     const adventure = await AdventureModel.find({ resortowner: objectId });
-    console.log(adventure,"status of adventure..")
+    // console.log(adventure,"status of adventure..")
 
-    console.log(adventure, "data in staff dashboard");
+    // console.log(adventure, "data in staff dashboard");
     res.status(200).json({ result: adventure, success: true });
   } catch (error) {
     console.log(error, "66666666666");
@@ -407,14 +407,14 @@ module.exports.editdestination=async(req,res)=>{
   }
 }
 module.exports.getbookedresort=async(req,res)=>{
-  console.log("booking page backend")
+  // console.log("booking page backend")
   try {
     let id = req.staffId;
     console.log(id,"staff Id....")
     const resortId=await ResortModel.find({resortowner:id})
     // console.log(resortId,"resort Id getting....")
     const booked=await BookingModel.find({resortId}).populate('traveler').populate('resortId')
-    console.log(booked,"booked...")
+    // console.log(booked,"booked...")
     res.status(200).json({result:booked,success:true})
   } catch (error) {
     console.log(error)

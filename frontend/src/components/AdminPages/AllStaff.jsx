@@ -55,17 +55,17 @@ console.log(staff,"staff displayin...")
       <td>{index + 1}</td>
       <td>{user.name}</td>
       <td>{user.email}</td>
-     <td>{user.admin_approval==='Unblock' ? 'Block':'Unblock'}</td>
+     <td>{user.admin_approval}</td>
     {user.admin_approval==='Unblock' ? (
         <button onClick={()=>handleBlockUnblock(user._id)}
-        className='btn btn-xs btn-success'>
-            Unblock
+        className='btn btn-xs btn-error'>
+            Block
 
         </button>
     ):(
         <button onClick={()=>handleBlockUnblock(user._id)}
-        className='btn btn-xs btn-error'>
-            Block
+        className='btn btn-xs btn-success'>
+            Unblock
         </button>
     )}
     </tr>
