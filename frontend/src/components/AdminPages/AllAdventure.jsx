@@ -8,6 +8,7 @@ import {getalladvData,approveadvent} from '../../services/Adminapi'
 
 const AllAdventure = () => {
     const [advdata,setadvdata]=useState([])
+    const [search, setSearch] = useState("");
     const navigate = useNavigate();
     
     useEffect(()=>{
@@ -53,8 +54,20 @@ const AllAdventure = () => {
         <Navbars/>
         <div className="flex-1">
         <Headers name={'List of activities'}/>
-        {/* <div className='form-control'>
-        </div> */}
+        <div className="form-control float-right">
+          <div className="form-control">
+            <div className="input-group">
+              <input
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
+                type="text"
+                placeholder="Search…"
+                className="input input-bordered mt-1 mb-1"
+              />
+            </div>
+          </div>
+        </div>
         <div className="overflow-x-auto inline">
           <table className="table table-compact w-full">
             <thead>
@@ -68,7 +81,10 @@ const AllAdventure = () => {
               </tr>
             </thead>
             <tbody>
-              {advdata.map((item, index) => (
+              {advdata.filter((item)=>{
+                return search.toLowerCase()==="" ? item:item.activity.toLowerCase().includes(search)
+              })
+              .map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item?.activity}</td>

@@ -1,15 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate} from "react-router-dom";
 import { useSelector } from "react-redux";
 import {FaUser} from 'react-icons/fa'
 import {TbButterfly} from 'react-icons/tb'
 
 const Header = () => {
   const users = useSelector((state) => state.user);
+  const navigate=useNavigate()
   const handleLogout = () => {
     localStorage.removeItem("usertoken");
+   navigate('/login')
     // dispatch an action if necessary
   };
+
   // console.log(users, "user");
 
   return (
@@ -92,21 +95,21 @@ const Header = () => {
             tabIndex={0}
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-sky-500 rounded-box w-52 text-white"
           >
-            {/* <li>
+            <li>
               <Link to='/profile'>
               <a className="justify-between">
                 {users.name}
                
               </a>
               </Link>
-            </li> */}
+            </li>
             <li>
               <Link to='/mybooking'>
               <a>My Booking</a>
               </Link>
             </li>
             <li>
-            <Link to ='/'><a onClick={handleLogout}>Logout</a></Link>
+            <a onClick={()=>handleLogout()}>Logout</a>
             </li>
           </ul>
         </div>

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
 // import axios from 'axios';
-import 'react-toastify/dist/ReactToastify.css';
+ 
 
 import { useDispatch } from 'react-redux';
 import { setUserDetails } from '../../redux/userSlice';
@@ -10,7 +11,7 @@ import { userlogin } from '../../services/Userapi';
 
 
 const UserLogin = () => {
-  // const users = useSelector((state) => state.user);
+  const users = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [useremail,setuseremail]=useState('')
@@ -49,6 +50,7 @@ const UserLogin = () => {
       email:useremail,
       password:userpass
      })
+     console.log(data,"data of user...")
       // if (data.data){
       if(data) {
         // console.log(data);
@@ -58,7 +60,7 @@ const UserLogin = () => {
           if (email) generateError(email);
           else if (password) generateError(password);
         } else {
-
+          
           dispatch(setUserDetails({
             name: data.data.user.name,
             id: data.data.user._id,
@@ -69,6 +71,10 @@ const UserLogin = () => {
           
           if(data.data.user.verifiyd){
             localStorage.setItem('usertoken',data.data.token)
+            console.log(data.data.message,"toast working..")
+            toast.success(data.data.message, {
+              position: "top-center",
+            });
             navigate('/');
           }
           else{
@@ -137,14 +143,14 @@ const UserLogin = () => {
         >
           Login
         </button>
+       
       </form>
       <p className=" font-bold text-black mt-4">Not registered? <Link to="/register" className="text-black font-bold">Signup here</Link></p>
       <p className=" font-bold text-black mt-4">Login As A staff?<Link to="/staff/stafflogin" className="text-black font-bold"> SignIn</Link></p>
-      <ToastContainer />
-      {/* <button className="link-btn">
-Already have an account? <Link to="/stafflogin" className="text-blue-500">Login here</Link>
-</button> */}
+     
+     
     </div>
+    <ToastContainer />
   </div>
   );
 };

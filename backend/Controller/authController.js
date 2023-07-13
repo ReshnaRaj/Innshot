@@ -64,7 +64,7 @@ module.exports.login=async (req,res,next)=>{
             console.log(token,"tyuy")
               res
               .status(200)
-              .json({ user,token,created: true });
+              .json({ user,token,created: true ,message:"Login Successfully"});
             } else {
                 const errors={password:"password is incorrect"}
                 res.json({errors,created:false})

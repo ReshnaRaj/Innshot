@@ -16,7 +16,7 @@ const Resort = () => {
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState("");
-  const [filteredResorts, setFilteredResorts] = useState();
+  const [filteredResorts, setFilteredResorts] = useState([]);
 
   const navigate = useNavigate();
 
@@ -80,37 +80,43 @@ const Resort = () => {
     }
   };
   const handleSearch = () => {
+    // console.log(resortbooked,"booked resorts...")
+    // console.log(selectedPlace,"place...")
+    // console.log(checkInDate,"from date")
+    // console.log(checkOutDate,"to date...")
     if (selectedPlace && checkInDate && checkOutDate) {
       const filterResorts = resort.filter((item) => {
         // console.log(item._id,"all resotss")
         const isBooked = resortbooked?.some((bookedItem) => {
-          // console.log(bookedItem.resortId._id,"ooooooooooo");
-          if (bookedItem.resortId._id === item._id && bookedItem.status === 'booked') {
+          console.log(resortbooked,"ooooooooooo");
+          if (
+            bookedItem.resortId._id === item._id &&
+            bookedItem.status === "booked"
+          ) {
             return true;
           }
           return false;
         });
-        // console.log(isBooked,"checking ")
+        console.log(isBooked,"checking ")
         const isPlaceMatched = item.place === selectedPlace;
         const isDateAvailable = !resortbooked.some((bookedItem) => {
           return (
             bookedItem.resortId._id === item._id &&
-            bookedItem.status === 'booked' &&
+            bookedItem.status === "booked" &&
             checkInDate <= bookedItem.checkOutDate &&
             checkOutDate >= bookedItem.checkInDate
           );
         });
         return !isBooked && isPlaceMatched && isDateAvailable;
       });
-      // console.log(filterResorts, "Filtered Resorts");
+      console.log(filterResorts, "Filtered Resorts");
       setFilteredResorts(filterResorts);
     }
     // else{
     //   setFilteredResorts(resort)
     // }
-   
   };
-  console.log(resort,"all resort datas...")
+  // console.log(resort, "all resort datas...");
 
   const today = new Date();
   const uniquePlaces = [...new Set(resort.map((item) => item.place))];
@@ -154,50 +160,59 @@ const Resort = () => {
           />
         </div>
 
-        <button className="btn join-item" onClick={handleSearch}>
+        <button
+          className="btn join-item"
+          onClick={() => {
+            // console.log("searching working....");
+            handleSearch();
+          }}
+        >
           Search
         </button>
       </div>
-      
 
       <div className="flex flex-wrap">
-      {(filteredResorts?.length > 0 ? filteredResorts : resort).map((item) => (
-          <div
-            className="bg-white shadow-1 p-5 rounded-tl-[20px] w-full max-w-[352px] mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105"
-            key={item.resortname}
-          >
-            <figure>
-              <img
-                src={`${item.image[0]}`}
-                alt="resort image"
-                className="rounded-tl-[20px] mb-8"
-              />
-            </figure>
-            <div className="mb-4 flex flex-col">
-              <div className="flex items-center mb-2">
-                <BiHomeAlt className="text-lg mr-2" />
-                <div className="text-lg font-semibold">{item.resortname}</div>
-              </div>
+        {(filteredResorts?.length > 0 ? filteredResorts : resort).map(
+          (item) => (
+            <div
+              className="bg-white shadow-1 p-5 rounded-tl-[20px] w-full max-w-[352px] mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105"
+              key={item.resortname}
+            >
+              <figure>
+                <img
+                  src={`${item.image[0]}`}
+                  alt="resort image"
+                  className="rounded-tl-[20px] mb-8"
+                />
+              </figure>
+              <div className="mb-4 flex flex-col">
+                <div className="flex items-center mb-2">
+                  <BiHomeAlt className="text-lg mr-2" />
+                  <div className="text-lg font-semibold">{item.resortname}</div>
+                </div>
 
-              <div className="flex items-center">
-                <MdPlace className="text-lg mr-2" />
-                <div className="text-black">{item.place}</div>
-              </div>
+                <div className="flex items-center">
+                  <MdPlace className="text-lg mr-2" />
+                  <div className="text-black">{item.place}</div>
+                </div>
 
-              <div className="flex items-center">
-                <FaBed className="text-lg mr-2" />
-                <div className="text-lg font-semibold">{item.number_room}</div>
-              </div>
+                <div className="flex items-center">
+                  <FaBed className="text-lg mr-2" />
+                  <div className="text-lg font-semibold">
+                    {item.number_room}
+                  </div>
+                </div>
 
-              <button
-                onClick={() => handleView(item._id)}
-                className="btn btn-primary"
-              >
-                View Details
-              </button>
+                <button
+                  onClick={() => handleView(item._id)}
+                  className="btn btn-primary"
+                >
+                  View Details
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        )}
       </div>
 
       <Footer />

@@ -36,6 +36,7 @@ const AllBookings = () => {
                
                 <th>Traveler</th>
                 <th>Status</th>
+                <th>CheckInDate</th>
                 <th>CheckOutDate</th>
                 
             
@@ -48,6 +49,7 @@ const AllBookings = () => {
                         <td>{item.resortId.resortname}</td>
                         <td>{item.traveler.name}</td>
                         <td>{item.status}</td>
+                        <td>{item.fromDate}</td>
                         <td>{item.toDate}</td>
                     </tr>
                 ))}

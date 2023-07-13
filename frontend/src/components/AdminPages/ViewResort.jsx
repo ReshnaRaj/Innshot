@@ -4,6 +4,7 @@ import Headers from "./layout/Headers";
 import { getuniqueresort } from "../../services/Adminapi";
 import { useParams } from "react-router-dom";
 import { baseUrl } from "../../files/file";
+import {MdFileDownload} from 'react-icons/md'
 
 const ViewResort = () => {
   const [resortdetails, setResortdetails] = useState([]);
@@ -117,26 +118,30 @@ const ViewResort = () => {
               <h2>Description</h2>
               <p>{resortdetails.description}</p>
               <h2>Certificate uploaded</h2>
+              <a href={`${resortdetails?.document}`} download><MdFileDownload/></a>
               {resortdetails?.document ? (
+                <>
                 <embed
                   src={`${resortdetails?.document}`}
                   type="application/pdf"
                   width="50%"
                   height="100px"
                 />
+                
+                </>
               ) : (
                 <p>No document available</p>
               )}
               {/* certicate image upload  */}
             </div>
             <div className="card w-96 bg-blue-500 shadow-xl rounded-none">
-              <figure className="px-10 pt-10">
+              {/* <figure className="px-10 pt-10">
                 <img
                   src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
                   alt="profile of resortowner"
                   className="rounded-xl"
                 />
-              </figure>
+              </figure> */}
               <div className="card-body">
                 <h2 className="text-xl font-semibold">
                   Name:{resortdetails?.resortowner?.name}

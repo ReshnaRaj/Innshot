@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Header from "./Layout/Header";
 import Footer from "./Layout/Footer";
 import { MdPlace } from "react-icons/md";
+import { useSelector } from "react-redux";
 import { FaRupeeSign } from "react-icons/fa";
 import { baseUrl } from "../../files/file";
 import {
@@ -9,10 +10,13 @@ import {
   getuseradventure,
   getuserdestination,
 } from "../../services/Userapi";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
+  const users = useSelector((state) => state.user);
   const [resort, setuserresort] = useState([]);
   const [adventure, setAdventure] = useState([]);
   const [destination, setDestination] = useState([]);
+  const navigate = useNavigate();
   // const [isLoggedIn, setIsLoggedIn] = useState(false); 
   useEffect(() => {
     userdestination();
@@ -47,6 +51,27 @@ const Home = () => {
       }
     } catch (error) {}
   };
+  const handleView = async (item) => {
+    try {
+      navigate(`/viewdata/${item}`, { state: { item } });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleClick=async(item)=>{
+    try {
+      navigate(`/viewadventure/${item}`,{state:{item}})
+    } catch (error) {
+      
+    }
+  }
+  const  handleSee=async(item)=>{
+    try {
+      navigate(`/viewdestination/${item}`,{state:{item}})
+    } catch (error) {
+      
+    }
+  }
   useEffect(() => {
     userresort();
   }, []);
@@ -69,10 +94,11 @@ const Home = () => {
       src: "https://res.cloudinary.com/dsyln8j3g/image/upload/v1686677184/4_izdg7c.jpg",
     },
   ];
-  console.log(resort, "updated");
+  console.log(users, "updated");
   return (
     <div className="mx-auto max-w-screen-2xl">
       <Header />
+      
       <div className="carousel">
         {images.map((img) => (
           <div
@@ -164,7 +190,9 @@ const Home = () => {
                     <div className="text-black">{item.price}</div>
                   </div>
 
-                  <button className="btn btn-primary">View Details</button>
+                  <button className="btn btn-primary" onClick={()=>{
+                    handleView(item._id)
+                  }}>View Details</button>
                 </div>
               </div>
             ))}
@@ -195,7 +223,10 @@ const Home = () => {
                   </div>
 
                  
-                  <button className="btn btn-primary">View Details</button>
+                  <button className="btn btn-primary" onClick={()=>{
+                      console.log("advrihdb working...")
+                      handleClick(item._id)
+                    }}>View Details</button>
                   
                 </div>
               </div>
@@ -233,7 +264,9 @@ const Home = () => {
                   </div> */}
 
                  
-                  <button className="btn btn-primary">View Details</button>
+                  <button className="btn btn-primary" onClick={()=>{
+                    handleSee(item._id)
+                  }}>View Details</button>
                   
                 </div>
               </div>

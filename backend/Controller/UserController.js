@@ -94,15 +94,15 @@ module.exports.resort_book = async (req, res) => {
   try {
     // console.log(req.body,"ooooo")
     const id=req.userId
-    console.log(req.userId, "userId");
+    // console.log(req.userId, "userId");
     const { resortId, traveler, fromDate, toDate, payment } = req.body;
     
-    console.log(traveler, "user details");
-    console.log(resortId, "resort full details included owner");
+    // console.log(traveler, "user details");
+    // console.log(resortId, "resort full details included owner");
     const traveller = await UserModel.findOne({ email: traveler.email });
-    console.log(traveller, "travller Id");
+    // console.log(traveller, "travller Id");
 
-    const resortt = await ResortModel.findOne({ _id: resortId });
+    const resortt = await ResortModel.findOne({ _id: resortId._id });
     console.log(resortt, "resortt");
     const existingBooking = await BookingModel.findOne({
       resortId: resortt,

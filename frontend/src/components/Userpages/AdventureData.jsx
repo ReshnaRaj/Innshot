@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import Header from "./Layout/Header";
 import Footer from "./Layout/Footer";
 import { getadvData } from "../../services/Userapi";
@@ -8,6 +8,7 @@ import { baseUrl } from "../../files/file";
 const AdventureData = () => {
   const [adventdata, setAdventdata] = useState([]);
   let { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAdvData();
@@ -21,6 +22,15 @@ const AdventureData = () => {
       console.log(error);
     }
   };
+  // const handleBookView=async(bookedadvdata)=>{
+  //   try {
+  //     navigate(`/viewbookadv/`,{state:{bookedadvdata}})
+      
+  //   } catch (error) {
+  //     console.log(error)
+      
+  //   }
+  // }
  
  
   const images =adventdata?.image?.map((image, index) => ({
@@ -43,13 +53,16 @@ const AdventureData = () => {
 
           <div className="mb-4 lg:mb-0 flex gap-x-2 text-sm">
             <div className="text-3xl font-semibold text-sky-300">
-              {adventdata.price}
-              <button
+              {/* {adventdata.price} */}
+              {/* <button
                 className="btn  ml-4 btn-info"
+                // onClick={(e)=>{
+                //   handleBookView(adventdata)
+                // }}
                 
               >
-                Contact  Now
-              </button>
+                 
+              </button> */}
             </div>
           </div>
         </div>

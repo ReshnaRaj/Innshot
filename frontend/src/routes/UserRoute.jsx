@@ -14,6 +14,8 @@ import DestinationData from '../components/Userpages/DestinationData'
 import ResortBooking from '../components/Userpages/ResortBooking';
 import Hotelpaying from '../components/Userpages/Hotelpaying';
 import Booking from '../components/Userpages/Booking';
+import AdventureBooking from '../components/Userpages/AdventureBooking';
+import Profile from '../components/Userpages/Profile';
 const UserRoute = () => {
   return (
     <>
@@ -29,10 +31,13 @@ const UserRoute = () => {
     <Route eaxct path='/destinations' element={<Destination/>}/>
     <Route exact path='/viewdestination/:id' element={<DestinationData/>}/>
    
-    <Route element={<PrivateRoute role={'user'} route={'/login'}/>}>
+    <Route element={<PrivateRoute role={'user'} route={'/'}/>}>
+    
     <Route exact path='/viewbook' element={<ResortBooking/>}/>
     <Route exact path='/hotelbooking' element={<Hotelpaying/>}/>
+    <Route exact path='/profile' element={<Profile/>}/>
     <Route exact path='/mybooking' element={<Booking/>}/>
+    {/* <Route exact path='/viewbookadv' element={<AdventureBooking/>}/> */}
    
    
     

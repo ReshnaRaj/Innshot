@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Layout/Header";
-
-import { useParams,useNavigate } from "react-router-dom";
+import { FaRupeeSign } from "react-icons/fa";
+import { useParams, useNavigate } from "react-router-dom";
 import { FaBed } from "react-icons/fa";
 import { getresortdata, getsimiliarstay } from "../../services/Userapi";
 import Footer from "./Layout/Footer";
@@ -32,15 +32,13 @@ const ResortData = () => {
       console.log(error);
     }
   };
-  const handleBookView=async(bookeddata)=>{
+  const handleBookView = async (bookeddata) => {
     try {
-      navigate(`/viewbook/`,{state:{bookeddata}})
-      
+      navigate(`/viewbook/`, { state: { bookeddata } });
     } catch (error) {
-      console.log(error)
-      
+      console.log(error);
     }
-  }
+  };
   const fetchSimilarStays = async () => {
     try {
       let { data } = await getsimiliarstay(resortdata.place);
@@ -70,12 +68,14 @@ const ResortData = () => {
             <h3 className="text-lg mb-4">{resortdata.address}</h3>
           </div>
           <div className="mb-4 lg:mb-0 flex gap-x-2 text-sm">
-            <div className="text-3xl font-semibold text-sky-300">
-              {resortdata.price}
+            <div className="text-2xl font-semibold text-sky-300">
+            <span ><FaRupeeSign className="inline"/></span>
+            <span className="inline"> {resortdata.price}</span>
+             
               <button
                 className="btn btn-info ml-4 text-black"
                 onClick={(e) => {
-                 handleBookView(resortdata)
+                  handleBookView(resortdata);
                   console.log(resortdata, "full detials..");
                 }}
               >
@@ -112,8 +112,41 @@ const ResortData = () => {
           </div>
         </div> */}
         <div className="flex flex-col items-start lg:flex-row">
-          <div className="max-w-[768px]">
-            <div className="mb-8 grid grid-cols-2 gap-11">
+          <div className="max-w-full">
+            <div className="carousel">
+              {images?.map((image) => (
+                <div
+                  id={`slide${image?.id}`}
+                  key={image?.id}
+                  className="carousel-item relative w-full"
+                >
+                  <img
+                    src={image?.src}
+                    className="w-96 h-60 mx-auto"
+                    alt="IMAGE"
+                  />
+                  <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                    <a
+                      href={`#slide${
+                        image?.id === 1 ? images?.length : image?.id - 1
+                      }`}
+                      className="btn btn-circle btn-ghost"
+                    >
+                      ❮
+                    </a>
+                    <a
+                      href={`#slide${
+                        image?.id === images?.length ? 1 : image?.id + 1
+                      }`}
+                      className="btn btn-circle btn-ghost"
+                    >
+                      ❯
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {/* <div className="mb-8 grid grid-cols-2 gap-11">
               {images && images.length > 0 ? (
                 <figure>
                   <img
@@ -137,7 +170,7 @@ const ResortData = () => {
                     ))
                   : null}
               </div>
-            </div>
+            </div> */}
             <div>
               <div>
                 <div className="flex gap-x-6">
@@ -186,7 +219,6 @@ const ResortData = () => {
           </div> */}
         </div>
       </div>
-      
 
       {/* <div className="container mt-5">
         <div className="card lg:card-side bg-sky-300 mt-9 shadow-xl">
@@ -198,7 +230,7 @@ const ResortData = () => {
           </div>
         </div>
       </div> */}
-      <Footer/>
+      <Footer />
     </div>
   );
 };
