@@ -58,7 +58,12 @@ const CancelBook=(BookingId)=>{
     console.log("cancel api call working..")
     return userAxiosInstance.post(`/cancelbooking/${BookingId}`)
 }
+const updatePassword = (data) => {
+    console.log(data,"data getting...")
+    console.log("changing password...")
+    return userAxiosInstance.post("/updatePassword", data);
+  };
 export {userregister,
     userlogin,userverify,getuserresort,authUser,
     getresortdata,getsimiliarstay,getuseradventure,
-    getuserdestination,getadvData,getDestinationData,booked_resort,get_booked_data,verifyrazorpay,CancelBook}
+    getuserdestination,getadvData,getDestinationData,booked_resort,get_booked_data,verifyrazorpay,CancelBook,updatePassword}

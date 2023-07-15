@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const {checkUser}=require('../Middleware/authuser')
 const {register,login,verifyuser,isUserAuth}=require('../Controller/authController')
-const {UserResort,getoneresort,getsimilarstay,UserAdventure,UserDestinations,getoneAdv,getonedest,getbookeddata,resort_book, verifyPayment,CancelBooking}=require('../Controller/UserController')
+const {UserResort,getoneresort,getsimilarstay,UserAdventure,UserDestinations,getoneAdv,getonedest,getbookeddata,resort_book, verifyPayment,CancelBooking,updatePassword}=require('../Controller/UserController')
 router.get('/')
 router.post('/',verifyuser)
 router.post('/register',register)
@@ -21,7 +21,7 @@ router.post('/bookedresort',checkUser,resort_book)
 router.post('/verifypayment',checkUser,verifyPayment)
 router.get('/getbookeddata',checkUser,getbookeddata)
 router.post('/cancelbooking/:id',checkUser,CancelBooking)
-
+router.post('/updatePassword',checkUser,updatePassword)
 
 
 

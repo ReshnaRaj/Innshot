@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { get_booked_data,CancelBook} from '../../services/Userapi';
 import Header from "./Layout/Header";
+import {Link}  from 'react-router-dom'
 import { ToastContainer, toast } from "react-toastify";
 const Booking = () => {
   const [resortbooked, setResortbooked] = useState([]);
@@ -44,8 +45,20 @@ const data=await CancelBook(BookingId)
   return (
     <div className='min-h screen'>
       <Header />
-      <h1 className='p-5 font-extrabold md:text-2xl text-center  underline-offset-8' >Your Booking Details</h1>
-      {resortbooked?.map((resort, index) => (
+
+      <h1 className='p-5 font-extrabold md:text-2xl text-center  underline-offset-8' >My Booking Details</h1>
+      {resortbooked.length === 0 ? (
+      <div className="flex flex-col items-center mt-5">
+      <h6 className="bg-red-500 text-white w-full text-center p-3 rounded-lg">
+        No bookings yet!
+      </h6>
+      <Link to="/resortlist" className="btn btn-success text-white w-full text-center p-3  mt-3 rounded-lg">
+        Go To Booking
+      </Link>
+    </div>
+    
+      ) : (
+      resortbooked?.map((resort, index) => (
         <div key={index} className="card card-side bg-transparent-400 shadow-xl">
           <div className="card-body">
             <h2 className="card-title">Booked Resort:{resort.resortId.resortname}</h2>
@@ -65,8 +78,9 @@ const data=await CancelBook(BookingId)
           </div>
           <ToastContainer />
         </div>
-      ))}
+      )))}
     </div>
+              
   );
 };
 

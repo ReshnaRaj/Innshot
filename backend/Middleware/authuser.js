@@ -22,18 +22,18 @@ const StaffModel = require("../Model/StaffModel");
 // };
 module.exports.checkUser = (req, res, next) => {
   try {
-    console.log("checking the user .....")
+    // console.log("checking the user .....")
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
       res.send({ status: false, message: "failed  no token present" });
     } else {
       jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decodedToken) => {
         if (err) {
-          console.log(err, "eeeeeeeee");
+          // console.log(err, "eeeeeeeee");
           res.json({ status: false, message: "failes" });
         } else {
           req.userId = decodedToken.userId;
-          console.log(req.userId, "uuuuuuuuuuu");
+          // console.log(req.userId, "uuuuuuuuuuu");
           // const user=await User.findById({_id:decodedToken.id})
           // req.user=user._id
           next();

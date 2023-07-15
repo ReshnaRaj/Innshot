@@ -3,6 +3,7 @@ const ResortModel = require("../Model/ResorttModel");
 const DestinationModel = require("../Model/DestinationModel");
 const BookingModel = require("../Model/BookingModel");
 const UserModel = require("../Model/UserModel");
+const bcrypt=require('bcrypt')
 // const stripe=require('stripe')(process.env.STRIPE_SECRET_KEY)
 // const {v4:uuidv4}=require('uuid')
 const Razorpay = require("razorpay");
@@ -92,37 +93,27 @@ module.exports.getonedest = async (req, res) => {
 };
 module.exports.resort_book = async (req, res) => {
   try {
-    // console.log(req.body,"ooooo")
-    const id=req.userId
-    // console.log(req.userId, "userId");
+    console.log("working of resort booking...");
     const { resortId, traveler, fromDate, toDate, payment } = req.body;
-    
-    // console.log(traveler, "user details");
-    // console.log(resortId, "resort full details included owner");
     const traveller = await UserModel.findOne({ email: traveler.email });
-    // console.log(traveller, "travller Id");
-
-    const resortt = await ResortModel.findOne({ _id: resortId._id });
-    console.log(resortt, "resortt");
+    console.log(traveller._id, "ffff");
+    const resortt = await ResortModel.findOne({ _id: resortId });
+    console.log(resortt._id, "ttttt");
     const existingBooking = await BookingModel.findOne({
-      resortId: resortt,
+      resortId: resortt._id,
       traveler: traveller,
       $or: [
         { fromDate: { $gte: fromDate }, toDate: { $lte: toDate } },
         { $and: [{ fromDate: { $lte: fromDate } }, { toDate: { $gte: toDate } }] },
         
       ],
-      
-      
     });
     console.log(existingBooking, "existing booking");
-
     if (existingBooking) {
       return res
         .status(400)
         .json({ error: "Resort already booked for the selected dates" });
     }
-
     if (payment === "cod") {
       const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -154,7 +145,7 @@ module.exports.resort_book = async (req, res) => {
       console.log(dayCount, "count of days");
 
       const newBooking = new BookingModel({
-        resortId: resortt,
+        resortId: resortt._id,
         traveler: traveller,
         fromDate: formatDate(fromDate),
         toDate: formatDate(toDate),
@@ -222,6 +213,42 @@ module.exports.resort_book = async (req, res) => {
     console.log(error, "123456");
   }
 };
+// module.exports.resort_book = async (req, res) => {
+//   try {
+//     const { resortId, traveler, fromDate, toDate, payment } = req.body;
+
+//     const traveller = await UserModel.findOne({ email: traveler.email });
+//     const resortt = await ResortModel.findOne({ _id: resortId._id });
+
+//     const existingBooking = await BookingModel.findOne({
+//       resortId: resortt._id,
+//       fromDate: fromDate,
+//       toDate: toDate,
+//     });
+
+//     if (existingBooking) {
+//       return res.status(400).json({ error: "Resort already booked for the selected dates" });
+//     }
+
+//     const overlappingBooking = await BookingModel.findOne({
+//       resortId: resortt._id,
+//       $or: [
+//         { fromDate: { $lte: fromDate }, toDate: { $gte: fromDate } },
+//         { fromDate: { $lte: toDate }, toDate: { $gte: toDate } },
+//       ],
+//     });
+
+//     if (overlappingBooking) {
+//       return res.status(400).json({ error: "Resort partially overlaps with an existing booking" });
+//     }
+
+//     // Rest of the code for handling payment and creating a new booking...
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ message: "An error occurred while booking the resort" });
+//   }
+// };
+
 module.exports.verifyPayment = async (req, res) => {
   try {
     console.log(req.body, "teena comes");
@@ -343,5 +370,28 @@ module.exports.CancelBooking = async (req, res, next) => {
   } catch (error) {
     console.log(error, "error consoling....");
     res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+module.exports.updatePassword = async (req, res) => {
+  console.log(req.body,"request body data getting...")
+  const _id = req.userId;
+  const { old, newPass } = req.body;
+  try {
+    let user = await UserModel.findById(_id);
+    const isMatch = await bcrypt.compare(old, user.password);
+
+    if (isMatch) {
+      const salt = await bcrypt.genSalt(10);
+      const hashPassword = await bcrypt.hash(newPass.trim(), salt);
+      const userupdate = await UserModel.findByIdAndUpdate(
+        { _id },
+        { $set: { password: hashPassword } }
+      );
+      res.json({ status: "success", result: userupdate });
+    } else {
+      res.json({ status: "failed", message: "credentials are incorrect" });
+    }
+  } catch (error) {
+    res.json({ status: "error", message: error.message });
   }
 };
