@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Layout/Header";
 import Footer from "./Layout/Footer";
+import { SiGooglechat } from "react-icons/si";
 import { MdPlace } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { FaRupeeSign } from "react-icons/fa";
@@ -17,7 +18,7 @@ const Home = () => {
   const [adventure, setAdventure] = useState([]);
   const [destination, setDestination] = useState([]);
   const navigate = useNavigate();
-  // const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     userdestination();
   }, []);
@@ -58,20 +59,16 @@ const Home = () => {
       console.log(error);
     }
   };
-  const handleClick=async(item)=>{
+  const handleClick = async (item) => {
     try {
-      navigate(`/viewadventure/${item}`,{state:{item}})
-    } catch (error) {
-      
-    }
-  }
-  const  handleSee=async(item)=>{
+      navigate(`/viewadventure/${item}`, { state: { item } });
+    } catch (error) {}
+  };
+  const handleSee = async (item) => {
     try {
-      navigate(`/viewdestination/${item}`,{state:{item}})
-    } catch (error) {
-      
-    }
-  }
+      navigate(`/viewdestination/${item}`, { state: { item } });
+    } catch (error) {}
+  };
   useEffect(() => {
     userresort();
   }, []);
@@ -98,7 +95,7 @@ const Home = () => {
   return (
     <div className="mx-auto max-w-screen-2xl">
       <Header />
-      
+
       <div className="carousel">
         {images.map((img) => (
           <div
@@ -190,9 +187,14 @@ const Home = () => {
                     <div className="text-black">{item.price}</div>
                   </div>
 
-                  <button className="btn btn-primary" onClick={()=>{
-                    handleView(item._id)
-                  }}>View Details</button>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => {
+                      handleView(item._id);
+                    }}
+                  >
+                    View Details
+                  </button>
                 </div>
               </div>
             ))}
@@ -214,7 +216,6 @@ const Home = () => {
                 </figure>
                 <div className="flex flex-col">
                   <div className="flex items-center">
-                 
                     <div className="text-lg font-semibold">{item.activity}</div>
                   </div>
                   <div className="flex items-center">
@@ -222,12 +223,15 @@ const Home = () => {
                     <div className="text-lg font-semibold">{item.place}</div>
                   </div>
 
-                 
-                  <button className="btn btn-primary" onClick={()=>{
-                      console.log("advrihdb working...")
-                      handleClick(item._id)
-                    }}>View Details</button>
-                  
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => {
+                      console.log("advrihdb working...");
+                      handleClick(item._id);
+                    }}
+                  >
+                    View Details
+                  </button>
                 </div>
               </div>
             ))}
@@ -235,7 +239,7 @@ const Home = () => {
         </div>
         <div className="card-body">
           <h1 className="p-5 font-extrabold md:text-2xl text-center  underline-offset-8">
-          Keep calm and travel on....
+            Keep calm and travel on....
           </h1>
           <div className="flex flex-wrap">
             {destination.map((item) => (
@@ -263,11 +267,14 @@ const Home = () => {
                     <div className="text-black">{item.resortName}</div>
                   </div> */}
 
-                 
-                  <button className="btn btn-primary" onClick={()=>{
-                    handleSee(item._id)
-                  }}>View Details</button>
-                  
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => {
+                      handleSee(item._id);
+                    }}
+                  >
+                    View Details
+                  </button>
                 </div>
               </div>
             ))}
@@ -315,9 +322,8 @@ const Home = () => {
           />
         </div>
       </div>
-
+      <SiGooglechat className="fixed bottom-4 right-4 z-50 text-4xl text-primary" />
       <Footer />
-      
     </div>
   );
 };

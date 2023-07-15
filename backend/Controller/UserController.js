@@ -95,18 +95,24 @@ module.exports.resort_book = async (req, res) => {
   try {
     console.log("working of resort booking...");
     const { resortId, traveler, fromDate, toDate, payment } = req.body;
+    console.log(req.body,"request body....")
+    const formatDate = (dateString) => {
+      const date = new Date(dateString);
+      const day = date.getDate();
+      const month = date.getMonth() + 1; // Months are zero-based
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    };
+    console.log(formatDate,"gggggggg")
     const traveller = await UserModel.findOne({ email: traveler.email });
     console.log(traveller._id, "ffff");
     const resortt = await ResortModel.findOne({ _id: resortId });
     console.log(resortt._id, "ttttt");
     const existingBooking = await BookingModel.findOne({
       resortId: resortt._id,
-      traveler: traveller,
-      $or: [
-        { fromDate: { $gte: fromDate }, toDate: { $lte: toDate } },
-        { $and: [{ fromDate: { $lte: fromDate } }, { toDate: { $gte: toDate } }] },
-        
-      ],
+       
+      fromDate:formatDate(fromDate),
+      toDate:formatDate(toDate)
     });
     console.log(existingBooking, "existing booking");
     if (existingBooking) {
@@ -115,16 +121,10 @@ module.exports.resort_book = async (req, res) => {
         .json({ error: "Resort already booked for the selected dates" });
     }
     if (payment === "cod") {
-      const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const day = date.getDate();
-        const month = date.getMonth() + 1; // Months are zero-based
-        const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
-      };
-
+      
+     console.log(formatDate,"tttt")
       const update_from = formatDate(fromDate);
-      console.log(update_from, typeof update_from, "tttt");
+      // console.log(update_from, typeof update_from, "tttt");
       const update_to = formatDate(toDate);
       const fromDateParts = update_from.split("/");
       const toDateParts = update_to.split("/");
@@ -158,13 +158,7 @@ module.exports.resort_book = async (req, res) => {
       res.json({ savedBooking, success: true });
     } else {
       try {
-        const formatDate = (dateString) => {
-          const date = new Date(dateString);
-          const day = date.getDate();
-          const month = date.getMonth() + 1; // Months are zero-based
-          const year = date.getFullYear();
-          return `${day}/${month}/${year}`;
-        };
+      
         const update_from = formatDate(fromDate);
         console.log(update_from, typeof update_from, "tttt");
         const update_to = formatDate(toDate);

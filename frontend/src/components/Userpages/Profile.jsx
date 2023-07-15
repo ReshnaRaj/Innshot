@@ -2,6 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Header from "./Layout/Header";
 import Footer from "./Layout/Footer";
+import { SiGooglechat } from "react-icons/si";
+import { Link } from "react-router-dom";
 import ChangePassword from "./ChangePassword";
 
 const Profile = () => {
@@ -27,18 +29,20 @@ const Profile = () => {
           <h2 className="text-lg mt-4 mb-2">Email:</h2>
           <input type="email" value={users.email} className="input mb-4" />
 
-          <div className="w-1/2 text-center flex justify-center items-center">
+          <div className=" text-center flex justify-center items-center">
             <label
               htmlFor="chngepass"
               className="cursor-pointer font-bold underline underline-offset-4"
             >
               Change Password
             </label>
-           
+ 
           </div>
+           
         </div>
       </div>
    <ChangePassword/>
+   <SiGooglechat className="fixed bottom-4 right-4 z-50 text-4xl text-primary" />
       <Footer />
     </div>
   );

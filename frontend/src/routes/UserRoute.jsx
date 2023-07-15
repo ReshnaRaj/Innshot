@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route,Routes } from 'react-router-dom'
+import { useSelector } from "react-redux";
 import LoginPage from '../pages/user/LoginPage'
 import RegisterPage from '../pages/user/RegisterPage'
 import UserHome from '../pages/user/UserHome';
@@ -16,7 +17,11 @@ import Hotelpaying from '../components/Userpages/Hotelpaying';
 import Booking from '../components/Userpages/Booking';
 import AdventureBooking from '../components/Userpages/AdventureBooking';
 import Profile from '../components/Userpages/Profile';
+import WelcomePage from '../components/Userpages/Chat/ChatwithOwner';
+
 const UserRoute = () => {
+  const user = useSelector((state) => state.user);
+  console.log(user,"user fata")
   return (
     <>
     <Routes>
@@ -37,6 +42,7 @@ const UserRoute = () => {
     <Route exact path='/hotelbooking' element={<Hotelpaying/>}/>
     <Route exact path='/profile' element={<Profile/>}/>
     <Route exact path='/mybooking' element={<Booking/>}/>
+    <Route exact path='/chat' element={<WelcomePage name={user}/>}/>
     {/* <Route exact path='/viewbookadv' element={<AdventureBooking/>}/> */}
    
    
