@@ -322,7 +322,7 @@ const Home = () => {
           />
         </div>
       </div>
-      <SiGooglechat className="fixed bottom-4 right-4 z-50 text-4xl text-primary" />
+      {/* <SiGooglechat className="fixed bottom-4 right-4 z-50 text-4xl text-primary" /> */}
       <Footer />
     </div>
   );

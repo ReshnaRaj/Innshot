@@ -107,10 +107,13 @@ module.exports.resort_book = async (req, res) => {
     const traveller = await UserModel.findOne({ email: traveler.email });
     console.log(traveller._id, "ffff");
     const resortt = await ResortModel.findOne({ _id: resortId });
-    console.log(resortt._id, "ttttt");
+    console.log(resortt, "ttttt");
     const existingBooking = await BookingModel.findOne({
       resortId: resortt._id,
-       
+       $or: [
+        { status:{$eq:"booked"}},
+        { status:{$ne:"cancelled"} }
+      ],
       fromDate:formatDate(fromDate),
       toDate:formatDate(toDate)
     });
@@ -207,41 +210,7 @@ module.exports.resort_book = async (req, res) => {
     console.log(error, "123456");
   }
 };
-// module.exports.resort_book = async (req, res) => {
-//   try {
-//     const { resortId, traveler, fromDate, toDate, payment } = req.body;
-
-//     const traveller = await UserModel.findOne({ email: traveler.email });
-//     const resortt = await ResortModel.findOne({ _id: resortId._id });
-
-//     const existingBooking = await BookingModel.findOne({
-//       resortId: resortt._id,
-//       fromDate: fromDate,
-//       toDate: toDate,
-//     });
-
-//     if (existingBooking) {
-//       return res.status(400).json({ error: "Resort already booked for the selected dates" });
-//     }
-
-//     const overlappingBooking = await BookingModel.findOne({
-//       resortId: resortt._id,
-//       $or: [
-//         { fromDate: { $lte: fromDate }, toDate: { $gte: fromDate } },
-//         { fromDate: { $lte: toDate }, toDate: { $gte: toDate } },
-//       ],
-//     });
-
-//     if (overlappingBooking) {
-//       return res.status(400).json({ error: "Resort partially overlaps with an existing booking" });
-//     }
-
-//     // Rest of the code for handling payment and creating a new booking...
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({ message: "An error occurred while booking the resort" });
-//   }
-// };
+ 
 
 module.exports.verifyPayment = async (req, res) => {
   try {

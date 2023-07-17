@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 
 const Navbars = () => {
   const admin=useSelector((state)=>state.admin)
+  console.log(admin.value,"admingggg")
   const handleLogout=()=>{
     localStorage.removeItem('admintoken')
   }
@@ -28,10 +29,10 @@ const Navbars = () => {
           <Link to="/admin/allstaff" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><FaUsers/></span>All ResortOwners</Link>
           
           <Link to="/admin/allbookings" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdBookmarkAdded/></span>Booking</Link>
-          {admin.email &&(
+          {admin.value.email &&(
             <>
             <div className='dropdown dropdown-hover'>
-            <label tabIndex={0} className="py-2 px-4"><span className='hover:text-white-300'>{admin.email}</span></label>
+            <label tabIndex={0} className="py-2 px-4"><span className='hover:text-white-300'>{admin.value.email}</span></label>
             <ul tabIndex={0} className="dropdown-content menu shadow w-22 bg-slate-900">
            
             <Link to='/admin/adlogin'><a onClick={handleLogout} className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdLogout /></span>Logout</a></Link>

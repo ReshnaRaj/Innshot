@@ -268,10 +268,12 @@ module.exports.adminlogin=async(req,res)=>{
 }
 module.exports.isAdminAuth = async (req, res) => {
     try {
+      console.log(req.adminId,"tttt")
       let admin = await AdminModel.findById(req.adminId);
       const admindetails = {
         email: admin.email,
       };
+      console.log(admindetails,"tttt")
       res.json({
         auth: true,
         result: admindetails,

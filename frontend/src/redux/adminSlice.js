@@ -18,7 +18,7 @@ const adminSlice = createSlice({
       // console.log(action.payload,"1234567")
       state.value={...action.payload,
       isAdminAuth:true}
-      console.log(state.value,"valuess")
+      // console.log(state.value,"valuess")
       
     },
     adminlogout:(state)=>{

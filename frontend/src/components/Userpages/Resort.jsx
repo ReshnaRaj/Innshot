@@ -5,6 +5,7 @@ import { MdPlace } from "react-icons/md";
 import { FaBed } from "react-icons/fa";
 import { BiHomeAlt } from "react-icons/bi";
 import DatePicker from "react-datepicker";
+import { useSelector } from "react-redux";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { getuserresort, get_booked_data } from "../../services/Userapi";
@@ -17,6 +18,19 @@ const Resort = () => {
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState("");
   const [filteredResorts, setFilteredResorts] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // const currentUser = useSelector((state) => state.user);
+
+  // console.log(currentUser, "user detaiks...");
+  // Replace "user" with the appropriate Redux slice name
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     setIsLoggedIn(true);
+  //   } else {
+  //     setIsLoggedIn(false);
+  //   }
+  // }, [currentUser]);
 
   const navigate = useNavigate();
 
@@ -80,42 +94,62 @@ const Resort = () => {
     }
   };
   const handleSearch = () => {
-    // console.log(resortbooked,"booked resorts...")
-    // console.log(selectedPlace,"place...")
-    // console.log(checkInDate,"from date")
-    // console.log(checkOutDate,"to date...")
     if (selectedPlace && checkInDate && checkOutDate) {
+      // Formatting the date into the correct format
+      const new_checkin = checkInDate;
+      const new_checkout = checkOutDate;
+  
+      const options = { day: "numeric", month: "numeric", year: "numeric" };
+      const formatted_InDate = new_checkin.toLocaleDateString("en-GB", options).replace(/\/0(\d)\//, '/$1/');
+      const formatted_outDate = new_checkout.toLocaleDateString("en-GB", options).replace(/\/0(\d)\//, '/$1/');
+  
       const filterResorts = resort.filter((item) => {
-        // console.log(item._id,"all resotss")
-        const isBooked = resortbooked?.some((bookedItem) => {
-          console.log(resortbooked,"ooooooooooo");
-          if (
-            bookedItem.resortId._id === item._id &&
-            bookedItem.status === "booked"
-          ) {
-            return true;
-          }
-          return false;
-        });
-        console.log(isBooked,"checking ")
         const isPlaceMatched = item.place === selectedPlace;
-        const isDateAvailable = !resortbooked.some((bookedItem) => {
+  
+        const hasOverlappingBooking = resortbooked?.some((bookedItem) => {
+          const bookedFrom = bookedItem.fromDate;
+          const bookedTo = bookedItem.toDate;
+          console.log(bookedTo,bookedFrom,"gigigigi")
+          console.log(formatted_InDate,formatted_outDate,"ooooo")
+  
+          // Check for overlapping bookings
+          const isOverlapping =
+            (formatted_InDate <= bookedFrom && bookedFrom <= formatted_outDate) || // Overlapping start date
+            (formatted_InDate <= bookedTo && bookedTo <= formatted_outDate) || // Overlapping end date
+            (bookedFrom <= formatted_InDate && formatted_outDate <= bookedTo); // Booking covers the entire search range
+  
           return (
             bookedItem.resortId._id === item._id &&
             bookedItem.status === "booked" &&
-            checkInDate <= bookedItem.checkOutDate &&
-            checkOutDate >= bookedItem.checkInDate
+            isOverlapping
           );
         });
-        return !isBooked && isPlaceMatched && isDateAvailable;
+  // isUserBooked: Also uses the .some() method on the 
+  // resortbooked array to check if the user has already
+  //  booked the resort for the specified dates. 
+  //  It compares the booked item's fromDate and toDate 
+  //  properties with the formatted search dates. 
+  //  If the user is already booked
+  //  for the specified dates, the function returns true.
+        const isUserBooked = resortbooked?.some((bookedItem) => {
+          return (
+            bookedItem.resortId._id === item._id &&
+            bookedItem.status === "booked" &&
+            formatted_InDate <= bookedItem.fromDate &&
+            formatted_outDate >= bookedItem.toDate
+            
+          );
+        });
+  
+        return isPlaceMatched && !hasOverlappingBooking && !isUserBooked;
       });
+  
       console.log(filterResorts, "Filtered Resorts");
       setFilteredResorts(filterResorts);
     }
-    // else{
-    //   setFilteredResorts(resort)
-    // }
   };
+  
+
   // console.log(resort, "all resort datas...");
 
   const today = new Date();
@@ -172,8 +206,56 @@ const Resort = () => {
       </div>
 
       <div className="flex flex-wrap">
-        {(filteredResorts?.length > 0 ? filteredResorts : resort).map(
-          (item) => (
+        {selectedPlace && checkInDate && checkOutDate ? (
+          filteredResorts?.length > 0 ? (
+            filteredResorts.map((item) => (
+              <div
+                className="bg-white shadow-1 p-5 rounded-tl-[20px] w-full max-w-[352px] mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105"
+                key={item.resortname}
+              >
+                <figure>
+                  <img
+                    src={`${item.image[0]}`}
+                    alt="resort image"
+                    className="rounded-tl-[20px] mb-8"
+                  />
+                </figure>
+                <div className="mb-4 flex flex-col">
+                  <div className="flex items-center mb-2">
+                    <BiHomeAlt className="text-lg mr-2" />
+                    <div className="text-lg font-semibold">
+                      {item.resortname}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center">
+                    <MdPlace className="text-lg mr-2" />
+                    <div className="text-black">{item.place}</div>
+                  </div>
+
+                  <div className="flex items-center">
+                    <FaBed className="text-lg mr-2" />
+                    <div className="text-lg font-semibold">
+                      {item.number_room}
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => handleView(item._id)}
+                    className="btn btn-primary"
+                  >
+                    View Details
+                  </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="text-2xl mx-auto">
+              <img src="https://res.cloudinary.com/dsyln8j3g/image/upload/v1689588227/new_nf8utw.gif"/>
+            </div>
+          )
+        ) : (
+          resort.map((item) => (
             <div
               className="bg-white shadow-1 p-5 rounded-tl-[20px] w-full max-w-[352px] mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105"
               key={item.resortname}
@@ -211,7 +293,7 @@ const Resort = () => {
                 </button>
               </div>
             </div>
-          )
+          ))
         )}
       </div>
 

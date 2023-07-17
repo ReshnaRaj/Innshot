@@ -5,7 +5,7 @@ import {authAdmin} from '../services/Adminapi'
 import { authStaff } from '../services/Staffapi';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { setUserDetails,userlogout } from '../redux/userSlice';
-import { adminlogin, adminlogout, setAdminDetails } from '../redux/adminSlice';
+import { adminlogin, adminlogout} from '../redux/adminSlice';
 import { setStaffDetails, staffLogout } from '../redux/staffSlice';
 
 
@@ -25,10 +25,11 @@ function PrivateRoute({role,route}) {
           dispatch(userlogout())
         }
         else if(response.data.auth){
-          // console.log(response.data,"ffffff")
+          console.log(response.data,"ffffff")
           dispatch(setUserDetails(response.data))
+        
         }
-        setAuth(response.data.auth)
+        setAuth(response.data?.auth)
       }).catch((response)=>{
         console.log(response,"aaaa")
         setAuth(response.data?.auth)
@@ -37,21 +38,22 @@ function PrivateRoute({role,route}) {
       })
 
     }else if(role==='admin'){
-      // console.log(role,"admin role...")
+    
       authAdmin().then((respo)=>{
-        // console.log("data display")
+        
         console.log(respo,"data")
         if(!respo.data.auth){
           localStorage.removeItem('admintoken')
           
           dispatch(adminlogout())
-          // navigate('/admin/adlogin')
+          
         }
         else if(respo.data.auth){
-          // console.log(respo.data,"admin email getting.........")
-          dispatch(adminlogin(respo.data))
+          console.log(respo.data.auth,"admin email getting.........")
+          console.log(respo.data.result)
+          dispatch(adminlogin(respo.data.result))
         } 
-        setAuth(respo.data.auth)
+        setAuth(respo.data?.auth)
       })
       .catch(respo=>{
         setAuth(respo.data?.auth)
