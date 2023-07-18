@@ -10,7 +10,9 @@ const ViewAdventure = () => {
   let { id } = useParams();
   console.log(id, "id adventure..");
   useEffect(() => {
+    
     getadventuredata();
+    // eslint-disable-next-line
   }, []);
   const getadventuredata = async () => {
     try {
@@ -40,7 +42,7 @@ const ViewAdventure = () => {
               key={image?.id}
               className="carousel-item relative w-full"
             >
-              <img src={image?.src} className="w-96 h-60 mx-auto" alt="IMAGE" />
+              <img src={image?.src} className="w-96 h-60 mx-auto" alt="image_Adventure" />
               <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
                 <a
                   href={`#slide${

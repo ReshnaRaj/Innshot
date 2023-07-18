@@ -11,6 +11,7 @@ const ViewResort = () => {
   let { id } = useParams();
   useEffect(() => {
     getresortdetails();
+    // eslint-disable-next-line
   }, []);
   const getresortdetails = async () => {
     try {
@@ -42,7 +43,7 @@ const ViewResort = () => {
               {resortdetails?.image && resortdetails.image[0] ? (
                 <img
                   src={`${resortdetails.image[0]}`}
-                  alt="resort image"
+                  alt="resort"
                   style={{ maxWidth: "200px", maxHeight: "200px" }}
                 />
               ) : (
@@ -73,7 +74,7 @@ const ViewResort = () => {
                         <img
                           src={image?.src}
                           className="w-40 mx-auto"
-                          alt="IMAGE"
+                          alt=""
                         />
                         <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
                           <a
