@@ -117,6 +117,7 @@ const Resort = () => {
             (formatted_InDate <= bookedFrom && bookedFrom <= formatted_outDate) || // Overlapping start date
             (formatted_InDate <= bookedTo && bookedTo <= formatted_outDate) || // Overlapping end date
             (bookedFrom <= formatted_InDate && formatted_outDate <= bookedTo); // Booking covers the entire search range
+            console.log(isOverlapping,"udemy...")
   
           return (
             bookedItem.resortId._id === item._id &&
