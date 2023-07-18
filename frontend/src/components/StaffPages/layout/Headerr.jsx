@@ -1,7 +1,7 @@
 import React from "react";
-import { SiGooglechat } from "react-icons/si";
+// import { SiGooglechat } from "react-icons/si";
  
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 const Headerr = ({ name }) => {
   return (

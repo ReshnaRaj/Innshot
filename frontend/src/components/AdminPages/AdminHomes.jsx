@@ -12,7 +12,7 @@ import {
   BarElement,
   Title,
 } from "chart.js";
-import { Doughnut, Pie} from "react-chartjs-2";
+import { Pie} from "react-chartjs-2";
 ChartJS.register(ArcElement,Tooltip,Legend,CategoryScale,LinearScale,BarElement,Title)
 const AdminHomes = () => {
  

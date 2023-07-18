@@ -5,7 +5,7 @@ import { MdPlace } from "react-icons/md";
 import { FaBed } from "react-icons/fa";
 import { BiHomeAlt } from "react-icons/bi";
 import DatePicker from "react-datepicker";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { getuserresort, get_booked_data } from "../../services/Userapi";
@@ -18,7 +18,7 @@ const Resort = () => {
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState("");
   const [filteredResorts, setFilteredResorts] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // const currentUser = useSelector((state) => state.user);
 
@@ -217,7 +217,7 @@ const Resort = () => {
                 <figure>
                   <img
                     src={`${item.image[0]}`}
-                    alt="resort image"
+                    alt="images_resort"
                     className="rounded-tl-[20px] mb-8"
                   />
                 </figure>
@@ -252,7 +252,7 @@ const Resort = () => {
             ))
           ) : (
             <div className="text-2xl mx-auto">
-              <img src="https://res.cloudinary.com/dsyln8j3g/image/upload/v1689588227/new_nf8utw.gif"/>
+              <img src="https://res.cloudinary.com/dsyln8j3g/image/upload/v1689588227/new_nf8utw.gif" alt="images_resort"/>
             </div>
           )
         ) : (
@@ -264,7 +264,7 @@ const Resort = () => {
               <figure>
                 <img
                   src={`${item.image[0]}`}
-                  alt="resort image"
+                  alt="images_resort"
                   className="rounded-tl-[20px] mb-8"
                 />
               </figure>

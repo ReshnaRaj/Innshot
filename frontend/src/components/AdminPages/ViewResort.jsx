@@ -3,7 +3,7 @@ import Navbars from "./layout/Navbars";
 import Headers from "./layout/Headers";
 import { getuniqueresort } from "../../services/Adminapi";
 import { useParams } from "react-router-dom";
-import { baseUrl } from "../../files/file";
+// import { baseUrl } from "../../files/file";
 import {MdFileDownload} from 'react-icons/md'
 
 const ViewResort = () => {

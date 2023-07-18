@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbars from "./layout/Navbars";
 import Headers from "./layout/Headers";
-import { getAllData, approveresort,rejectresort,approveresortt } from "../../services/Adminapi";
+import { getAllData,rejectresort,approveresortt } from "../../services/Adminapi";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -49,7 +49,7 @@ const PendingRequest = () => {
   // };
   const handleRejectreasonsubmitt=async()=>{
     try {
-      if(rejectionreason==""){
+      if(rejectionreason===""){
         
        return alert('type the reason first')
       }
