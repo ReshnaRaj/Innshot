@@ -12,11 +12,12 @@ import ViewAdventure from "../components/AdminPages/ViewAdventure";
 import ViewDestination from "../components/AdminPages/ViewDest";
 import AllResorters from "../components/AdminPages/AllStaff";
 import AllBookings from "../components/AdminPages/AllBookings";
-
+import Error from '../components/Error/Admin'
 const AdminRoute = () => {
   return (
     <>
       <Routes>
+        
         <Route exact path='/adlogin' element={<AdminLogin />} />
         <Route
           element={<PrivateRoute role={"admin"} route={'/admin/adlogin'} />}
@@ -37,6 +38,7 @@ const AdminRoute = () => {
           <Route exact path="/allbookings" element={<AllBookings />} />
           {/* <Route exact path='/allresort' element={<Resort/>}/> */}
         </Route>
+        <Route exact path='/*' element={<Error/>}/>
       </Routes>
     </>
   );

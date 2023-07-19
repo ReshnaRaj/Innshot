@@ -4,7 +4,7 @@ import StaffRoute from "./routes/StaffRoute";
 import AdminRoute from "./routes/AdminRoute";
 import UserRoute from './routes/UserRoute'
 import 'react-toastify/dist/ReactToastify.css'
-import Error from './components/Error/Admin'
+
 function App() {
   return (
  <BrowserRouter>
@@ -12,7 +12,7 @@ function App() {
   <Route exact path='/*' element={<UserRoute/>}/>
   <Route exact path='/staff/*' element={<StaffRoute/>}/>
   <Route exact path='/admin/*' element={<AdminRoute/>}/>
-  <Route exact path='*' element={<Error/>}/>
+ 
  </Routes>
  </BrowserRouter>
   );
