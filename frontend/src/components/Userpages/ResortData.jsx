@@ -1,27 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import Header from "./Layout/Header";
 import { FaRupeeSign } from "react-icons/fa";
-import { SiGooglechat } from "react-icons/si";
+// import { SiGooglechat } from "react-icons/si";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaBed } from "react-icons/fa";
-import { getresortdata, getsimiliarstay } from "../../services/Userapi";
+import { getresortdata } from "../../services/Userapi";
 import Footer from "./Layout/Footer";
 
 const ResortData = () => {
   const [resortdata, setResortdata] = useState([]);
-  const [similarStays, setSimilarStays] = useState([]);
+  // const [similarStays, setSimilarStays] = useState([]);
   let { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     getResortData();
   }, []);
-  useEffect(() => {
-    if (resortdata.place) {
-      fetchSimilarStays();
-    }
-  }, [resortdata.place]);
+  // useEffect(() => {
+  //   if (resortdata.place) {
+  //     fetchSimilarStays();
+  //   }
+  // }, [resortdata.place]);
 
   const getResortData = async () => {
     try {
@@ -41,17 +41,17 @@ const ResortData = () => {
       console.log(error);
     }
   };
-  const fetchSimilarStays = async () => {
-    try {
-      let { data } = await getsimiliarstay(resortdata.place);
-      console.log(resortdata.place, "similar stays data get");
-      if (data.success) {
-        setSimilarStays(data.similarStays);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchSimilarStays = async () => {
+  //   try {
+  //     let { data } = await getsimiliarstay(resortdata.place);
+  //     console.log(resortdata.place, "similar stays data get");
+  //     if (data.success) {
+  //       setSimilarStays(data.similarStays);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const images = resortdata?.image?.map((image, index) => ({
     id: index + 1,
@@ -130,7 +130,7 @@ const ResortData = () => {
                   <img
                     src={image?.src}
                     className="w-96 h-60 mx-auto"
-                    alt="IMAGE"
+                    // alt="IMAGE"
                   />
                   <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
                     <a

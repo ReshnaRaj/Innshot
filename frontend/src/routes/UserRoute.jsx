@@ -15,34 +15,36 @@ import DestinationData from '../components/Userpages/DestinationData'
 import ResortBooking from '../components/Userpages/ResortBooking';
 import Hotelpaying from '../components/Userpages/Hotelpaying';
 import Booking from '../components/Userpages/Booking';
-import AdventureBooking from '../components/Userpages/AdventureBooking';
+// import AdventureBooking from '../components/Userpages/AdventureBooking';
 import Profile from '../components/Userpages/Profile';
 import WelcomePage from '../components/Userpages/Chat/ChatwithOwner';
-
+import Error from '../components/Error/User'
 const UserRoute = () => {
   const user = useSelector((state) => state.user);
   console.log(user,"user fata")
   return (
     <>
     <Routes>
-    <Route exact path='/' element={<UserHome/>}/>
-    <Route exact path='/register' element={<RegisterPage/>}/>
-    <Route exact path='/login' element={<LoginPage/>}/>
-    <Route exact path="/verifyemail/:id" element={<EmailVerify/>} />
-    <Route exact path='/resortlist' element={<ResortList/>}/>
-    <Route exact path='/viewdata/:id' element={<ResortData/>}/>
-    <Route exact path='/adventure' element={<Adventure/>}/>
-    <Route exact path='/viewadventure/:id' element={<AdventureData/>}/>
-    <Route eaxct path='/destinations' element={<Destination/>}/>
-    <Route exact path='/viewdestination/:id' element={<DestinationData/>}/>
+    <Route   path='/*' element={<Error/>}/>
+    <Route  path='/' element={<UserHome/>}/>
+    <Route  path='/register' element={<RegisterPage/>}/>
+    <Route  path='/login' element={<LoginPage/>}/>
+    <Route  path="/verifyemail/:id" element={<EmailVerify/>} />
+    <Route  path='/resortlist' element={<ResortList/>}/>
+    <Route  path='/viewdata/:id' element={<ResortData/>}/>
+    <Route  path='/adventure' element={<Adventure/>}/>
+    <Route  path='/viewadventure/:id' element={<AdventureData/>}/>
+    <Route  path='/destinations' element={<Destination/>}/>
+    <Route  path='/viewdestination/:id' element={<DestinationData/>}/>
    
-    <Route element={<PrivateRoute role={'user'} route={'/'}/>}>
+    <Route element={<PrivateRoute role={'user'} route={'/login'}/>}>
     
-    <Route exact path='/viewbook' element={<ResortBooking/>}/>
-    <Route exact path='/hotelbooking' element={<Hotelpaying/>}/>
-    <Route exact path='/profile' element={<Profile/>}/>
-    <Route exact path='/mybooking' element={<Booking/>}/>
-    <Route exact path='/chat' element={<WelcomePage name={user}/>}/>
+    <Route  path='/viewbook' element={<ResortBooking/>}/>
+    <Route  path='/hotelbooking' element={<Hotelpaying/>}/>
+    <Route  path='/profile' element={<Profile/>}/>
+    <Route  path='/mybooking' element={<Booking/>}/>
+    <Route  path='/chat' element={<WelcomePage name={user}/>}/>
+   
     {/* <Route exact path='/viewbookadv' element={<AdventureBooking/>}/> */}
    
    

@@ -13,23 +13,26 @@ import PrivateRoute from '../Protectedroute/PrivateRoute';
 import AddDestination from '../components/StaffPages/AddDestination';
 import EditDest from '../components/StaffPages/EditDest';
 import Booking from '../components/StaffPages/Booking';
+import Error from '../components/Error/Staff'
 const StaffRoute = () => {
   return (
     <>
     <Routes>
-    <Route exact path='/stafflogin' element={<StaffLogin/>}/>
-    <Route exact path='/staffregister' element={<StaffRegister/>}/>
-    <Route exact path="/verifystaffemail/:id" element={<EmailVerifystaff/>} />
+    <Route path='/*' element={<Error/>}/>
+    <Route  path='/stafflogin' element={<StaffLogin/>}/>
+    <Route  path='/staffregister' element={<StaffRegister/>}/>
+    <Route  path="/verifystaffemail/:id" element={<EmailVerifystaff/>} />
     <Route element={<PrivateRoute role={'staff'} route={'/staff/stafflogin'}/>}>
-    <Route exact path='/staffhome' element={<StaffHome/>}/>
-    <Route exact path='/staffresorts' element={<StaffResort/>}/>
-    <Route exact path='/add-resort' element={<AdResort/>}/>
-    <Route exact path='/editresort' element={<EditResort/>}/>
-    <Route exact path='/staffadventure' element={<StafAdventure/>}/>
-    <Route exact path='/staffdestination' element={<StaffDest/>}/>
-    <Route exact path='/add-dest' element={<AddDestination/>}/>
-    <Route exact path='/editdest' element={<EditDest/>}/>
-    <Route exact path='/bookings' element={<Booking/>}/>
+    <Route  path='/staffhome' element={<StaffHome/>}/>
+    <Route  path='/staffresorts' element={<StaffResort/>}/>
+    <Route  path='/add-resort' element={<AdResort/>}/>
+    <Route  path='/editresort' element={<EditResort/>}/>
+    <Route  path='/staffadventure' element={<StafAdventure/>}/>
+    <Route  path='/staffdestination' element={<StaffDest/>}/>
+    <Route  path='/add-dest' element={<AddDestination/>}/>
+    <Route  path='/editdest' element={<EditDest/>}/>
+    <Route  path='/bookings' element={<Booking/>}/>
+   
     
     </Route>
     </Routes>
