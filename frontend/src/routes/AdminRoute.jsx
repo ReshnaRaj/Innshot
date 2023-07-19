@@ -38,7 +38,7 @@ const AdminRoute = () => {
           <Route exact path="/allbookings" element={<AllBookings />} />
           {/* <Route exact path='/allresort' element={<Resort/>}/> */}
         </Route>
-        <Route exact path='/*' element={<Error/>}/>
+        <Route   path='/*' element={<Error/>}/>
       </Routes>
     </>
   );
