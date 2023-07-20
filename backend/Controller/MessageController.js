@@ -1,9 +1,10 @@
 const MessageModel=require('../Model/MessageModel')
 module.exports.addMessage=async(req,res)=>{
-    const {chatId,senderId,text}=req.body 
+    const {ChatId,senderId,text}=req.body 
     const message=new MessageModel({
-     chatId,senderId,text
+     ChatId,senderId,text
     })
+    console.log(message,"you are good")
     try {
         const result=await message.save()
         res.status(200).json(result)
@@ -13,9 +14,12 @@ module.exports.addMessage=async(req,res)=>{
     }
 }
 module.exports.getMessage=async(req,res)=>{
-    const {chatId}=req.params;
+    console.log(req.params.chatId,"chat id...")
+    // const {ChatId}=req.params;
     try {
-        const result=await MessageModel.find({chatId})
+
+        const result=await MessageModel.find({ChatId: req.params.chatId})
+        console.log(result,"getting message")
         res.status(200).json(result)
     } catch (error) {
         res.status(500).json(error)
