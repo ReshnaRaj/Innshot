@@ -8,12 +8,7 @@ import { userregister } from '../../services/Userapi';
 
 const UserRegister = () => {
   const [message, setMessage] = useState('');
-  // const [user, setUser] = useState({
-  //   name: '',
-  //   email: '',
-  //   phone: '',
-  //   password: ''
-  // });
+ 
   const [name,setname]=useState('')
   const [email,setemail]=useState('')
   const [phone,setphone]=useState('')
@@ -45,11 +40,9 @@ const UserRegister = () => {
         if (data) {
           console.log(data,"data of user")
           if (data.errors) {
-            const { name, email, phone, password } = data.errors;
-            if (name) generateError(name);
-            else if (email) generateError(email);
-            else if (password) generateError(password);
-            else if (phone) generateError(phone);
+           
+            generateError(response.error);
+   
           } else {
             setMessage('Account activated, check your email');
             // navigate('/emailverify');
@@ -73,7 +66,7 @@ const UserRegister = () => {
       <div className="w-full max-w-md bg-white-200 rounded-lg shadow-md p-8"   style={{ opacity: 0.9 }}>
         <h2 className="text-2xl font-bold mb-1 text-center text-black">User Signup</h2>
         {message && (
-  <div className="flex items-center font-bold text-center text-yellow-500 mb-4">
+  <div className="flex items-center font-bold text-center text-black mb-4">
     <svg className="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
     </svg>
