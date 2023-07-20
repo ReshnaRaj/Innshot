@@ -32,7 +32,7 @@ module.exports.register=async(req,res,next)=>{
         const user=await UserModel.create({name,email,phone,password})
       
         // console.log(req.body)
-        sendmail(email,'please Activate your account',`${REACT_APP_BASE_URL}/verifyemail/${user._id}`)
+        sendmail(email,'please Activate your account',`${BASE_URL}/verifyemail/${user._id}`)
         console.log(user,"after verifying mail id...")
         
 
