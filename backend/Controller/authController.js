@@ -157,7 +157,7 @@ module.exports.staffreg=async(req,res,next)=>{
         // const staff = await StaffModel.findOne({ email });
         // const phones = await StaffModel.findOne({ phone });
         // console.log(staffuser,"new staff registration.")
-        sendmail(email,'please Activate your account As a resort owner',`${process.env.BASE_URL}/staff/verifystaffemail/${staffuser._id}`);
+        sendmail(email,'please Activate your account As a resort owner',`${BASE_URL}/staff/verifystaffemail/${staffuser._id}`);
 
         // console.log(staffuser,"staffff")
         res.status(201).json({staffuser,created:true})
