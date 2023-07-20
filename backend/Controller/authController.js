@@ -86,8 +86,8 @@ module.exports.login=async (req,res,next)=>{
   catch (error) {
         
         console.log(error);
-        const errors=handleErrors(error)
-        res.json({errors,created:false})
+        // const errors=handleErrors(error)
+        res.json({error,created:false})
     }
 
 };
@@ -164,8 +164,8 @@ module.exports.staffreg=async(req,res,next)=>{
 
     } catch (error) {
         console.log(error);
-        const errors=handleErrors(error)
-        res.json({errors,created:false})
+        // const errors=handleErrors(error)
+        res.json({error,created:false})
         
     }
 }
@@ -208,8 +208,8 @@ module.exports.stafflogin = async (req, res, next) => {
       }
     } catch (error) {
       console.log(error);
-      const errors = handleErrors(error);
-      res.json({ errors, created: false });
+      // const errors = handleErrors(error);
+      res.json({ error, created: false });
     }
   };
   
