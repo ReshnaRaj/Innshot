@@ -79,6 +79,7 @@ function PrivateRoute({role,route}) {
   },[])
   if(auth===null) return 
   // console.log(typeof auth,auth)
+ 
   return (
    auth ? <Outlet/> : <Navigate to={route}/>
   )

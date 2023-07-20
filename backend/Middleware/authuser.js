@@ -33,9 +33,7 @@ module.exports.checkUser = (req, res, next) => {
           res.json({ status: false, message: "failes" });
         } else {
           req.userId = decodedToken.userId;
-          // console.log(req.userId, "uuuuuuuuuuu");
-          // const user=await User.findById({_id:decodedToken.id})
-          // req.user=user._id
+          
           next();
         }
       });

@@ -63,10 +63,10 @@ const UserLogin = () => {
           
           dispatch(setUserDetails({
             name: data.data.user.name,
-            id: data.data.user._id,
+            _id: data.data.user._id,
             email: data.data.user.email,
             phone: data.data.user.phone,
-            token: data.data.token
+            // token: data.data.token
           }));
           
           if(data.data.user.verifiyd){

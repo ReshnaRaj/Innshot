@@ -2,12 +2,13 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Header from "./Layout/Header";
 import Footer from "./Layout/Footer";
-import { SiGooglechat } from "react-icons/si";
+// import { SiGooglechat } from "react-icons/si";
 import { Link } from "react-router-dom";
 import ChangePassword from "./ChangePassword";
 
 const Profile = () => {
   const users = useSelector((state) => state.user);
+  console.log(users,"jiijijjj")
   return (
     <div>
       <Header />
@@ -42,7 +43,7 @@ const Profile = () => {
         </div>
       </div>
    <ChangePassword/>
-   <SiGooglechat className="fixed bottom-4 right-4 z-50 text-4xl text-primary" />
+   {/* <SiGooglechat className="fixed bottom-4 right-4 z-50 text-4xl text-primary" /> */}
       <Footer />
     </div>
   );

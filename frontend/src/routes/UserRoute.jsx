@@ -17,8 +17,9 @@ import Hotelpaying from '../components/Userpages/Hotelpaying';
 import Booking from '../components/Userpages/Booking';
 // import AdventureBooking from '../components/Userpages/AdventureBooking';
 import Profile from '../components/Userpages/Profile';
-import WelcomePage from '../components/Userpages/Chat/ChatwithOwner';
+ 
 import Error from '../components/Error/User'
+import Chat from '../pages/chat/Chat'
 const UserRoute = () => {
   const user = useSelector((state) => state.user);
   console.log(user,"user fata")
@@ -37,17 +38,13 @@ const UserRoute = () => {
     <Route  path='/destinations' element={<Destination/>}/>
     <Route  path='/viewdestination/:id' element={<DestinationData/>}/>
    
-    <Route element={<PrivateRoute role={'user'} route={'/login'}/>}>
+    <Route element={<PrivateRoute role={'user'} route={'/login'} />}>
     
     <Route  path='/viewbook' element={<ResortBooking/>}/>
     <Route  path='/hotelbooking' element={<Hotelpaying/>}/>
     <Route  path='/profile' element={<Profile/>}/>
     <Route  path='/mybooking' element={<Booking/>}/>
-    <Route  path='/chat' element={<WelcomePage name={user}/>}/>
-   
-    {/* <Route exact path='/viewbookadv' element={<AdventureBooking/>}/> */}
-   
-   
+    <Route  path='/chat' element= {<Chat/>}/>
     
     </Route>
     </Routes>

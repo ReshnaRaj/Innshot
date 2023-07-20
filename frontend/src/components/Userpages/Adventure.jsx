@@ -5,8 +5,11 @@ import Footer from "./Layout/Footer";
 import { MdPlace } from "react-icons/md";
 import { baseUrl } from "../../files/file";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 const Adventure = () => {
+  const users = useSelector((state) => state.user);
+  console.log(users,"zcc")
     const [adventure,setAdventure]=useState([])
     useEffect(()=>{
         useradventure()

@@ -115,7 +115,7 @@ module.exports.isUserAuth=async(req,res,next)=>{
         console.log(userDetials,"user detaills consoling...")
         // userDetials.auth=true 
         res.json({
-            'auth':true,
+            auth:true,
             _id:userDetials._id,
             name:userDetials.name,
             email:userDetials.email,

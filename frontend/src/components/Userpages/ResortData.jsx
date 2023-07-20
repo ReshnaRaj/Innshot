@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Header from "./Layout/Header";
 import { FaRupeeSign } from "react-icons/fa";
-// import { SiGooglechat } from "react-icons/si";
+import { SiGooglechat } from "react-icons/si";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaBed } from "react-icons/fa";
 import { getresortdata } from "../../services/Userapi";
@@ -70,9 +70,9 @@ const ResortData = () => {
             <h3 className="text-lg mb-4">{resortdata.address}</h3>
           </div>
           <div className="mb-4 lg:mb-0 flex gap-x-2 text-sm">
-            {/* <Link to="/chat">Chat
+            <Link to="/chat">Chat
           <SiGooglechat className="text-2xl text-info" />
-          </Link> */}
+          </Link>
             <div className="text-2xl font-semibold text-sky-300">
             
             <span ><FaRupeeSign className="inline"/></span>
