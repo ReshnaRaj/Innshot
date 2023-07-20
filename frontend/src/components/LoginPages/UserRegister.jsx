@@ -40,8 +40,8 @@ const UserRegister = () => {
         if (data) {
           console.log(data,"data of user")
           if (data.errors) {
-           
-            generateError(response.error);
+           console.log(data.errors,"gggg")
+            generateError(data.error);
    
           } else {
             setMessage('Account activated, check your email');
