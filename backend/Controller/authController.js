@@ -13,19 +13,19 @@ const {verifyLink,verifystaffLink}=require('../Middleware/authuser')
 //     })
 
 // }
-const handleErrors=(err)=>{
-    let errors={email:"",password:""}
-if(err.code===11000){
-    errors.email="This email is already registered"
-    return errors
-}
-if(err.message.includes('users validation failed')){
-    console.log(err.message,"error messageconsoling....")
-    Object.values(err.errors).forEach(({properties})=>{
-        errors[properties.path]=properties.message
-    })
-}return errors
-}
+// const handleErrors=(err)=>{
+//     let errors={email:"",password:""}
+// if(err.code===11000){
+//     errors.email="This email is already registered"
+//     return errors
+// }
+// if(err.message.includes('users validation failed')){
+//     console.log(err.message,"error messageconsoling....")
+//     Object.values(err.errors).forEach(({properties})=>{
+//         errors[properties.path]=properties.message
+//     })
+// }return errors
+// }
 module.exports.register=async(req,res,next)=>{
     try {
         const {name,email,phone,password}=req.body
@@ -41,8 +41,8 @@ module.exports.register=async(req,res,next)=>{
 
     } catch (error) {
         console.log(error);
-        const errors=handleErrors(error)
-        res.json({errors,created:false})
+        // const errors=handleErrors(error)
+        res.json({error,created:false})
         
     }
 }
