@@ -11,14 +11,14 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { booked_resort,verifyrazorpay} from "../../services/Userapi";
 import { ToastContainer, toast } from "react-toastify";
-// import  {keyId}  from "../../files/file";
+import  {keyId}  from "../../files/file";
  
 
 const ResortBooking = () => {
   const users = useSelector((state) => state.user);
   console.log(users,"hhhh")
   const navigate = useNavigate();
-  const keyid=process.env.REACT_APP_KEY_ID
+  const keyid=keyId
   console.log(keyid,"ppp")
   // console.log(users,"tooooo")
   // const dispatch = useDispatch();
@@ -133,7 +133,7 @@ console.log(dayCount,"counting...")
       color:'#3499cc',
      }
     }
-    const rzp1=new Razorpay(options)
+    const rzp1=new window.Razorpay(options)
     rzp1.open()
 
   }
