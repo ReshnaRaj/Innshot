@@ -86,7 +86,20 @@ const editdestination=(data,id)=>{
 const get_book_data=()=>{
     return staffAxiosInstance.get('/getbookedresortdata')
 }
+// starting of chat in staff side
+const staffChats=(id)=>{
+    console.log(id,"staff id in api call chat")
+    return staffAxiosInstance.get(`/getstaffchat/${id}`)
+}
+const getStaff=(id)=>{
+    console.log(id,"staff chhatting working..")
+    return staffAxiosInstance.get(`/getuserdata/${id}`)
+}
+const getstaffMessages=(id)=>{
+    return staffAxiosInstance.get(`/getstaffmsg/${id}`)
+}
+const addMsg=(data)=>{
+    return staffAxiosInstance.post('/admsg',data)
+}
 
-
-
-export {staffregister,stafflogin,staffresort,staffverify,getResortData,editpostresortdatas,disableresort,authStaff,staffadv,getStaffAdv,editadvpost,AddDest,getDest,editdestination,get_book_data}
+export {staffregister,stafflogin,staffresort,staffverify,getResortData,editpostresortdatas,disableresort,authStaff,staffadv,getStaffAdv,editadvpost,AddDest,getDest,editdestination,get_book_data,staffChats,getStaff,getstaffMessages,addMsg}

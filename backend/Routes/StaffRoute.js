@@ -2,10 +2,11 @@ const express = require('express')
 const router = express.Router()
 
 const {staffreg,stafflogin,verifystaff,isStaffAuth}=require('../Controller/authController')
-const { addresort,getResort,posteditresort,disableResort,addAdventure,getAdv,posteditadv,addDestination,getDestinationData,editdestination,getbookedresort} = require('../Controller/StaffController')
+const { addresort,getResort,posteditresort,disableResort,addAdventure,getAdv,posteditadv,addDestination,getDestinationData,editdestination,getbookedresort,getStaf} = require('../Controller/StaffController')
 const {checkStaff}=require('../Middleware/authuser')
 const {uploadImage}=require('../Middleware/Multer')
-
+const {StaffChats,findstaffchat}=require('../Controller/ChatController')
+const {adMessage,getMessag}=require('../Controller/MessageController')
 
 // const {upload}=require('../Middleware/fileupload')
 router.post('/stafflogin',stafflogin)
@@ -28,6 +29,15 @@ router.get('/getdestdata',checkStaff,getDestinationData)
 router.post('/posteditdest/:id',checkStaff,uploadImage.array('destimages',5),editdestination)
 
 router.get('/getbookedresortdata',checkStaff,getbookedresort)
+// staff chatting working..
+router.get('/getstaffchat/:staffId',checkStaff,StaffChats)
+router.get('/getuserchats/find/:fisrtId/:secondId',checkStaff,findstaffchat)
+
+router.post('/admsg',checkStaff,adMessage)
+router.get('/getstaffmsg/:chatId',checkStaff,getMessag)
+router.get('/getuserdata/:id',checkStaff,getStaf)
+
+
 
 
 

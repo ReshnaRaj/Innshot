@@ -70,6 +70,7 @@ const SendId=(sentid,receiveid)=>{
   })
 }
 const userChats = (id) => {
+  // shows user msgd resortowners
   console.log(id, "java");
   return userAxiosInstance.get(`/getuserchat/${id}`);
 };

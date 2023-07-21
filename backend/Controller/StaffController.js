@@ -6,6 +6,7 @@ const AdventureModel = require("../Model/AdventureModel");
 const { ObjectId } = require("mongodb");
 const DestinationModel = require("../Model/DestinationModel");
 const BookingModel = require("../Model/BookingModel");
+const UserModel = require("../Model/UserModel");
 
 module.exports.addresort = async (req, res, next) => {
   try {
@@ -418,5 +419,16 @@ module.exports.getbookedresort=async(req,res)=>{
     res.status(200).json({result:booked,success:true})
   } catch (error) {
     console.log(error)
+  }
+}
+module.exports.getStaf=async(req,res)=>{
+  try {
+    const id=req.params.id
+    const user=await UserModel.find({_id:id})
+    console.log(user,"ooo")
+    res.json({success:true,result:user})
+  } catch (error) {
+    res.status(400).json({success:false,message:error.message})
+    
   }
 }

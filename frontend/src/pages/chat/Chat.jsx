@@ -5,7 +5,7 @@ import { userChats } from "../../services/Userapi";
 import Header from "../../components/Userpages/Layout/Header";
 import Footer from "../../components/Userpages/Layout/Footer";
 import Conversate from "../../components/Conversation/Conversate";
-import Chatbox from "../../components/ChatBox/Chatbox";
+import Chatbox from "../../components/Conversation/Chatbox";
 import {io} from 'socket.io-client'
 
 const Chat = () => {
@@ -48,6 +48,7 @@ const Chat = () => {
     const getChats = async () => {
       try {
         const { data } = await userChats(users.id);
+        //  userChats means shows user msgd resortowners
         setChats(data);
         console.log(data, "hhhh");
       } catch (error) {

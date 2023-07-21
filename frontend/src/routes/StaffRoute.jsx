@@ -14,7 +14,8 @@ import AddDestination from '../components/StaffPages/AddDestination';
 import EditDest from '../components/StaffPages/EditDest';
 import Booking from '../components/StaffPages/Booking';
 import Error from '../components/Error/Staff'
-import Chats from '../pages/chat/chatStaff'
+ 
+import Chatwithuser from '../pages/chat/Chatwithuser';
 const StaffRoute = () => {
   return (
     <>
@@ -33,7 +34,8 @@ const StaffRoute = () => {
     <Route  path='/add-dest' element={<AddDestination/>}/>
     <Route  path='/editdest' element={<EditDest/>}/>
     <Route  path='/bookings' element={<Booking/>}/>
-    <Route path='/chat' element={<Chats/>}/>
+  
+    <Route path='/chatwithuser' element={<Chatwithuser/>}/>
     
     </Route>
     </Routes>
