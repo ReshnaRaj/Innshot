@@ -11,7 +11,7 @@ const Conversate = ({data,currentUserId,online}) => {
         const  getUserData=async()=>{
             const {data}=await getUser(userId)
             setUserData(data.result)
-            console.log(data.result)
+            console.log(data.result,"9999999999")
 
         }
         getUserData()

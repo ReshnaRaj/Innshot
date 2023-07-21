@@ -121,9 +121,7 @@ console.log(dayCount,"counting...")
         if(data.success){
           navigate('/hotelbooking/');
         }
-        else{
-          alert('payment failed')
-        }
+        
         console.log(data,"data coming...")
         
       } catch (error) {
