@@ -35,9 +35,7 @@ module.exports.getoneresort = async (req, res, next) => {
 module.exports.getsimilarstay = async (req, res, next) => {
   try {
     const place = req.params.data;
-    // console.log(place,"place is getting...")
-    // const {excludedResortId} = req.body;
-    // console.log(excludedResortId,"hhhhhhh")
+ 
     const similarStays = await ResortModel.find({
       verify: true,
       place,
