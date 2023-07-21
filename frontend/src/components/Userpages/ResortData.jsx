@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+ 
 import Header from "./Layout/Header";
 import { FaRupeeSign } from "react-icons/fa";
-import { SiGooglechat } from "react-icons/si";
+import { useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaBed } from "react-icons/fa";
-import { getresortdata } from "../../services/Userapi";
+import { getresortdata,SendId} from "../../services/Userapi";
 import Footer from "./Layout/Footer";
+ 
 
 const ResortData = () => {
+  const users = useSelector((state) => state.user);
   const [resortdata, setResortdata] = useState([]);
   // const [similarStays, setSimilarStays] = useState([]);
   let { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
+    // eslint-disable-next-line
     getResortData();
   }, []);
   // useEffect(() => {
@@ -41,6 +44,12 @@ const ResortData = () => {
       console.log(error);
     }
   };
+  const handleSendIds=async (sender,reciever)=>{
+    console.log(sender,reciever,"ttttttt")
+  const ids=await SendId(sender,reciever)
+  navigate('/chat')
+  console.log(ids)
+  }
   // const fetchSimilarStays = async () => {
   //   try {
   //     let { data } = await getsimiliarstay(resortdata.place);
@@ -59,7 +68,7 @@ const ResortData = () => {
     isLarge: index === 0,
   }));
   // console.log(similarStays,"ooooooo")
-
+console.log(users,"user id checking...")
   return (
     <div>
       <Header />
@@ -70,9 +79,11 @@ const ResortData = () => {
             <h3 className="text-lg mb-4">{resortdata.address}</h3>
           </div>
           <div className="mb-4 lg:mb-0 flex gap-x-2 text-sm">
-            <Link to="/chat">Chat
-          <SiGooglechat className="text-2xl text-info" />
-          </Link>
+            <button className="btn btn-info" onClick={()=>{
+              handleSendIds(users.id,resortdata?.resortowner?._id)
+              }}>Chat</button>
+           
+          
             <div className="text-2xl font-semibold text-sky-300">
             
             <span ><FaRupeeSign className="inline"/></span>
@@ -130,7 +141,7 @@ const ResortData = () => {
                   <img
                     src={image?.src}
                     className="w-96 h-60 mx-auto"
-                    // alt="IMAGE"
+                 
                   />
                   <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
                     <a

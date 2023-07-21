@@ -8,6 +8,7 @@ const bcrypt=require('bcrypt')
 // const {v4:uuidv4}=require('uuid')
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
+const StaffModel = require("../Model/StaffModel");
 const key_id = process.env.KEY_ID;
 const key_secret = process.env.KEY_SECRET;
 module.exports.UserResort = async (req, res, next) => {
@@ -358,3 +359,15 @@ module.exports.updatePassword = async (req, res) => {
     res.json({ status: "error", message: error.message });
   }
 };
+module.exports.getStaff=async(req,res)=>{
+  try {
+    const id=req.params.id
+    console.log(id)
+    const staff=await StaffModel.find({_id:id})
+    console.log(staff,"staff999")
+    res.json({success:true,result:staff})
+  } catch (error) {
+    res.status(400).json({success:false,message:error.message})
+    
+  }
+}

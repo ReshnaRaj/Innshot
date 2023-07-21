@@ -63,10 +63,28 @@ const updatePassword = (data) => {
   console.log("changing password...");
   return userAxiosInstance.post("/updatePassword", data);
 };
+const SendId=(sentid,receiveid)=>{
+  return userAxiosInstance.post('/createchat',{
+    senderId: sentid,
+    receiverId: receiveid,
+  })
+}
 const userChats = (id) => {
   console.log(id, "java");
   return userAxiosInstance.get(`/getuserchat/${id}`);
 };
+const getUser=(id)=>{
+  console.log(id,"api call ")
+  return userAxiosInstance.get(`/getstaffdata/${id}`)
+}
+const getMessages=(id)=>{
+  console.log(id,"id getting..")
+  return userAxiosInstance.get(`/getmsg/${id}`)
+}
+const adMessage=(data)=>{
+  console.log(data,"addmessage")
+  return userAxiosInstance.post('/addmsg',data)
+}
 export {
   userregister,
   userlogin,
@@ -84,5 +102,9 @@ export {
   verifyrazorpay,
   CancelBook,
   updatePassword,
+  SendId,
   userChats,
+  getUser,
+  getMessages,
+  adMessage
 };

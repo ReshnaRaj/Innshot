@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Layout/Header";
 import Footer from "./Layout/Footer";
-import { json, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { FaBed } from "react-icons/fa";
 import { MdPlace } from "react-icons/md";
 import { FaRupeeSign } from "react-icons/fa";

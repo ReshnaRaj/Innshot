@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const {checkUser}=require('../Middleware/authuser')
 const {register,login,verifyuser,isUserAuth}=require('../Controller/authController')
-const {UserResort,getoneresort,getsimilarstay,UserAdventure,UserDestinations,getoneAdv,getonedest,getbookeddata,resort_book, verifyPayment,CancelBooking,updatePassword}=require('../Controller/UserController')
+const {UserResort,getoneresort,getsimilarstay,UserAdventure,UserDestinations,getoneAdv,getonedest,getbookeddata,resort_book, verifyPayment,CancelBooking,updatePassword,getStaff}=require('../Controller/UserController')
 const {createChat,UserChats,findChat}=require('../Controller/ChatController')
 const {addMessage,getMessage}=require('../Controller/MessageController')
 router.get('/')
@@ -31,6 +31,7 @@ router.get('/getchat/find/:firstId/:secondId',checkUser,findChat)
 // message beackend
 router.post('/addmsg',checkUser,addMessage)
 router.get('/getmsg/:chatId',checkUser,getMessage)
+router.get('/getstaffdata/:id',checkUser,getStaff)
 
 
 module.exports=router;
