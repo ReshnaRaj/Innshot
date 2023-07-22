@@ -9,8 +9,8 @@ const bcrypt=require('bcrypt')
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const StaffModel = require("../Model/StaffModel");
-const key_id = process.env.KEY_ID;
-const key_secret = process.env.KEY_SECRET;
+const key_id ="rzp_test_PbltfzpnGtYEOk";
+const key_secret ="jt5UkkCd8C3Vi8kwZQVDHZUf";
 module.exports.UserResort = async (req, res, next) => {
   try {
     const resortt = await ResortModel.find({ verify: true });
@@ -35,7 +35,9 @@ module.exports.getoneresort = async (req, res, next) => {
 module.exports.getsimilarstay = async (req, res, next) => {
   try {
     const place = req.params.data;
- 
+    // console.log(place,"place is getting...")
+    // const {excludedResortId} = req.body;
+    // console.log(excludedResortId,"hhhhhhh")
     const similarStays = await ResortModel.find({
       verify: true,
       place,
