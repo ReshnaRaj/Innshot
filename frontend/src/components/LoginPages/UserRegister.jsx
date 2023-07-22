@@ -23,6 +23,7 @@ const UserRegister = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     if(password!==repassword){
       console.log(generateError,"yyyyyyyyyy")
       generateError('Password not match Try again later')
@@ -150,7 +151,13 @@ const UserRegister = () => {
               value={password}
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter your password"
-              onChange={(e) =>  setpassword( e.target.value )}
+              onChange={(e) => {
+                // const pass=e.target.value
+                // const strongpass= /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
+                // if(strongpass)
+            
+                 setpassword( e.target.value )}
+              }
               required
             />
           </div><div className="mb-6">

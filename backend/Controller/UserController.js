@@ -9,8 +9,9 @@ const bcrypt=require('bcrypt')
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const StaffModel = require("../Model/StaffModel");
-const key_id ="rzp_test_PbltfzpnGtYEOk";
-const key_secret ="jt5UkkCd8C3Vi8kwZQVDHZUf";
+const key_id =process.env.KEY_ID;
+const key_secret =process.env.KEY_SECRET
+console.log(key_id,"2222222")
 module.exports.UserResort = async (req, res, next) => {
   try {
     const resortt = await ResortModel.find({ verify: true });
