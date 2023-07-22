@@ -12,6 +12,7 @@ const StaffModel = require("../Model/StaffModel");
 const key_id =process.env.KEY_ID;
 const key_secret =process.env.KEY_SECRET
 console.log(key_id,"2222222")
+console.log(key_secret,"3333")
 module.exports.UserResort = async (req, res, next) => {
   try {
     const resortt = await ResortModel.find({ verify: true });
