@@ -89,9 +89,9 @@ console.log(dayCount,"counting...")
       
     } catch (error) {
       console.log(error,"222222")
-      toast.error("Resort already booked for the selected dates", {
-        position: toast.POSITION.TOP_CENTER,
-      });
+      // toast.error("Resort already booked for the selected dates", {
+      //   position: toast.POSITION.TOP_CENTER,
+      // });
     }
   }
   const initPayment=(data,resortdat,checkInDate,checkOutDate,paymentt)=>{
