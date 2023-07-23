@@ -18,10 +18,11 @@ const AddResort = () => {
     phone: "",
   });
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Check for required fields
+    const descriptionWords = resortData.description.trim().split(/\s+/).length;
+    const addres = resortData.address.trim().split(/\s+/).length;
+
     if (
       resortData.resortname === "" ||
       resortData.number_room === "" ||
@@ -38,7 +39,21 @@ const AddResort = () => {
         position: "top-center",
       });
       return;
-    } else {
+    }
+    else if (addres<= 5) {
+      toast.error("Address should be 5 character", {
+        position: "top-center",
+      });
+    }
+   
+   else if (descriptionWords <= 80) {
+      console.log("inside the condition...");
+      toast.error("description atleast be 80 characters", {
+        position: "top-center",
+      });
+    }
+    
+    else {
       setIsLoading(true);
       const formData = new FormData();
       formData.append("resortname", resortData.resortname);
@@ -47,7 +62,7 @@ const AddResort = () => {
       formData.append("description", resortData.description);
       formData.append("price", resortData.price);
       formData.append("phone", resortData.phone);
-      formData.append('resort_services',resortData.services)
+      formData.append("resort_services", resortData.services);
 
       for (let i = 0; i < resortData.image.length; i++) {
         const file = resortData.image[i];
@@ -57,7 +72,6 @@ const AddResort = () => {
       // while adding the services of resort i want to convert it into array of strings
       // const formattedServices = [];
       // let currentService = "";
-      
 
       // for (let i = 0; i < resortData.services.length; i++) {
       //   if (resortData.services[i] === "," && currentService !== "") {
@@ -76,19 +90,7 @@ const AddResort = () => {
       //   formData.append("resort_services", formattedServices[i]);
       // }
       formData.append("number_room", resortData.number_room);
-      formData.append('document',resortData.document)
-      // show a messaage only uplaod pdf format
-      // const certificateFile = resortData.document;
-      // const allowedFormats = ["pdf"];
-
-      // const fileExtension = certificateFile.name.split(".").pop().toLowerCase();
-      // if (!allowedFormats.includes(fileExtension)) {
-      //   alert("Please upload a PDF document for the certificate.");
-      //   return;
-      // }
-
-      // formData.append("document", certificateFile);
-      // console.log(resortData.document,"sssssssssssss")
+      formData.append("document", resortData.document);
 
       // Add logic to handle the form submission (e.g., sending data to the server)
       try {
@@ -97,7 +99,7 @@ const AddResort = () => {
         const response = await staffresort(formData);
         console.log(response, "response printed...");
         if (response.data.created) {
-          setIsLoading(false)
+          setIsLoading(false);
           console.log("inside toast");
           console.log(response.data.message, "message");
           toast.success(response.data.message, {
@@ -116,7 +118,7 @@ const AddResort = () => {
       <Navbar />
       <div className="flex-1">
         <Headerr name={"Resort Details"} />
-{/* {isLoading && <span className="loading loading-spinner text-success"></span> } */}
+        {/* {isLoading && <span className="loading loading-spinner text-success"></span> } */}
         <div className="p-4">
           <h2 className="text-xl font-bold mb-4">Add Resort</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -129,13 +131,13 @@ const AddResort = () => {
                   value={resortData.resortname}
                   type="text"
                   onChange={(e) => {
-                    const resname = e.target.value.replace(/[^a-zA-Z]/g, " ");
-                    console.log(resname, "resname....");
-                    setResortData({ ...resortData, resortname: resname });
+                    setResortData({
+                      ...resortData,
+                      resortname: e.target.value,
+                    });
                   }}
                   placeholder="Type here"
                   className="input input-bordered input-md w-96 max-w-xs"
-                  //  const pattern="/^[a-zA-Z]+ [a-zA-Z]+$/"
                 />
               </div>
               <div className="w-full max-w-xs mr-4">
@@ -161,14 +163,20 @@ const AddResort = () => {
                 <textarea
                   value={resortData.address}
                   onChange={(e) => {
-                    const addres = e.target.value.split(" ");
-                    if (addres.length <= 20) {
-                      setResortData({
-                        ...resortData,
-                        address: addres.join(" "),
-                      });
-                    }
+                    setResortData({
+                      ...resortData,
+                      address: e.target.value,
+                    });
                   }}
+                  // onChange={(e) => {
+                  //   const addres = e.target.value.split(" ");
+                  //   if (addres.length <=5) {
+                  //     setResortData({
+                  //       ...resortData,
+                  //       address: addres.join(" "),
+                  //     });
+                  //   }
+                  // }}
                   className="textarea textarea-bordered h-24 w-80"
                   placeholder="Address of the resort"
                 ></textarea>
@@ -180,15 +188,22 @@ const AddResort = () => {
                 <textarea
                   value={resortData.description}
                   onChange={(e) => {
-                    const words = e.target.value.split(" ");
-                    console.log(words, "words coming.....");
-                    if (words.length <= 10 || e.target.value.length < 5500) {
-                      setResortData({
-                        ...resortData,
-                        description: words.join(" "),
-                      });
-                    }
+                    setResortData({
+                      ...resortData,
+                      description: e.target.value,
+                    });
+                    
                   }}
+                  // onChange={(e) => {
+                  //   const words = e.target.value.split(" ");
+                  //   console.log(words, "words coming.....");
+                  //   if (words.length <= 10 || e.target.value.length < 5500) {
+                  //     setResortData({
+                  //       ...resortData,
+                  //       description: words.join(" "),
+                  //     });
+                  //   }
+                  // }}
                   className="textarea textarea-bordered h-24 w-80"
                   placeholder="Description of the resort"
                 ></textarea>
@@ -239,10 +254,10 @@ const AddResort = () => {
                 <input
                   type="file"
                   // name='file'
-                  onChange={(e) =>{
+                  onChange={(e) => {
                     const file = e.target.files[0];
-                    const allowedFormats = ['application/pdf'];
-              
+                    const allowedFormats = ["application/pdf"];
+
                     if (file && allowedFormats.includes(file.type)) {
                       setResortData({
                         ...resortData,
@@ -250,11 +265,10 @@ const AddResort = () => {
                       });
                     } else {
                       // File format not allowed, handle the error
-                      setResortData({...resortData,document:null})
-                      alert('Only PDF files are allowed.');
-                      e.target.type = 'text';
-                      e.target.type = 'file';
-                     
+                      setResortData({ ...resortData, document: null });
+                      alert("Only PDF files are allowed.");
+                      e.target.type = "text";
+                      e.target.type = "file";
                     }
                   }}
                   className="file-input w-full max-w-xs"
@@ -308,7 +322,7 @@ const AddResort = () => {
                   type="text"
                   value={resortData.services}
                   onChange={(e) => {
-                    console.log(resortData.services.length,"length of the resortData.....")
+                  
                     setResortData({ ...resortData, services: e.target.value });
                   }}
                   placeholder="Enter the services"

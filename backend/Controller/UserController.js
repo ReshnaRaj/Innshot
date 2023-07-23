@@ -15,7 +15,7 @@ console.log(key_id,"2222222")
 console.log(key_secret,"3333")
 module.exports.UserResort = async (req, res, next) => {
   try {
-    const resortt = await ResortModel.find({ verify: true });
+    const resortt = await ResortModel.find({ verify: 'verified' });
     // console.log(resort,"resort showing working.....")
     res.status(200).json({ resortt, success: true });
   } catch (error) {

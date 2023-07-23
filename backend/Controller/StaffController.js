@@ -229,26 +229,7 @@ module.exports.disableResort = async (req, res, next) => {
   }
 };
 
-module.exports.getallresortdata = async (req, res, next) => {
-  try {
-    // console.log("get all resort admin page ")
-    const resort = await ResortModel.find({ status: "Enable" }).populate(
-      "resortowner"
-    );
-    // console.log(resort,"resort data coming...")
 
-    // resort.forEach(resortt => {
-    //   console.log("Resort Owner Name:", resortt.resortowner);
-    // });
-    // const resortOwnerNames = resort.map(resort => resort.resortowner.name);
-    // console.log("Resort Owner Names:", resortOwnerNames);
-    res.status(200).json({ resort, success: true });
-  } catch (error) {
-    // next(error)
-    console.log(error);
-    res.json({ message: "error in get all resort data in admin side" });
-  }
-};
 module.exports.addAdventure = async (req, res, next) => {
   try {
     console.log(req.files, "ppppp");

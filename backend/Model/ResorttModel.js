@@ -42,8 +42,8 @@ const resortSchema=new mongoose.Schema({
         required:[true,'price is required']
     },
     verify:{
-        type:Boolean,
-        default:false
+        type:String,
+        default:'new'
     },
     phone:{
         type:Number

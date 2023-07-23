@@ -6,6 +6,7 @@ import { MdPlace } from "react-icons/md";
 import { baseUrl } from "../../files/file";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
+import Page from './Layout/Page'
 
 const Adventure = () => {
   const users = useSelector((state) => state.user);
@@ -68,6 +69,7 @@ const Adventure = () => {
 
         ))}
         </div>
+        <Page/>
         <Footer />
 
     </div>

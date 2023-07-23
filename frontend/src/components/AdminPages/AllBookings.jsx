@@ -1,65 +1,63 @@
-import React,{useEffect, useState} from 'react'
-import Navbars from './layout/Navbars'
-import Headers from './layout/Headers'
-import {getall_bookings} from '../../services/Adminapi'
+import React, { useEffect, useState } from "react";
+import Navbars from "./layout/Navbars";
+import Headers from "./layout/Headers";
+import { getall_bookings } from "../../services/Adminapi";
+import Footer from "./layout/Footer";
 
 const AllBookings = () => {
-    const [allbooking,setAllbooking]=useState([])
-    useEffect(()=>{
-        getallbooking()
-    },[])
-    const getallbooking=async()=>{
-        try {
-            let {data}=await getall_bookings();
-            console.log(data,"data of booked...")
-            if(data.success){
-                setAllbooking(data.result)
-            }
-        } catch (error) {
-            console.log(error,"error")
-            
-        }
+  const [allbooking, setAllbooking] = useState([]);
+  useEffect(() => {
+    getallbooking();
+  }, []);
+  const getallbooking = async () => {
+    try {
+      let { data } = await getall_bookings();
+      console.log(data, "data of booked...");
+      if (data.success) {
+        setAllbooking(data.result);
+      }
+    } catch (error) {
+      console.log(error, "error");
     }
-    console.log(allbooking,"all bookings...")
+  };
+  console.log(allbooking, "all bookings...");
   return (
-    <div className='flex'>
-        <Navbars/>
-        <div className='flex-1'>
-            <Headers name={"List of Destination"} />
-            <div className="overflow-x-auto inline">
+    <div className="flex">
+      <Navbars />
+      <div className="flex-1">
+        <Headers name={"List of Destination"} />
+        <div className="overflow-x-auto inline">
           <table className="table table-compact w-full">
             <thead>
               <tr>
                 <th>No</th>
-              
+
                 <th>Booked Resort</th>
-               
+
                 <th>Traveler</th>
                 <th>Status</th>
                 <th>CheckInDate</th>
                 <th>CheckOutDate</th>
-                
-            
               </tr>
             </thead>
             <tbody>
-                {allbooking.map((item,index)=>(
-                    <tr key={index}>
-                        <td>{index+1}</td>
-                        <td>{item.resortId.resortname}</td>
-                        <td>{item.traveler.name}</td>
-                        <td>{item.status}</td>
-                        <td>{item.fromDate}</td>
-                        <td>{item.toDate}</td>
-                    </tr>
-                ))}
+              {allbooking.map((item, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{item.resortId.resortname}</td>
+                  <td>{item.traveler.name}</td>
+                  <td>{item.status}</td>
+                  <td>{item.fromDate}</td>
+                  <td>{item.toDate}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
-          </div>
+          <Footer />
         </div>
-        
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default AllBookings
+export default AllBookings;

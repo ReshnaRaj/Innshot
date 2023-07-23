@@ -4,6 +4,7 @@ import Headers from './layout/Headers'
 import { useNavigate } from "react-router-dom";
 import {getalldestData,approvedest} from '../../services/Adminapi'
 import { ToastContainer, toast } from "react-toastify";
+import Footer from './layout/Footer'
 
 const AllDestination = () => {
   const [destdata,setDestdata]=useState([])
@@ -106,6 +107,7 @@ const AllDestination = () => {
               ))}
             </tbody>
           </table>
+          <Footer/>
           </div>
         </div>
         <ToastContainer />  

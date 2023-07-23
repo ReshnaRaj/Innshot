@@ -5,6 +5,7 @@ import Footer from "./Layout/Footer";
 import { baseUrl } from "../../files/file";
 import { getuserdestination} from '../../services/Userapi'
 import { useNavigate } from 'react-router-dom';
+import Page from './Layout/Page'
 const Destination = () => {
     const [destination,setDestination]=useState([])
     useEffect(()=>{
@@ -63,6 +64,7 @@ userdestination()
 
         ))}
         </div>
+        <Page/>
         <Footer/>
     </div>
   )

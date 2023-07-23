@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from './layout/Navbar'
 import Headerr from './layout/Headerr'
 import { Link ,useNavigate} from "react-router-dom";
+import Footer from './layout/Footer';
 import {getDest} from '../../services/Staffapi'
 
 const StaffDest = () => {
@@ -99,6 +100,7 @@ const StaffDest = () => {
               ))}
             </tbody>
           </table>
+          <Footer/>
         </div>
         </div>
     </div>

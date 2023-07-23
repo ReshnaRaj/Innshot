@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./layout/Navbar";
 import Headerr from "./layout/Headerr";
+import Footer from './layout/Footer'
 import {
   getResortData,
   staffadv,
@@ -526,6 +527,7 @@ const StaffAdventure = () => {
                 ))}
               </tbody>
             </table>
+            <Footer/>
           </div>
         </div>
       </div>

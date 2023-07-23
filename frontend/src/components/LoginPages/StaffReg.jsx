@@ -30,10 +30,20 @@ const StaffReg = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
+    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/;;
+   
+
     if(staffname===""||staffemail===""||staffphone===""||staffpassword===""){
       generateError('Please fill all are required')
     }
-    if(staffpassword!==staffrepassword){
+    
+    else if (!strongPasswordRegex.test(staffpassword)) {
+      generateError(
+        'Please Enter strong password'
+      );
+       
+    }
+    else if(staffpassword!==staffrepassword){
       console.log(generateError,"yyyyyyyyyy")
       generateError('Password not match Try again later')
     }

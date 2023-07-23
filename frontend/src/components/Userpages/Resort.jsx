@@ -5,6 +5,7 @@ import { MdPlace } from "react-icons/md";
 import { FaBed } from "react-icons/fa";
 import { BiHomeAlt } from "react-icons/bi";
 import DatePicker from "react-datepicker";
+import Page from "./Layout/Page";
 // import { useSelector } from "react-redux";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -61,11 +62,7 @@ const Resort = () => {
   };
 
   const handleCheckOutDateChange = (date) => {
-    if (checkInDate && date <= checkInDate) {
-      setCheckOutDate(null);
-    } else {
-      setCheckOutDate(date);
-    }
+    setCheckOutDate(date);
   };
   useEffect(() => {
     if (checkInDate) {
@@ -98,58 +95,61 @@ const Resort = () => {
       // Formatting the date into the correct format
       const new_checkin = checkInDate;
       const new_checkout = checkOutDate;
-  
+
       const options = { day: "numeric", month: "numeric", year: "numeric" };
-      const formatted_InDate = new_checkin.toLocaleDateString("en-GB", options).replace(/\/0(\d)\//, '/$1/');
-      const formatted_outDate = new_checkout.toLocaleDateString("en-GB", options).replace(/\/0(\d)\//, '/$1/');
-  
+      const formatted_InDate = new_checkin
+        .toLocaleDateString("en-GB", options)
+        .replace(/\/0(\d)\//, "/$1/");
+      const formatted_outDate = new_checkout
+        .toLocaleDateString("en-GB", options)
+        .replace(/\/0(\d)\//, "/$1/");
+
       const filterResorts = resort.filter((item) => {
         const isPlaceMatched = item.place === selectedPlace;
-  
+
         const hasOverlappingBooking = resortbooked?.some((bookedItem) => {
           const bookedFrom = bookedItem.fromDate;
           const bookedTo = bookedItem.toDate;
-          console.log(bookedTo,bookedFrom,"gigigigi")
-          console.log(formatted_InDate,formatted_outDate,"ooooo")
-  
+          console.log(bookedTo, bookedFrom, "gigigigi");
+          console.log(formatted_InDate, formatted_outDate, "ooooo");
+
           // Check for overlapping bookings
           const isOverlapping =
-            (formatted_InDate <= bookedFrom && bookedFrom <= formatted_outDate) || // Overlapping start date
+            (formatted_InDate <= bookedFrom &&
+              bookedFrom <= formatted_outDate) || // Overlapping start date
             (formatted_InDate <= bookedTo && bookedTo <= formatted_outDate) || // Overlapping end date
             (bookedFrom <= formatted_InDate && formatted_outDate <= bookedTo); // Booking covers the entire search range
-            console.log(isOverlapping,"udemy...")
-  
+          console.log(isOverlapping, "udemy...");
+
           return (
             bookedItem.resortId._id === item._id &&
             bookedItem.status === "booked" &&
             isOverlapping
           );
         });
-  // isUserBooked: Also uses the .some() method on the 
-  // resortbooked array to check if the user has already
-  //  booked the resort for the specified dates. 
-  //  It compares the booked item's fromDate and toDate 
-  //  properties with the formatted search dates. 
-  //  If the user is already booked
-  //  for the specified dates, the function returns true.
+        // isUserBooked: Also uses the .some() method on the
+        // resortbooked array to check if the user has already
+        //  booked the resort for the specified dates.
+        //  It compares the booked item's fromDate and toDate
+        //  properties with the formatted search dates.
+        //  If the user is already booked
+        //  for the specified dates, the function returns true.
         const isUserBooked = resortbooked?.some((bookedItem) => {
           return (
             bookedItem.resortId._id === item._id &&
             bookedItem.status === "booked" &&
             formatted_InDate <= bookedItem.fromDate &&
             formatted_outDate >= bookedItem.toDate
-            
           );
         });
-  
+
         return isPlaceMatched && !hasOverlappingBooking && !isUserBooked;
       });
-  
+
       console.log(filterResorts, "Filtered Resorts");
       setFilteredResorts(filterResorts);
     }
   };
-  
 
   // console.log(resort, "all resort datas...");
 
@@ -192,6 +192,7 @@ const Resort = () => {
             onChange={handleCheckOutDateChange}
             placeholderText="Check-out"
             className="w-64 h-10 max-w-xs"
+            minDate={today}
           />
         </div>
 
@@ -252,7 +253,10 @@ const Resort = () => {
             ))
           ) : (
             <div className="text-2xl mx-auto">
-              <img src="https://res.cloudinary.com/dsyln8j3g/image/upload/v1689588227/new_nf8utw.gif" alt="images_resort"/>
+              <img
+                src="https://res.cloudinary.com/dsyln8j3g/image/upload/v1689588227/new_nf8utw.gif"
+                alt="images_resort"
+              />
             </div>
           )
         ) : (
@@ -297,6 +301,7 @@ const Resort = () => {
           ))
         )}
       </div>
+      <Page />
 
       <Footer />
     </div>

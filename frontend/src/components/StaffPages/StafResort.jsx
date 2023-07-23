@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Headerr from "./layout/Headerr";
 import Navbar from "./layout/Navbar";
-import {
-  getResortData,
-  disableresort,
-} from "../../services/Staffapi";
+import Footer from "./layout/Footer";
+import { getResortData, disableresort } from "../../services/Staffapi";
 
 const StafResort = () => {
   const [resort, setresort] = useState([]);
@@ -16,7 +14,7 @@ const StafResort = () => {
   }, []);
   const getresortData = async () => {
     try {
-      let {data} = await getResortData();
+      let { data } = await getResortData();
       console.log(data, "data of resort ");
 
       if (data.success) {
@@ -45,7 +43,7 @@ const StafResort = () => {
         getresortData();
       }
     } catch (error) {
-      console.log(error,"eeeeeeeeeee")
+      console.log(error, "eeeeeeeeeee");
     }
   };
 
@@ -83,7 +81,7 @@ const StafResort = () => {
                   <td>{item.place}</td>
                   <td>{item.price}</td>
                   <td>{item.status}</td>
-                  <td>{item?.verify ? "approved" : "rejected"}</td>
+                  <td>{item?.verify==='verified' ? 'verified' :'rejected'}</td>
                   <button
                     className="btn btn-xs btn-info"
                     onClick={() => {
@@ -95,24 +93,24 @@ const StafResort = () => {
                     Edit
                   </button>
                   {/* <Link to='' onClick={()=>handleEdit(item._id)} className='btn btn-xs btn-success' style={{marginRight:'10px'}}>Edit </Link> */}
-                
-                  {item.status==='Enable' ? (
-  <button 
-    onClick={() => handledisable(item._id)}
-    className="btn btn-xs btn-error" 
-    style={{ marginRight: "10px" }}
-  >
-    Disable
-  </button>
-) : (
-  <button 
-    onClick={() => handledisable(item._id)}
-    className="btn btn-xs btn-success"
-    style={{ marginRight: "10px" }}
-  >
-    Enable
-  </button>
-)}
+
+                  {item.status === "Enable" ? (
+                    <button
+                      onClick={() => handledisable(item._id)}
+                      className="btn btn-xs btn-error"
+                      style={{ marginRight: "10px" }}
+                    >
+                      Disable
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handledisable(item._id)}
+                      className="btn btn-xs btn-success"
+                      style={{ marginRight: "10px" }}
+                    >
+                      Enable
+                    </button>
+                  )}
 
                   {/* <Link to='' onClick={()=> { 
             console.log(item._id,"delete id coming...")
@@ -121,6 +119,7 @@ const StafResort = () => {
               ))}
             </tbody>
           </table>
+          <Footer/>
         </div>
       </div>
     </div>

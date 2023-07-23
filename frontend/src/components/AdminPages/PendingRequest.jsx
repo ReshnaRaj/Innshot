@@ -4,6 +4,7 @@ import Headers from "./layout/Headers";
 import { getAllData,rejectresort,approveresortt } from "../../services/Adminapi";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import Footer from './layout/Footer'
 
 const PendingRequest = () => {
   const [data, setdata] = useState([]);
@@ -146,7 +147,7 @@ const PendingRequest = () => {
                     <td>{item?.resortname}</td>
                     <td>{item?.resortowner?.name}</td>
                     <td>{item?.place}</td>
-                    <td>{item?.verify ? "approved" : "rejected"}</td>
+                    <td>{item?.verify==='verified'? 'verified' : 'rejected'}</td>
 
                     <button
                       onClick={() => {
@@ -158,7 +159,7 @@ const PendingRequest = () => {
                     >
                       View
                     </button>
-                    {item.verify === false ? (
+                    {item.verify === 'new' ? (
                       <button
                         onClick={() => handleapprove(item._id)}
                         className="btn btn-xs btn-success"
@@ -166,14 +167,14 @@ const PendingRequest = () => {
                       >
                         Approve
                       </button>
-                    ) : (
+                    ) : item.verify === 'verified' ? (
                       <>
-                        {/* The button to open modal */}
+                        
                         <label
                           htmlFor="my_modal_6"
                           className="btn btn-xs btn-error"
                           onClick={(e)=>{
-                            // console.log(item._id,"items id rejections....")
+                            
                             handleReject(item._id)
                           }}
                           
@@ -181,7 +182,7 @@ const PendingRequest = () => {
                           Reject
                         </label>
 
-                        {/* Put this part before </body> tag */}
+                         
                         <input
                           type="checkbox"
                           id="my_modal_6"
@@ -215,11 +216,21 @@ const PendingRequest = () => {
                           </div>
                         </div>
                       </>
-                    )}
+                    ): (
+                      <button
+                      onClick={() => handleapprove(item._id)}
+                      className="btn btn-xs btn-success"
+                      style={{ marginRight: "10px" }}
+                    >
+                      Approve
+                    </button>
+                    )
+                      }
                   </tr>
                 ))}
             </tbody>
           </table>
+          <Footer/>
         </div>
       </div>
       <ToastContainer />

@@ -3,6 +3,7 @@ import Navbars from './layout/Navbars'
 import Headers from './layout/Headers'
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import Footer from './layout/Footer';
 
 import {getalladvData,approveadvent} from '../../services/Adminapi'
 
@@ -123,6 +124,7 @@ const AllAdventure = () => {
               ))}
             </tbody>
           </table>
+          <Footer/>
           </div>
         </div>
         <ToastContainer />  

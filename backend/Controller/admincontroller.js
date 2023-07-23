@@ -51,6 +51,20 @@ let sendMail=(name,resort,email,reason)=>{
     })
   })
 }
+module.exports.getallresortdata = async (req, res, next) => {
+  try {
+    
+    const resort = await ResortModel.find({status:"Enable" }).populate(
+      "resortowner"
+    );
+   console.log(resort,"admin resort see")
+    res.status(200).json({ resort, success: true });
+  } catch (error) {
+    // next(error)
+    console.log(error);
+    res.json({ message: "error in get all resort data in admin side" });
+  }
+};
 module.exports.rejectResort=async(req,res)=>{
   try {
     const resortId=req.params.id;
@@ -60,7 +74,8 @@ module.exports.rejectResort=async(req,res)=>{
     console.log(reject,"reject working...")
     let data=await sendMail(reject.resortowner.name,reject.resortname,reject.resortowner.email,req.body.data)
     console.log(data,"resaonsss")
-    await ResortModel.updateOne({_id:resortId},{$set:{verify:false,reject_reason:req.body.data}}).then((response)=>{
+    await ResortModel.updateOne({_id:resortId},{$set:{verify:'rejected'
+    ,reject_reason:req.body.data}}).then((response)=>{
       res.status(200).json({message:"Rejection reason mail sended Successfully"})
     })
 
@@ -79,12 +94,13 @@ module.exports.approvedresort=async(req,res)=>{
   
     let info=await sendMail(approve.resortowner.name,approve.resortname,approve.resortowner.email)
     console.log(info,"sendmail success")
-    await ResortModel.updateOne({_id:resortId},{$set:{verify:true},$unset:{reject_reason:""}}).then((response)=>{
+    await ResortModel.updateOne({_id:resortId},{$set:{verify:'verified'},$unset:{reject_reason:""}}).then((response)=>{
       res.status(200).json({message:"Approved message emailed successfully.."})
     })
   
         
   } catch (error) {
+    console.log(error)
     
   }
 }

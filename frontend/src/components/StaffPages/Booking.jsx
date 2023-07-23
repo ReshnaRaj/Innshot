@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./layout/Navbar";
 import Headerr from "./layout/Headerr";
+import Footer from './layout/Footer'
 import { get_book_data } from "../../services/Staffapi";
 
 const Booking = () => {
@@ -71,6 +72,7 @@ const Booking = () => {
 })}
             </tbody>
           </table>
+          <Footer/>
         </div>
       </div>
     </div>

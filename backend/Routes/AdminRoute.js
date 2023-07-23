@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const { adminlogin, isAdminAuth } = require("../Controller/authController");
-const { getallresortdata } = require("../Controller/StaffController");
+ 
 const {
   approveresort,
+  getallresortdata,
   getuniqueresortdata,
   getalladvdata,
   getuniqadvdata,
@@ -16,7 +17,7 @@ const {
   rejectResort,
   approvedresort,
   getallbookings,
-} = require("../Controller/admincontroller");
+} = require("../Controller/AdminController");
 const { checkAdmin } = require("../Middleware/authuser");
 router.post("/adlogin", adminlogin);
 router.get("/getallresortdata", getallresortdata);

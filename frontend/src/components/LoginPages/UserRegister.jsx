@@ -23,8 +23,19 @@ const UserRegister = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
+    if(name===""||email===""||phone===""||password===""){
+      generateError('Please fill all are required')
+    }
+  else if (!strongPasswordRegex.test(password)) {
+    generateError(
+      'Please Enter strong password'
+    );
+    // return; // Return early to prevent further execution
+  }
+  
     
-    if(password!==repassword){
+    else if(password!==repassword){
       console.log(generateError,"yyyyyyyyyy")
       generateError('Password not match Try again later')
     }
@@ -89,7 +100,7 @@ const UserRegister = () => {
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter your name"
               onChange={(e)=> setname(e.target.value)}
-              required
+               
             />
           </div>
           
@@ -109,7 +120,7 @@ const UserRegister = () => {
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter your email"
               onChange={(e) =>  setemail(e.target.value )}
-              required
+            
             />
           </div>
           <div className="mb-4">
@@ -135,7 +146,7 @@ const UserRegister = () => {
                   setphone(phoneNumber);
                 }
               }}
-              required
+            
             />
           </div>
           <div className="mb-6">
@@ -158,7 +169,7 @@ const UserRegister = () => {
             
                  setpassword( e.target.value )}
               }
-              required
+              
             />
           </div><div className="mb-6">
             <label
@@ -174,7 +185,7 @@ const UserRegister = () => {
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter confirm password"
               onChange={(e) =>  setrepassword( e.target.value )}
-              required
+             
             />
           </div>
           <button
