@@ -174,7 +174,7 @@ const Home = () => {
                 <div className="flex flex-col">
                   <div className="flex items-center ">
                     <div className="text-lg font-semibold">
-                      {item.resortname}
+                      {item.resortname} 
                     </div>
                   </div>
 
@@ -184,7 +184,7 @@ const Home = () => {
                   </div>
                   <div className="flex items-center">
                     <FaRupeeSign className="text-sm" />
-                    <div className="text-black">{item.price}</div>
+                    <div className="text-black">{item.price} per room</div>
                   </div>
 
                   <button

@@ -44,10 +44,11 @@ const getDestinationData = (id) => {
 //     return userAxiosInstance.post('/booking',data)
 // }
 const booked_resort = (data) => {
-  // console.log(data,"datttttttttt")
+  console.log(data,"going to book the resort")
   return userAxiosInstance.post("/bookedresort", data);
 };
 const verifyrazorpay = (data) => {
+  console.log(data,"verifying the payment data")
   return userAxiosInstance.post("/verifypayment", data);
 };
 const get_booked_data = () => {

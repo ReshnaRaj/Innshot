@@ -34,5 +34,9 @@ const bookingSchema = new mongoose.Schema({
     required: true,
     default: "booked",
   },
+  selected_days:{
+    type:Number
+
+  },
 });
 module.exports = mongoose.model("Booking", bookingSchema);

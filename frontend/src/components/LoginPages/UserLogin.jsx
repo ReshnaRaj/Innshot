@@ -36,14 +36,7 @@ const UserLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (!user.email) {
-    //   generateError('email is required');
-    //   return;
-    // }
-    // if (!user.password) {
-    //   generateError('password is required');
-    //   return;
-    // }
+   
     try {
       // console.log(user,"login user dataaaa")
      const data =await userlogin({

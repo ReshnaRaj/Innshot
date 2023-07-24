@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
- 
+
 import Header from "./Layout/Header";
 import { FaRupeeSign } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaBed } from "react-icons/fa";
-import { getresortdata,SendId} from "../../services/Userapi";
+import { getresortdata, SendId } from "../../services/Userapi";
 import Footer from "./Layout/Footer";
- 
 
 const ResortData = () => {
   const users = useSelector((state) => state.user);
   const [resortdata, setResortdata] = useState([]);
+  const [rooms, setRooms] = useState(0);
+  const [price, setPrice] = useState(0);
   // const [similarStays, setSimilarStays] = useState([]);
   let { id } = useParams();
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const ResortData = () => {
     // eslint-disable-next-line
     getResortData();
   }, []);
+
   // useEffect(() => {
   //   if (resortdata.place) {
   //     fetchSimilarStays();
@@ -29,27 +31,45 @@ const ResortData = () => {
   const getResortData = async () => {
     try {
       let { data } = await getresortdata(id);
-      console.log(data, "resort one data get");
+      // console.log(data, "resort one data get");
       if (data.success) {
         setResortdata(data.oneresortdata);
+        setPrice(data.oneresortdata.price);
       }
     } catch (error) {
       console.log(error);
     }
   };
+  const increment = () => {
+    // console.log(resortdata.number_room,"count of room")
+    console.log(rooms,"number of user entered count")
+    if (rooms <resortdata.number_room) 
+    setRooms(rooms + 1);
+    if(rooms<=resortdata.number_room-1)
+    priceChange();
+  };
+  const decrement = () => {
+    if (rooms > 1) {
+      setRooms(rooms - 1);
+      priceChang();
+    }
+  };
+
   const handleBookView = async (bookeddata) => {
     try {
-      navigate(`/viewbook/`, { state: { bookeddata } });
+      console.log(price,"price of the resort...")
+      console.log(rooms,"count of rooms user selected...")
+      navigate(`/viewbook/`, { state: { bookeddata ,price,rooms} });
     } catch (error) {
       console.log(error);
     }
   };
-  const handleSendIds=async (sender,reciever)=>{
-    console.log(sender,reciever,"ttttttt")
-  const ids=await SendId(sender,reciever)
-  navigate('/chat')
-  console.log(ids)
-  }
+  const handleSendIds = async (sender, reciever) => {
+    console.log(sender, reciever, "ttttttt");
+    const ids = await SendId(sender, reciever);
+    navigate("/chat");
+    console.log(ids);
+  };
   // const fetchSimilarStays = async () => {
   //   try {
   //     let { data } = await getsimiliarstay(resortdata.place);
@@ -67,8 +87,25 @@ const ResortData = () => {
     src: `${image}`,
     isLarge: index === 0,
   }));
+  const priceChange = () => {
+    // console.log(price, "oo")
+    // console.log(rooms,"tttt")
+    var updatedPrice = resortdata.price * (rooms+1);
+    console.log(updatedPrice,"updated price...");
+    setPrice(updatedPrice);
+  };
+  const priceChang = () => {
+    // console.log(price, "oo")
+    // console.log(rooms,"tttt")
+    var updatedPrice = resortdata.price * (rooms-1);
+    console.log(updatedPrice);
+    setPrice(updatedPrice);
+  };
   // console.log(similarStays,"ooooooo")
-console.log(users,"user id checking...")
+  // console.log(users, "user id checking...");
+  // console.log(resortdata, "resort details...");
+  // console.log(rooms,"count of user entered resort")
+  // console.log(price, "price of resort");
   return (
     <div>
       <Header />
@@ -79,26 +116,33 @@ console.log(users,"user id checking...")
             <h3 className="text-lg mb-4">{resortdata.address}</h3>
           </div>
           <div className="mb-4 lg:mb-0 flex gap-x-2 text-sm">
-            <button className="btn btn-info" onClick={()=>{
-              handleSendIds(users.id,resortdata?.resortowner?._id)
-              }}>Chat</button>
-           
-          
+            <button
+              className="btn btn-info"
+              onClick={() => {
+                handleSendIds(users.id, resortdata?.resortowner?._id);
+              }}
+            >
+              Chat
+            </button>
+
             <div className="text-2xl font-semibold text-sky-300">
-            
-            <span ><FaRupeeSign className="inline"/></span>
-            <span className="inline"> {resortdata.price}</span>
+              <span>
+                <FaRupeeSign className="inline" />
+              </span>
+              <span className="inline" onChange={priceChange}>
+              
+                {price}
+              </span>
 
               <button
                 className="btn btn-info ml-4 text-black"
                 onClick={(e) => {
-                  handleBookView(resortdata);
-                  console.log(resortdata, "full detials..");
+                  handleBookView(resortdata,price);
+                  console.log(price, "full detials..");
                 }}
               >
                 Book Now
               </button>
-              
             </div>
           </div>
         </div>
@@ -138,11 +182,7 @@ console.log(users,"user id checking...")
                   key={image?.id}
                   className="carousel-item relative w-full"
                 >
-                  <img
-                    src={image?.src}
-                    className="w-96 h-60 mx-auto"
-                 
-                  />
+                  <img src={image?.src} className="w-96 h-60 mx-auto" />
                   <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
                     <a
                       href={`#slide${
@@ -191,9 +231,26 @@ console.log(users,"user id checking...")
             </div> */}
             <div>
               <div>
-                <div className="flex gap-x-6">
+                <div className="flex gap-x-6 font-bold">
+                  Total Rooms :
                   <FaBed className="text-2xl" />
                   <div>{resortdata.number_room}</div>
+                </div>
+                <div className="font-bold">how many rooms you need?</div>
+                <div>
+                  <button
+                    onClick={decrement}
+                    className=" btn-info btn-md rounded-3xl mr-2"
+                  >
+                    -
+                  </button>
+                  {rooms}
+                  <button
+                    onClick={increment}
+                    className="btn-info btn-md rounded-3xl ml-2"
+                  >
+                    +
+                  </button>
                 </div>
                 <div className="font-semibold">
                   Services:{" "}

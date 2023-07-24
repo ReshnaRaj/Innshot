@@ -22,7 +22,7 @@ const StaffModel = require("../Model/StaffModel");
 // };
 module.exports.checkUser = (req, res, next) => {
   try {
-    console.log("checking the user 666.....")
+    // console.log("checking the user 666.....")
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
       res.send({ status: false, message: "failed  no token present" });

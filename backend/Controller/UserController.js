@@ -97,8 +97,11 @@ module.exports.getonedest = async (req, res) => {
 module.exports.resort_book = async (req, res) => {
   try {
     console.log("working of resort booking...");
-    const { resortId, traveler, fromDate, toDate, payment } = req.body;
-    console.log(req.body,"request body....")
+    const { resortId, traveler, fromDate, toDate, payment ,pricee,count_rooms} = req.body;
+    // console.log(req.body,"request body....")
+    console.log(pricee,"updated price..")
+    console.log( count_rooms,"count user entered rooms..")
+    // formatting the date 
     const formatDate = (dateString) => {
       const date = new Date(dateString);
       const day = date.getDate();
@@ -106,11 +109,16 @@ module.exports.resort_book = async (req, res) => {
       const year = date.getFullYear();
       return `${day}/${month}/${year}`;
     };
-    console.log(formatDate,"gggggggg")
+   
     const traveller = await UserModel.findOne({ email: traveler.email });
-    console.log(traveller._id, "ffff");
+    
     const resortt = await ResortModel.findOne({ _id: resortId });
-    console.log(resortt, "ttttt");
+    if (count_rooms > resortt.number_room) {
+      return res.status(400).json({ error: "Insufficient rooms available in the resort" });
+    }
+    const newRoomsAvailable =  resortt.number_room- count_rooms;
+    await ResortModel.findByIdAndUpdate(resortt._id, { $set: { number_room: newRoomsAvailable } });
+  
     const existingBooking = await BookingModel.findOne({
       resortId: resortt._id,
        $or: [
@@ -129,6 +137,7 @@ module.exports.resort_book = async (req, res) => {
     if (payment === "cod") {
       
      console.log(formatDate,"tttt")
+    //  this code is for formatting the date 
       const update_from = formatDate(fromDate);
       // console.log(update_from, typeof update_from, "tttt");
       const update_to = formatDate(toDate);
@@ -149,6 +158,7 @@ module.exports.resort_book = async (req, res) => {
       const dayCount = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
 
       console.log(dayCount, "count of days");
+      console.log(pricee,"22222333")
 
       const newBooking = new BookingModel({
         resortId: resortt._id,
@@ -157,7 +167,8 @@ module.exports.resort_book = async (req, res) => {
         toDate: formatDate(toDate),
         Booked_at: new Date(),
         "payment.payment_method": payment,
-        "payment.payment_amount": resortt.price * dayCount,
+        "payment.payment_amount": pricee ,
+        selected_days:count_rooms ,
       });
       // console.log(newBooking,"from date and to date....")
       const savedBooking = await newBooking.save();
@@ -191,7 +202,7 @@ module.exports.resort_book = async (req, res) => {
           key_secret,
         });
         const options = {
-          amount: resortt.price * dayCount * 100,
+          amount: pricee  * 100,
           currency: "INR",
           receipt: crypto.randomBytes(10).toString("hex"),
         };
@@ -227,7 +238,10 @@ module.exports.verifyPayment = async (req, res) => {
       checkInDate,
       checkOutDate,
       paymentt,
+      real_amount,count_room
+    
     } = req.body;
+    console.log(req.body,"0000")
     const sign = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSign = crypto
       .createHmac("sha256", key_secret)
@@ -236,7 +250,9 @@ module.exports.verifyPayment = async (req, res) => {
     if (razorpay_signature === expectedSign) {
       const user = req.userId;
       const bookedresort = resortdat;
-      const price = resortdat.price;
+      // console.log(bookedresort,"booke4444")
+   
+      
 
       // this is written for saving the day of count in database and the day should be stored in database
       const formatDate = (dateString) => {
@@ -266,7 +282,7 @@ module.exports.verifyPayment = async (req, res) => {
       const dayCount = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
 
       console.log(dayCount, "count of days");
-
+      console.log(real_amount,"price new...")
       const newBooking = new BookingModel({
         resortId: bookedresort,
         traveler: user,
@@ -274,9 +290,10 @@ module.exports.verifyPayment = async (req, res) => {
         toDate: formatDate(checkOutDate),
         Booked_at: new Date(),
         "payment.payment_method": paymentt,
-        "payment.payment_amount": price * dayCount,
+        "payment.payment_amount": real_amount,
         "payment.payment_status": "completed",
         "payment.payment_id": razorpay_payment_id,
+        selected_days:count_room,
       });
       const savedBooking = await newBooking.save();
       res.json({

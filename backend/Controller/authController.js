@@ -85,7 +85,7 @@ module.exports.login = async (req, res, next) => {
         res.json({ errors });
       }
     } else {
-      const errors = { email: "No user with the entered mail id" };
+      const errors = { email: "Please Signup to Login" };
       res.json({ errors, created: false });
     }
   } catch (error) {
