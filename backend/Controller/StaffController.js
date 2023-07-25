@@ -11,9 +11,7 @@ const UserModel = require("../Model/UserModel");
 module.exports.addresort = async (req, res, next) => {
   try {
     console.log(req.staffId,"staff Id")
-    
-    // console.log(req.body, "adding working....");
-    // console.log(req.staff.admin_approval,"checking .....")
+ 
       let files = Object.values(req.files).flatMap((val) => val);
 
     let docpath = files.pop().path;
@@ -358,7 +356,7 @@ module.exports.getDestinationData = async (req, res) => {
 
     console.log(id, "dvdv");
     const destination = await DestinationModel.find({ resortowner: id });
-    // console.log(destination, "succvvvv");
+   
     res.status(200).json({ result: destination, success: true });
   } catch (error) {}
 };
@@ -389,14 +387,14 @@ module.exports.editdestination=async(req,res)=>{
   }
 }
 module.exports.getbookedresort=async(req,res)=>{
-  // console.log("booking page backend")
+  
   try {
     let id = req.staffId;
     console.log(id,"staff Id....")
     const resortId=await ResortModel.find({resortowner:id})
-    // console.log(resortId,"resort Id getting....")
+    
     const booked=await BookingModel.find({resortId}).populate('traveler').populate('resortId')
-    // console.log(booked,"booked...")
+     
     res.status(200).json({result:booked,success:true})
   } catch (error) {
     console.log(error)

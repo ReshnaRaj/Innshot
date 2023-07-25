@@ -10,7 +10,7 @@ const dbConnection = require("./Connection/database");
 
 const userouter = require("./Routes/UserRoute");
 const staffrouter = require("./Routes/StaffRoute");
-const adminrouter = require("./Routes/AdminRoute.js");
+const adminrouter = require("./Routes/AdminRoute");
 const socket = require("socket.io");
 // const stripe=require('stripe')
 dbConnection();

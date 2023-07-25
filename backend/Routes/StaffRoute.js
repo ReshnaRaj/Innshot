@@ -8,7 +8,7 @@ const {uploadImage}=require('../Middleware/Multer')
 const {StaffChats,findstaffchat}=require('../Controller/ChatController')
 const {adMessage,getMessag}=require('../Controller/MessageController')
 
-// const {upload}=require('../Middleware/fileupload')
+ 
 router.post('/stafflogin',stafflogin)
 router.post('/staffregister',staffreg)
 router.post('/verifystaffemail/:id',verifystaff)

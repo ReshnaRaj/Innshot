@@ -145,7 +145,7 @@ module.exports.approvedresort=async(req,res)=>{
 module.exports.getuniqueresortdata=async(req,res,next)=>{
     try {
         let resortId=req.params.id
-        // console.log(resortId ,"resortid getting in admin  side")
+      
         let resortdata=await ResortModel.findById(resortId).populate('resortowner')
         console.log(resortdata,"resortdata in unique page ....")
         res.status(200).json({resortdata,success:true})
@@ -200,7 +200,7 @@ module.exports.approveAdvent = async (req, res, next) => {
 module.exports.getalldestdata=async(req,res,next)=>{
   try {
     const destination=await DestinationModel.find({}).populate('resortowner')
-    // console.log(destination,"aaaaaaaaaaa")
+    
     res.status(200).json({destination,success:true})
     
   } catch (error) {
@@ -220,11 +220,11 @@ module.exports.getuniquedest=async(req,res)=>{
 }
 module.exports.approveDestination=async(req,res)=>{
   try {
-    // console.log("working....")
+    
     let destId=req.params.id
-    // console.log(destId,"destination id")
+ 
     let destination=await DestinationModel.findById(destId).populate('resortowner')
-    // console.log(destination,"data.....")
+    
     const new_status=destination.verify===false ? true : false;
     console.log(new_status,"updated...")
     let message=new_status ? 'Resort Approved' : 'Resort Rejeceted';
@@ -242,7 +242,7 @@ module.exports.approveDestination=async(req,res)=>{
 module.exports.getAllstaffData = async (req, res) => {
   try {
     const staffs = await StaffModel.find({verified:true});
-    // console.log(staffs,"all staff displaying...")
+   
     res.status(200).json({staffs,success:true})
   } catch (error) {
     console.error(error);
@@ -252,9 +252,9 @@ module.exports.getAllstaffData = async (req, res) => {
 
 module.exports.blockStaff=async(req,res)=>{
   try {
-    // console.log("blocking working...")
+    
     const staffId=req.params.id
-    // console.log(staffId,"id of staff")
+    
     let StafBlock=await StaffModel.findById(staffId)
     console.log(StafBlock,"blocking ...")
     const newStatus=(StafBlock.admin_approval==='Unblock' ? 'Block':'Unblock')
@@ -272,7 +272,7 @@ module.exports.getallbookings=async(req,res)=>{
   try {
     
     const resortbookings=await BookingModel.find({}).populate('traveler').populate('resortId')
-    // console.log(resortbookings,"booking all data")
+ 
     res.status(200).json({result:resortbookings,success:true})
   } catch (error) {
     console.log(error,"error while booking")
