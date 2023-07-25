@@ -21,7 +21,7 @@ const { checkAdmin } = require("../Middleware/authuser");
 router.post("/adlogin", adminlogin);
 router.get("/getallresortdata", getallresortdata);
 router.get("/getuniqueresort/:id", getuniqueresortdata);
-// router.post('/approveresort/:id',approveresort)
+ 
 router.get("/isAdminauth", checkAdmin, isAdminAuth);
 router.get("/getalladvdata", checkAdmin, getalladvdata);
 router.get("/getuniqadv/:id", checkAdmin, getuniqadvdata);
