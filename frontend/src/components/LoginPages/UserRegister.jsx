@@ -78,7 +78,7 @@ const UserRegister = () => {
       <div className="w-full max-w-md bg-white-200 rounded-lg shadow-md p-8"   style={{ opacity: 0.9 }}>
         <h2 className="text-2xl font-bold mb-1 text-center text-black">User Signup</h2>
         {message && (
-  <div className="flex items-center font-bold text-center text-black mb-4">
+  <div className="flex items-center font-bold text-center text-red-600 mb-4">
     <svg className="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
     </svg>
@@ -171,7 +171,7 @@ const UserRegister = () => {
               }
               
             />
-          </div><div className="mb-6">
+            {/* <progress className={'max-w-[60%]'}   max={4}/> */}
             <label
               htmlFor="password"
               className="block text-black text-sm font-bold mb-2"

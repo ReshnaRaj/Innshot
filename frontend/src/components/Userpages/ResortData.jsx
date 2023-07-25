@@ -136,8 +136,11 @@ const ResortData = () => {
 
               <button
                 className="btn btn-info ml-4 text-black"
+                disabled={resortdata.number_room===0}
                 onClick={(e) => {
+                  
                   handleBookView(resortdata,price);
+                 
                   console.log(price, "full detials..");
                 }}
               >

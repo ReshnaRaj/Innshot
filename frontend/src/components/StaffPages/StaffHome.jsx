@@ -131,7 +131,7 @@ const StaffHome = () => {
       console.log(allresort,"count of all resorts")
       setTotalcount(allresort)
 
-      const approvedResorts = data.result.filter(resort => resort.verify === true);
+      const approvedResorts = data.result.filter(resort => resort.verify === 'verified');
       setCount(approvedResorts.length)
       // console.log(approvedResorts,"ffff")
      

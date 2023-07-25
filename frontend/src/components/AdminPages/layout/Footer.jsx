@@ -1,13 +1,27 @@
 import React from 'react'
 
-const Footer = () => {
+const Footer = ({ currentpage, npage, onPageChange }) => {
+  const renderPageButtons = () => {
+    const pageButtons = [];
+
+    for (let page = 1; page <= npage; page++) {
+      pageButtons.push(
+        <button
+          key={page}
+          className={`join-item btn rounded-3xl ${currentpage === page ? 'btn-outline mr-1' : 'mr-1'}`}
+          onClick={() => onPageChange(page)}
+        >
+          {page}
+        </button>
+      );
+    }
+
+    return pageButtons;
+  };
   return (
     <div className="flex justify-center mt-6">
-      <div className="join ">
-        <button className="join-item btn rounded-3xl btn-outline mr-1">1</button>
-        <button className="join-item btn rounded-3xl mr-1">2</button>
-        <button className="join-item btn rounded-3xl mr-1">3</button>
-        <button className="join-item btn rounded-3xl mr-1">4</button>
+      <div className="join">
+        {renderPageButtons()}
       </div>
     </div>
   )

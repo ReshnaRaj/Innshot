@@ -34,7 +34,7 @@ const bookingSchema = new mongoose.Schema({
     required: true,
     default: "booked",
   },
-  selected_days:{
+  selected_rooms:{
     type:Number
 
   },

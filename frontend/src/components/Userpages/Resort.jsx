@@ -62,7 +62,14 @@ const Resort = () => {
   };
 
   const handleCheckOutDateChange = (date) => {
-    setCheckOutDate(date);
+    if(date<checkInDate){
+      setCheckOutDate(checkInDate);
+    }
+    else{
+      setCheckOutDate(date);
+    }
+
+    
   };
   useEffect(() => {
     if (checkInDate) {
@@ -192,7 +199,7 @@ const Resort = () => {
             onChange={handleCheckOutDateChange}
             placeholderText="Check-out"
             className="w-64 h-10 max-w-xs"
-            minDate={today}
+            minDate={checkInDate ? new Date(checkInDate) : null}
           />
         </div>
 

@@ -64,7 +64,7 @@ const data=await CancelBook(BookingId)
             <h2 className="card-title">Booked Resort:{resort.resortId.resortname}</h2>
             <p>Address:{resort.resortId.address}</p>
             <p>Price:{resort.payment.payment_amount}</p>
-            <p>Selected Rooms:{resort.selected_days}</p>
+            <p>Selected Rooms:{resort.selected_rooms}</p>
             <p>Place:{resort.resortId.place}</p>
             <p>Status:{resort.status}</p>
             <p>Booked Date:{new Date(resort.Booked_at).toLocaleDateString('en-US')}</p>

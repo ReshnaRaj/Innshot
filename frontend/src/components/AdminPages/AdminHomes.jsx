@@ -90,10 +90,10 @@ const AdminHomes = () => {
     try {
       let dataa = await getAllData();
       console.log(dataa, "data of all resorts");
-      const approve=dataa.data.resort.filter(book=>book.verify===true)
+      const approve=dataa.data.resort.filter(book=>book.verify==='verified')
       console.log(approve,"lenght of approved")
       setApproved(approve.length)
-      const reject=dataa.data.resort.filter(book=>book.verify===false)
+      const reject=dataa.data.resort.filter(book=>book.verify==='rejected')
       console.log(reject,"count of rejected")
       setRejected(reject.length)
     

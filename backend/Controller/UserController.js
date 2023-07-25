@@ -168,14 +168,14 @@ module.exports.resort_book = async (req, res) => {
         Booked_at: new Date(),
         "payment.payment_method": payment,
         "payment.payment_amount": pricee ,
-        selected_days:count_rooms ,
+        selected_rooms:count_rooms ,
       });
       // console.log(newBooking,"from date and to date....")
       const savedBooking = await newBooking.save();
       res.json({ savedBooking, success: true });
     } else {
       try {
-      
+      // formatting the date 
         const update_from = formatDate(fromDate);
         console.log(update_from, typeof update_from, "tttt");
         const update_to = formatDate(toDate);
@@ -293,7 +293,7 @@ module.exports.verifyPayment = async (req, res) => {
         "payment.payment_amount": real_amount,
         "payment.payment_status": "completed",
         "payment.payment_id": razorpay_payment_id,
-        selected_days:count_room,
+        selected_rooms:count_room,
       });
       const savedBooking = await newBooking.save();
       res.json({
@@ -323,38 +323,103 @@ module.exports.getbookeddata = async (req, res) => {
     res.status(200).json({ result: bookedresort });
   } catch (error) {}
 };
+ 
+
 module.exports.CancelBooking = async (req, res, next) => {
   try {
-    const BookId = req.params.id;
-    const BookedData = await BookingModel.findById(BookId);
+    const bookId = req.params.id;
+    const bookedData = await BookingModel.findById(bookId);
 
-    if (BookedData) {
-      const updatedBooking = await BookingModel.findByIdAndUpdate(
-        BookId,
-        { $set: { status: "cancelled" } },
-        { new: true }
-      );
-      console.log(updatedBooking, "status updated");
-
-      if (updatedBooking) {
-        // Additional logic or actions after successful cancellation
-        res.json({
-          message: "Booking cancelled successfully",
-          data: updatedBooking,
-        });
-      } else {
-        res.status(404).json({ message: "Booking not found" });
-      }
-    } else {
-      res.status(400).json({
-        message: "Cancellation is not available for this payment method",
-      });
+    if (!bookedData) {
+      return res.status(404).json({ message: "Booking not found" });
     }
+
+    if (bookedData.status === "cancelled") {
+      return res.status(400).json({ message: "Booking is already cancelled" });
+    }
+
+    const updatedBooking = await BookingModel.findByIdAndUpdate(
+      bookId,
+      { $set: { status: "cancelled" } },
+      { new: true }
+    );
+console.log(updatedBooking,"updated booking....")
+    if (!updatedBooking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    // Get the resortId from the updatedBooking data
+    const resortId = updatedBooking.resortId;
+
+    // Find the corresponding resort data
+    const resortData = await ResortModel.findById(resortId);
+    console.log(resortData,"resort data in booking...")
+
+    if (!resortData) {
+      return res.status(404).json({ message: "Resort data not found" });
+    }
+
+    // Increment the selectedRooms count by the number of rooms booked in this particular booking
+    const roomsBooked = updatedBooking.selected_rooms;
+    console.log(roomsBooked,"numbe rof rooms booked...")
+    resortData.number_room += roomsBooked;
+
+    // Save the updated resort data
+    await resortData.save();
+
+    return res.json({
+      message: "Booking cancelled successfully",
+      data: updatedBooking,
+    });
   } catch (error) {
     console.log(error, "error consoling....");
-    res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+// module.exports.CancelBooking = async (req, res, next) => {
+//   try {
+//     const BookId = req.params.id;
+//     const BookedData = await BookingModel.findById(BookId);
+
+//     if (BookedData) {
+//       const updatedBooking = await BookingModel.findByIdAndUpdate(
+//         BookId,
+//         { $set: { status: "cancelled" } },
+//         { new: true }
+//       );
+//       console.log(updatedBooking, "status updated");
+
+//       if (updatedBooking) {
+//         // Additional logic or actions after successful cancellation
+//         res.json({
+//           message: "Booking cancelled successfully",
+//           data: updatedBooking,
+//         });
+//       } else {
+//         res.status(404).json({ message: "Booking not found" });
+//       }
+//       const resortId = updatedBooking.resortId;
+
+      
+//       const resortData = await ResortModel.findById(resortId);
+//       console.log(resortData,"resort dat in booking page")
+//       if (!resortData) {
+//         return res.status(404).json({ message: "Resort data not found" });
+//       }
+//       const roomsBooked = updatedBooking.selected_rooms.length;
+//       resortData.number_room += roomsBooked;
+//       await resortData.save();
+//     } else {
+//       res.status(400).json({
+//         message: "Cancellation is not available for this payment method",
+//       });
+//     }
+//   } catch (error) {
+//     console.log(error, "error consoling....");
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// };
 module.exports.updatePassword = async (req, res) => {
   console.log(req.body,"request body data getting...")
   const _id = req.userId;

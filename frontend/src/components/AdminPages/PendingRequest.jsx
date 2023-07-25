@@ -8,6 +8,13 @@ import Footer from './layout/Footer'
 
 const PendingRequest = () => {
   const [data, setdata] = useState([]);
+  const [currentpage,setCurrentpage]=useState(1)
+  const recordpage=3
+  const lastIndex=currentpage*recordpage
+  const firstIndex=lastIndex-recordpage
+  const records=data.slice(firstIndex,lastIndex)
+  const npage=Math.ceil(data.length/recordpage)
+  const numbers=[...Array(npage+1).keys()].slice(1)
   const [resortId,setResortid]=useState("")
   const [search, setSearch] = useState("");
   const [rejectionreason,setRejectionreason]=useState("")
@@ -16,6 +23,9 @@ const PendingRequest = () => {
   useEffect(() => {
     getData();
   }, []);
+  const handlePageChange = (page) => {
+    setCurrentpage(page);
+  };
   const getData = async () => {
     try {
       let dataa = await getAllData();
@@ -230,7 +240,7 @@ const PendingRequest = () => {
                 ))}
             </tbody>
           </table>
-          <Footer/>
+          <Footer currentpage={currentpage} npage={npage} onPageChange={handlePageChange} />
         </div>
       </div>
       <ToastContainer />

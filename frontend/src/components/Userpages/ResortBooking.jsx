@@ -5,20 +5,19 @@ import { useLocation } from "react-router-dom";
 import { FaBed } from "react-icons/fa";
 import { MdPlace } from "react-icons/md";
 import { FaRupeeSign } from "react-icons/fa";
-// import { RxCalendar } from "react-icons/rx";
+import { RxCalendar } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 // import {resort_book} from '../../services/Userapi'
 import { useSelector } from "react-redux";
-import { booked_resort,verifyrazorpay} from "../../services/Userapi";
+import { booked_resort, verifyrazorpay } from "../../services/Userapi";
 import { ToastContainer, toast } from "react-toastify";
-import  {keyId}  from "../../files/file";
- 
+import { keyId } from "../../files/file";
 
 const ResortBooking = () => {
   const users = useSelector((state) => state.user);
   // console.log(users,"hhhh")
   const navigate = useNavigate();
-  const keyid=keyId
+  const keyid = keyId;
   // console.log(keyid,"ppp")
   // console.log(users,"tooooo")
   // const dispatch = useDispatch();
@@ -26,7 +25,7 @@ const ResortBooking = () => {
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [paymentt, setPaymentt] = useState("");
-  
+
   // const [name, setName] = useState("");
   // const [phone, setPhone] = useState("");
   // const [email, setEmail] = useState("");
@@ -35,12 +34,12 @@ const ResortBooking = () => {
   const timeDifference = checkOutDate?.getTime() - checkInDate?.getTime();
   const dayCount = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
   const booked = location.state?.bookeddata;
-  const pric=location.state?.price
-  const count_room=location.state?.rooms
-  console.log(count_room,"count of rooms...")
-console.log(dayCount,"count of user selected days..")
-console.log(pric,"wwwwwww")  
- 
+  const pric = location.state?.price;
+  const count_room = location.state?.rooms;
+  console.log(count_room, "count of rooms...");
+  console.log(dayCount, "count of user selected days..");
+  console.log(pric, "wwwwwww");
+
   const handlebookingHotel = async (bookedd) => {
     try {
       // console.log(resortQuery,"ppppp")
@@ -51,17 +50,17 @@ console.log(pric,"wwwwwww")
         fromDate: checkInDate,
         toDate: checkOutDate,
         payment: paymentt,
-        pricee:pric*dayCount,
-        count_rooms:count_room
+        pricee: pric * dayCount,
+        count_rooms: count_room,
       });
       localStorage.removeItem("checkinDate");
       localStorage.removeItem("checkoutDate");
-      // console.log(data,"ffff")
-      if(data.data.success){
-      // console.log(data,"fffff")
-      navigate('/hotelbooking/');
+      console.log(data.data, "ffff");
+      console.log(data.data.success, "4444444");
+      if (data.data.success) {
+        // console.log(data,"fffff")
+        navigate("/hotelbooking/");
       }
-      
     } catch (error) {
       console.log(error.response.data.error, "i8i8i8i");
       toast.error(error.response.data.error, {
@@ -69,79 +68,91 @@ console.log(pric,"wwwwwww")
       });
     }
   };
-  const handleOnlinePayment=async(resortdat)=>{
+  const handleOnlinePayment = async (resortdat) => {
     try {
-      
-      const data=await booked_resort({
+      const data = await booked_resort({
         resortId: booked,
         traveler: users,
         fromDate: checkInDate,
         toDate: checkOutDate,
         payment: paymentt,
-        pricee:pric*dayCount,
-        count_rooms:count_room
-
-      })
+        pricee: pric * dayCount,
+        count_rooms: count_room,
+      });
       // console.log(data,"uuuu")
       // console.log(resortdat,"yyyy")
-      var real_amount=pric*dayCount
-      initPayment(data.data,resortdat, checkInDate,checkOutDate,paymentt,real_amount,count_room)
+      var real_amount = pric * dayCount;
+      initPayment(
+        data.data,
+        resortdat,
+        checkInDate,
+        checkOutDate,
+        paymentt,
+        real_amount,
+        count_room
+      );
       // console.log(data,"data apply")
       localStorage.removeItem("checkinDate");
       localStorage.removeItem("checkoutDate");
-      
     } catch (error) {
-      console.log(error,"222222")
+      console.log(error, "222222");
       // toast.error("Resort already booked for the selected dates", {
       //   position: toast.POSITION.TOP_CENTER,
       // });
     }
-  }
-  const initPayment=(data,resortdat,checkInDate,checkOutDate,paymentt,real_amount,count_room)=>{
+  };
+  const initPayment = (
+    data,
+    resortdat,
+    checkInDate,
+    checkOutDate,
+    paymentt,
+    real_amount,
+    count_room
+  ) => {
     // console.log(data.data.id,"oooo")
- 
-    // console.log(dayCount,"count of days..")
-    const options={
-      key:keyid,
-      name:booked.resortname,
-      description:"Test Payment",
-      amount:real_amount*100,
-      currency:data.currency,
-      order_id:data.data.id,
-     handler:async(response)=>{
-      try {
-        // console.log(response,"resonse..")
-        const {razorpay_order_id,razorpay_payment_id,razorpay_signature}=response;
-        const {data}=await verifyrazorpay({
-          razorpay_order_id,
-          razorpay_payment_id,
-          razorpay_signature,
-          resortdat,
-          checkInDate,checkOutDate,paymentt,real_amount,count_room
-          
-        
-        
-        })
-        if(data.success){
-          navigate('/hotelbooking/');
-        }
-        
-        // console.log(data,"data coming...")
-        
-      } catch (error) {
-        console.log(error,"----")
-        
-      }
-     },
-     theme:{
-      color:'#3499cc',
-     }
-    }
-    const rzp1=new window.Razorpay(options)
-    rzp1.open()
 
-  }
- 
+    // console.log(dayCount,"count of days..")
+    const options = {
+      key: keyid,
+      name: booked.resortname,
+      description: "Test Payment",
+      amount: real_amount * 100,
+      currency: data.currency,
+      order_id: data.data.id,
+      handler: async (response) => {
+        try {
+          // console.log(response,"resonse..")
+          // razorpay sending the orderid,payment etc from razorpay server then we send these data to our server
+          const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+            response;
+          const { data } = await verifyrazorpay({
+            razorpay_order_id,
+            razorpay_payment_id,
+            razorpay_signature,
+            resortdat,
+            checkInDate,
+            checkOutDate,
+            paymentt,
+            real_amount,
+            count_room,
+          });
+          if (data.success) {
+            navigate("/hotelbooking/");
+          }
+
+          // console.log(data,"data coming...")
+        } catch (error) {
+          console.log(error, "----");
+        }
+      },
+      theme: {
+        color: "#3499cc",
+      },
+    };
+    const rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  };
 
   useEffect(() => {
     setResortdata(booked.resortname);
@@ -154,7 +165,7 @@ console.log(pric,"wwwwwww")
     // console.log(checkInDateFromStorage,"check in date..")
     const checkOutDateFromStorage = localStorage.getItem("checkoutDate");
     // console.log(checkOutDateFromStorage,"checkout")
-    // updating the state of date 
+    // updating the state of date
     if (checkInDateFromStorage) {
       setCheckInDate(new Date(checkInDateFromStorage));
     }
@@ -206,13 +217,10 @@ console.log(pric,"wwwwwww")
   // }
 
   // console.log(paymentt, "00000....");
- 
 
   // console.log(from,to,"number")
 
-
-  
-// console.log(price,"price of the resort")
+  // console.log(price,"price of the resort")
   return (
     <div>
       <Header />
@@ -265,7 +273,7 @@ console.log(pric,"wwwwwww")
           <div className="max-w-[900px] bg-gray-100 p-4 mt-5 rounded-lg">
             <h2 className="font-semibold">{booked?.resortname}</h2>
             <h2 className="font-semibold flex items-center">
-              {/* <RxCalendar className="text-lg mb-6" /> */}
+              <RxCalendar className="text-lg mb-6" />
               <span className="ml-2 mb-6">
                 {checkInDate && checkOutDate
                   ? `${checkInDate.toLocaleDateString(
@@ -290,18 +298,15 @@ console.log(pric,"wwwwwww")
               <MdPlace className="text-sm" />
               <span className="ml-2">{booked?.place}</span>
             </h2>
-            <h2>
-               Selected Days:{dayCount}
-               
-            </h2>
-            <h2>
-            Actual Price per room:{booked?.price}
-            </h2>
+            <h2>Selected Days:{dayCount}</h2>
+            <h2>Actual Price per room:{booked?.price}</h2>
 
             <h2 className="font-semibold flex items-center">
               <FaRupeeSign className="text-sm" />
-              <span className="ml-2">{pric}*{dayCount}=</span>
-              <span className="ml-2">{pric*dayCount}</span>
+              <span className="ml-2">
+                {pric}*{dayCount}=
+              </span>
+              <span className="ml-2">{pric * dayCount}</span>
             </h2>
             <div className="form-group">
               <label>Payment Method:</label>
@@ -333,23 +338,22 @@ console.log(pric,"wwwwwww")
               </div>
             </div>
             <button
-             disabled={!checkInDate || !checkOutDate}
+              disabled={!checkInDate || !checkOutDate  || paymentt === "cod"}
               onClick={() => {
-                console.log(booked,"789")
-                console.log(pric,"updated price")
+                console.log(booked, "789");
+                console.log(pric, "updated price");
                 handleOnlinePayment(booked);
               }}
               className="btn btn-success mr-4"
             >
               Pay Now
             </button>
- 
-        
+
             <button
-              disabled={!checkInDate || !checkOutDate}
+              disabled={!checkInDate || !checkOutDate  || paymentt === "online"}
               onClick={() => {
                 // console.log(booked,"id of resort...")
-                console.log(pric,"88888")
+                console.log(pric, "88888");
                 handlebookingHotel(booked);
               }}
               className="btn btn-success"
@@ -360,7 +364,7 @@ console.log(pric,"wwwwwww")
         </div>
       </div>
       <ToastContainer />
-      <Footer/>
+      <Footer />
     </div>
   );
 };
