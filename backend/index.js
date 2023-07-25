@@ -6,13 +6,13 @@ const cors = require("cors");
 const path = require("path");
 // const http = require("http");
 const dbConnection = require("./Connection/database");
-// const cookieParser = require("cookie-parser");
+ 
 
 const userouter = require("./Routes/UserRoute");
 const staffrouter = require("./Routes/StaffRoute");
 const adminrouter = require("./Routes/AdminRoute");
 const socket = require("socket.io");
-// const stripe=require('stripe')
+ 
 dbConnection();
 app.use("/", express.static(path.join(__dirname, "public")));
 
@@ -23,7 +23,7 @@ app.use(
     credentials: true,
   })
 );
-// app.use(cookieParser());
+ 
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

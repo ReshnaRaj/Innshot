@@ -3,33 +3,17 @@ const User = require("../Model/UserModel");
 const Staff = require("../Model/StaffModel");
 const Admin = require("../Model/AdminModel");
 const StaffModel = require("../Model/StaffModel");
-// module.exports.checkUser = (req, res, next) => {
-//   const token = req.headers.authorization.split(" ")[1];
-//   jwt.verify(token, process.env.SECRET, async (err, decodedToken) => {
-//     if (err) {
-//       res.json({ status: false });
-//     } else {
-//       const user = await User.findById({ _id: decodedToken.id });
-//       if (user.verifiyd) {
-//         res.json({ status: false });
-//       } else {
-//         req.user = user._id;
-//         res.json({ status: false });
-//         next();
-//       }
-//     }
-//   });
-// };
+ 
 module.exports.checkUser = (req, res, next) => {
   try {
-    // console.log("checking the user 666.....")
+ 
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
       res.send({ status: false, message: "failed  no token present" });
     } else {
       jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decodedToken) => {
         if (err) {
-          // console.log(err, "eeeeeeeee");
+          
           res.json({ status: false, message: "failes" });
         } else {
           req.userId = decodedToken.userId;
@@ -55,21 +39,7 @@ module.exports.checkStaff = (req, res, next) => {
         } else {
           req.staffId = decodedToken.staffId;
           next()
-          // const staff=await StaffModel.findById({_id:req.staffId})
-          // console.log(staff,"coold")
-          // if(staff.admin_approval){
-          //   res.json({status:false,message:'admin Blocked'})
-          // }
-          // else{
-          //   req.staffId = decodedToken.staffId;
-          //   next();
-          // }
-          
-          // console.log(req.staffId, "staff id...");
-          // const staff = await Staff.findById({_id:decodedToken.id})
-          // req.staff=staff._id
-
-          // req.staff =decoded.staff
+ 
          
         }
       });
@@ -80,7 +50,7 @@ module.exports.checkStaff = (req, res, next) => {
 };
 module.exports.checkAdmin = (req, res, next) => {
   try {
-    // console.log(req.headers.authorization,"authorization consoling....")
+ 
     if (req.headers.authorization) {
       const token = req.headers.authorization?.split(" ")[1];
       jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decodedToken) => {
@@ -99,30 +69,7 @@ module.exports.checkAdmin = (req, res, next) => {
     res.json({ status: false, message: "something went wrong" });
   }
 };
-// module.exports.checkAdmin=(req,res,next)=>{
-//   try {
-//     const token=req.headers.authorization?.split(' ')[1]
-//     if(!token){
-//       res.send({status:false,message:'no token'})
-//     }
-//     else{
-//       jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decodedToken) => {
-//         if(err){
-//           res.json({status:false,message:'error '})
-//         }
-//         else{
-//           req.adminId = decodedToken.adminId;
-//           next()
-//         }
-//     })
-    
-//   } 
-// }catch (error) {
-//   console.log(error,"errorr ")
-    
-    
-//   }
-// }
+ 
 
 module.exports.verifyLink = async (userId) => {
   try {

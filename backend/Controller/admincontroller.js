@@ -104,7 +104,7 @@ module.exports.approvedresort=async(req,res)=>{
     
   }
 }
-// module.exports.approveresort = async (req, res, next) => {
+ 
 //     try {
 //       let resortId = req.params.id;
 //       let approve = await ResortModel.findById(resortId).populate('resortowner');
