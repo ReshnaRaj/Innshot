@@ -16,7 +16,7 @@ const {
   rejectResort,
   approvedresort,
   getallbookings,
-} = require("../Controller/AdminController");
+} = require("../Controller/AdminController.js");
 const { checkAdmin } = require("../Middleware/authuser");
 router.post("/adlogin", adminlogin);
 router.get("/getallresortdata", getallresortdata);
