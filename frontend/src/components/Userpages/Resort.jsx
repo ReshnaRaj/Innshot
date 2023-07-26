@@ -183,7 +183,7 @@ const Resort = () => {
   const uniquePlaces = [...new Set(resort.map((item) => item.place))];
 
   return (
-    <div className="container mx-auto">
+    <div className="mx-auto max-w-screen-2xl">
       <Header />
 
       <div className="px-[30px] py-4 max-w-[1170px] mx-auto flex flex-col lg:flex-row justify-between gap-4 lg:gap-x-3 relative lg:-top-4 lg:shadow-md rounded-lg">

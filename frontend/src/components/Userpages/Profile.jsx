@@ -10,7 +10,7 @@ const Profile = () => {
   const users = useSelector((state) => state.user);
   console.log(users,"jiijijjj")
   return (
-    <div>
+    <div className="mx-auto max-w-screen-2xl">
       <Header />
       <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
         <div className="bg-sky-300 rounded-lg shadow-md p-8 w-full md:w-96">

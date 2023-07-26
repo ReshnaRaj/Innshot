@@ -169,7 +169,7 @@ const ResortBooking = () => {
 
 console.log(resortdata,"resort")
   return (
-    <div className="container mx-auto">
+    <div className="mx-auto max-w-screen-2xl">
       <Header />
       <div className="container mx-auto min-h-[800px] mb-14">
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">

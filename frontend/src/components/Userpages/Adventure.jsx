@@ -36,7 +36,7 @@ const Adventure = () => {
     console.log(adventure,"adventure datas are coming....")
 
   return (
-    <div className='container mx-auto'>
+    <div className='mx-auto max-w-screen-2xl'>
         <Header/>
         <div className="flex flex-wrap">
         {adventure.map((item)=>(

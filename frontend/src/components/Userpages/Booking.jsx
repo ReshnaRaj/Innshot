@@ -43,7 +43,7 @@ const data=await CancelBook(BookingId)
   console.log(resortbooked, 'oooo');
 
   return (
-    <div className='min-h screen'>
+    <div className='mx-auto max-w-screen-2xl'>
       <Header />
 
       <h1 className='p-5 font-extrabold md:text-2xl text-center  underline-offset-8' >My Booking Details</h1>
