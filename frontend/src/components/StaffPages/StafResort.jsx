@@ -64,7 +64,7 @@ const StafResort = () => {
               <tr>
                 <th>No</th>
                 <th>Resort name</th>
-                <th>Address</th>
+              
                 <th>Place</th>
                 <th>Price</th>
                 <th>Status</th>
@@ -77,11 +77,11 @@ const StafResort = () => {
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item.resortname}</td>
-                  <td>{item.address}</td>
+              
                   <td>{item.place}</td>
                   <td>{item.price}</td>
                   <td>{item.status}</td>
-                  <td>{item?.verify==='verified' ? 'verified' :'rejected'}</td>
+                  <td>{item?.verify}</td>
                   <button
                     className="btn btn-xs btn-info"
                     onClick={() => {

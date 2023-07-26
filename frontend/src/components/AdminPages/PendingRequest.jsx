@@ -1,31 +1,47 @@
 import React, { useState, useEffect } from "react";
 import Navbars from "./layout/Navbars";
 import Headers from "./layout/Headers";
-import { getAllData,rejectresort,approveresortt } from "../../services/Adminapi";
+import {
+  getAllData,
+  rejectresort,
+  approveresortt,
+} from "../../services/Adminapi";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import Footer from './layout/Footer'
+ 
 
 const PendingRequest = () => {
   const [data, setdata] = useState([]);
-  const [currentpage,setCurrentpage]=useState(1)
-  const recordpage=3
-  const lastIndex=currentpage*recordpage
-  const firstIndex=lastIndex-recordpage
-  const records=data.slice(firstIndex,lastIndex)
-  const npage=Math.ceil(data.length/recordpage)
-  const numbers=[...Array(npage+1).keys()].slice(1)
-  const [resortId,setResortid]=useState("")
+  const [currentpage, setCurrentpage] = useState(1);
+  const recordpage = 5;
+  const lastIndex = currentpage * recordpage;
+  const firstIndex = lastIndex - recordpage;
+  const records = data.slice(firstIndex, lastIndex);
+  const npage = Math.ceil(data.length / recordpage);
+  const numbers = [...Array(npage + 1).keys()].slice(1);
+  const [resortId, setResortid] = useState("");
   const [search, setSearch] = useState("");
-  const [rejectionreason,setRejectionreason]=useState("")
+  const [rejectionreason, setRejectionreason] = useState("");
   // console.log(search, "searching working...");
   const navigate = useNavigate();
+  function changePage(id) {
+    setCurrentpage(id);
+  }
+
+  function prePage() {
+    if (currentpage !== 1) {
+      setCurrentpage(currentpage - 1);
+    }
+  }
+  function nextPage() {
+    if (currentpage !== npage) {
+      setCurrentpage(currentpage + 1);
+    }
+  }
   useEffect(() => {
     getData();
   }, []);
-  const handlePageChange = (page) => {
-    setCurrentpage(page);
-  };
+   
   const getData = async () => {
     try {
       let dataa = await getAllData();
@@ -33,17 +49,15 @@ const PendingRequest = () => {
 
       if (dataa.data.resort) {
         console.log(dataa.data, "tttttttt");
-        // const resortOwnerNames = dataa.data.map(
-        //   (resort) => resort.resortowner.name
-        // );
-        // console.log("Resort Owner Names:", resortOwnerNames);
+       
+ 
         setdata(dataa.data.resort);
       }
     } catch (error) {
       console.log(error, "error coming..");
     }
   };
-  // const handleapprove = async (resortId) => {
+   
   //   try {
   //     let { data } = await approveresort(resortId);
   //     // console.log(data,"data from approve part of admin")
@@ -58,53 +72,46 @@ const PendingRequest = () => {
   //     console.log(error, "error");
   //   }
   // };
-  const handleRejectreasonsubmitt=async()=>{
+  const handleRejectreasonsubmitt = async () => {
     try {
-      if(rejectionreason===""){
-        
-       return alert('type the reason first')
-      }
-      else{
-      console.log(resortId,"id getting")
-      console.log(rejectionreason,"reason getting")
+      if (rejectionreason === "") {
+        return alert("type the reason first");
+      } else {
+        console.log(resortId, "id getting");
+        console.log(rejectionreason, "reason getting");
 
-      let {data}=await rejectresort(resortId,rejectionreason)
-      setRejectionreason("")
-      if(data){
-        const message=data.message
-        toast.success(message,{
-          position:'top-center'
-        })
-        getData();
+        let { data } = await rejectresort(resortId, rejectionreason);
+        setRejectionreason("");
+        if (data) {
+          const message = data.message;
+          toast.success(message, {
+            position: "top-center",
+          });
+          getData();
+        }
       }
-      }
-    } catch (error) {
-      
-    }
-  }
-  const handleReject=async(resortid)=>{
-    // console.log(resortid,"resort id getting....")
-    setResortid(resortid)
-    console.log(resortId,"yyyyyyyy")
-    // setRejectionreason("")
-  }
-  const handleapprove=async(id)=>{
+    } catch (error) {}
+  };
+  const handleReject = async (resortid) => {
+  
+    setResortid(resortid);
+    console.log(resortId, "yyyyyyyy");
+    
+  };
+  const handleapprove = async (id) => {
     try {
-      let data=await approveresortt(id)
-      setResortid(id)
-      if(data){
-        const message=data.message
-        toast.success(message,{
-          position:'top-center'
-        })
+      let data = await approveresortt(id);
+      setResortid(id);
+      if (data) {
+        const message = data.message;
+        toast.success(message, {
+          position: "top-center",
+        });
         getData();
       }
-      
-    } catch (error) {
-      
-    }
-  }
- 
+    } catch (error) {}
+  };
+
   const handleView = async (item) => {
     try {
       console.log(item, "resort full coming...");
@@ -112,7 +119,7 @@ const PendingRequest = () => {
       navigate(`/admin/viewresort/${item}`, { state: { item } });
     } catch (error) {}
   };
-  // console.log(rejectionreason,"...")
+  
   return (
     <div className="flex">
       <Navbars />
@@ -145,7 +152,7 @@ const PendingRequest = () => {
               </tr>
             </thead>
             <tbody>
-              {data
+              {records
                 .filter((item) => {
                   return search.toLowerCase() === ""
                     ? item
@@ -157,7 +164,9 @@ const PendingRequest = () => {
                     <td>{item?.resortname}</td>
                     <td>{item?.resortowner?.name}</td>
                     <td>{item?.place}</td>
-                    <td>{item?.verify==='verified'? 'verified' : 'rejected'}</td>
+                    <td>
+                      {item?.verify}
+                    </td>
 
                     <button
                       onClick={() => {
@@ -169,7 +178,7 @@ const PendingRequest = () => {
                     >
                       View
                     </button>
-                    {item.verify === 'new' ? (
+                    {item.verify === "new" ? (
                       <button
                         onClick={() => handleapprove(item._id)}
                         className="btn btn-xs btn-success"
@@ -177,22 +186,18 @@ const PendingRequest = () => {
                       >
                         Approve
                       </button>
-                    ) : item.verify === 'verified' ? (
+                    ) : item.verify === "verified" ? (
                       <>
-                        
                         <label
                           htmlFor="my_modal_6"
                           className="btn btn-xs btn-error"
-                          onClick={(e)=>{
-                            
-                            handleReject(item._id)
+                          onClick={(e) => {
+                            handleReject(item._id);
                           }}
-                          
                         >
                           Reject
                         </label>
 
-                         
                         <input
                           type="checkbox"
                           id="my_modal_6"
@@ -208,16 +213,14 @@ const PendingRequest = () => {
                               value={rejectionreason}
                               className="form-input w-auto h-auto"
                               placeholder="Enter reason for rejection"
-                              onChange={(e)=>{
-                                setRejectionreason(e.target.value)
-                                }
-                                }>
-                            </textarea>
+                              onChange={(e) => {
+                                setRejectionreason(e.target.value);
+                              }}
+                            ></textarea>
                             <div className="modal-action">
                               <label
                                 htmlFor="my_modal_6"
                                 onClick={handleRejectreasonsubmitt}
-                              
                                 className="btn btn-xs btn-success"
                               >
                                 Send
@@ -226,21 +229,46 @@ const PendingRequest = () => {
                           </div>
                         </div>
                       </>
-                    ): (
+                    ) : (
                       <button
-                      onClick={() => handleapprove(item._id)}
-                      className="btn btn-xs btn-success"
-                      style={{ marginRight: "10px" }}
-                    >
-                      Approve
-                    </button>
-                    )
-                      }
+                        onClick={() => handleapprove(item._id)}
+                        className="btn btn-xs btn-success"
+                        style={{ marginRight: "10px" }}
+                      >
+                        Approve
+                      </button>
+                    )}
                   </tr>
                 ))}
             </tbody>
           </table>
-          <Footer currentpage={currentpage} npage={npage} onPageChange={handlePageChange} />
+          <div className="join flex  justify-center  mt-5">
+            <button
+              className="join-item btn btn-outline  btn-info"
+              onClick={prePage}
+            >
+              Prev
+            </button>
+            {numbers.map((n, i) => (
+              <div
+                className={`join ${currentpage === n ? "active" : ""}`}
+                key={i}
+              >
+                <button
+                  className="join-item btn btn-outline btn-info"
+                  onClick={() => changePage(n)}
+                >
+                  {n}
+                </button>
+              </div>
+            ))}
+            <button
+              className="join-item btn btn-outline btn-info"
+              onClick={nextPage}
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
       <ToastContainer />

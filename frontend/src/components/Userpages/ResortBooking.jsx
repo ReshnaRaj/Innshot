@@ -15,12 +15,10 @@ import { keyId } from "../../files/file";
 
 const ResortBooking = () => {
   const users = useSelector((state) => state.user);
-  // console.log(users,"hhhh")
+ 
   const navigate = useNavigate();
   const keyid = keyId;
-  // console.log(keyid,"ppp")
-  // console.log(users,"tooooo")
-  // const dispatch = useDispatch();
+ 
   const [resortdata, setResortdata] = useState([]);
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
@@ -36,14 +34,11 @@ const ResortBooking = () => {
   const booked = location.state?.bookeddata;
   const pric = location.state?.price;
   const count_room = location.state?.rooms;
-  console.log(count_room, "count of rooms...");
-  console.log(dayCount, "count of user selected days..");
-  console.log(pric, "wwwwwww");
+ 
 
   const handlebookingHotel = async (bookedd) => {
     try {
-      // console.log(resortQuery,"ppppp")
-      // console.log("paying booking")
+    
       const data = await booked_resort({
         resortId: bookedd,
         traveler: users,
@@ -55,19 +50,19 @@ const ResortBooking = () => {
       });
       localStorage.removeItem("checkinDate");
       localStorage.removeItem("checkoutDate");
-      console.log(data.data, "ffff");
-      console.log(data.data.success, "4444444");
+ 
       if (data.data.success) {
-        // console.log(data,"fffff")
+        
         navigate("/hotelbooking/");
       }
     } catch (error) {
-      console.log(error.response.data.error, "i8i8i8i");
+       
       toast.error(error.response.data.error, {
         position: toast.POSITION.TOP_CENTER,
       });
     }
   };
+  
   const handleOnlinePayment = async (resortdat) => {
     try {
       const data = await booked_resort({
@@ -79,8 +74,7 @@ const ResortBooking = () => {
         pricee: pric * dayCount,
         count_rooms: count_room,
       });
-      // console.log(data,"uuuu")
-      // console.log(resortdat,"yyyy")
+      
       var real_amount = pric * dayCount;
       initPayment(
         data.data,
@@ -91,7 +85,7 @@ const ResortBooking = () => {
         real_amount,
         count_room
       );
-      // console.log(data,"data apply")
+     
       localStorage.removeItem("checkinDate");
       localStorage.removeItem("checkoutDate");
     } catch (error) {
@@ -110,9 +104,7 @@ const ResortBooking = () => {
     real_amount,
     count_room
   ) => {
-    // console.log(data.data.id,"oooo")
-
-    // console.log(dayCount,"count of days..")
+ 
     const options = {
       key: keyid,
       name: booked.resortname,
@@ -122,7 +114,7 @@ const ResortBooking = () => {
       order_id: data.data.id,
       handler: async (response) => {
         try {
-          // console.log(response,"resonse..")
+           
           // razorpay sending the orderid,payment etc from razorpay server then we send these data to our server
           const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
             response;
@@ -141,7 +133,7 @@ const ResortBooking = () => {
             navigate("/hotelbooking/");
           }
 
-          // console.log(data,"data coming...")
+           
         } catch (error) {
           console.log(error, "----");
         }
@@ -162,9 +154,9 @@ const ResortBooking = () => {
     setResortdata(booked.place);
 
     const checkInDateFromStorage = localStorage.getItem("checkinDate");
-    // console.log(checkInDateFromStorage,"check in date..")
+  
     const checkOutDateFromStorage = localStorage.getItem("checkoutDate");
-    // console.log(checkOutDateFromStorage,"checkout")
+ 
     // updating the state of date
     if (checkInDateFromStorage) {
       setCheckInDate(new Date(checkInDateFromStorage));
@@ -175,52 +167,7 @@ const ResortBooking = () => {
     }
   }, []);
 
-  //  async function onToken(token){
-  //   console.log(booked,"token getting... ")
-  //   try {
-  //     // console.log(resortQuery,"ppppp")
-  //     // console.log("paying booking")
-  //     const data = await booked_resort({
-  //       resortId: booked,
-  //       traveler: users,
-  //       fromDate: checkInDate,
-  //       toDate: checkOutDate,
-  //       payment: payment,
-  //       token
-  //     });
-  //     localStorage.removeItem("checkinDate");
-  //     localStorage.removeItem("checkoutDate");
-  //     navigate('/hotelbooking/');
-  //   } catch (error) {
-  //     console.log(error,"error...")
-  //   }
-  //  }
-  // const checkOut=async ()=>{
-  //   console.log("checking..")
-  //   const data =await booked_resort({
-  //     resortId: booked,
-  //     traveler: users,
-  //     fromDate: checkInDate,
-  //     toDate: checkOutDate,
-  //     payment: payment,
-
-  //   }).then(res=>{
-  //     if(res.ok) return res.json
-  //     return res.json().then(json=>Promise.reject(json))
-  //   })
-  //   .then(({url})=>{
-  //     window.location=url
-  //   })
-  //   .catch(e=>{
-  //     console.log(e.error)
-  //   })
-  // }
-
-  // console.log(paymentt, "00000....");
-
-  // console.log(from,to,"number")
-
-  // console.log(price,"price of the resort")
+console.log(resortdata,"resort")
   return (
     <div>
       <Header />
@@ -340,8 +287,8 @@ const ResortBooking = () => {
             <button
               disabled={!checkInDate || !checkOutDate  || paymentt === "cod"}
               onClick={() => {
-                console.log(booked, "789");
-                console.log(pric, "updated price");
+               
+              
                 handleOnlinePayment(booked);
               }}
               className="btn btn-success mr-4"
@@ -352,8 +299,7 @@ const ResortBooking = () => {
             <button
               disabled={!checkInDate || !checkOutDate  || paymentt === "online"}
               onClick={() => {
-                // console.log(booked,"id of resort...")
-                console.log(pric, "88888");
+             
                 handlebookingHotel(booked);
               }}
               className="btn btn-success"

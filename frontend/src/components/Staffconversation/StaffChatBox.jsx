@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState } from "react";
 import { getStaff,getstaffMessages,addMsg } from "../../services/Staffapi";
-import { format } from "timeago.js";
+ 
 import InputEmoji  from "react-input-emoji";
 import { FiSend } from "react-icons/fi";
 
@@ -42,6 +42,21 @@ const StaffChatBox = ({chat, currentStaff,setStaffsendMessage, staffrecievedMess
         };
         if (chat !== null) fetchmessages();
       }, [chat]);
+      function convertTimestampToFormattedDateTime(timestamp) {
+        const date = new Date(timestamp);
+      
+        const day = String(date.getDate()).padStart(2, '0');
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const month = monthNames[date.getMonth()];
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+      
+        const formattedDateTime = `${day}-${month} ${hours}:${minutes}:${seconds} ${ampm}`;
+      
+        return formattedDateTime;
+      }
 
       const handleSend=async (e)=>{
         e.preventDefault()
@@ -88,7 +103,7 @@ const StaffChatBox = ({chat, currentStaff,setStaffsendMessage, staffrecievedMess
                       {message.text}
                     </span>
                     <span className="text-sm">
-                      {format(message.createdAt)}
+                    {message.createdAt && convertTimestampToFormattedDateTime(message.createdAt)}
                     </span>
                   </div>
                 </div>
@@ -99,7 +114,7 @@ const StaffChatBox = ({chat, currentStaff,setStaffsendMessage, staffrecievedMess
                       {message.text}
                     </span>
                     <span className="text-sm">
-                      {format(message.createdAt)}
+                    {message.createdAt && convertTimestampToFormattedDateTime(message.createdAt)}
                     </span>
                   </div>
                 </div>

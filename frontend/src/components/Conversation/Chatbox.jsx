@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState } from "react";
 import { getUser, getMessages,adMessage } from "../../services/Userapi";
-import { format } from "timeago.js";
+ 
 import InputEmoji  from "react-input-emoji";
 import { FiSend } from "react-icons/fi";
 
@@ -17,7 +17,7 @@ useEffect(()=>{
   if(recievedMessage!==null && recievedMessage.ChatId===chat.id){
 setMessages([...messages,recievedMessage])
   }
-
+    // eslint-disable-next-line 
 },[recievedMessage])
   useEffect(() => {
     const userId = chat?.members?.find((id) => id !== currentUser);
@@ -43,6 +43,26 @@ setMessages([...messages,recievedMessage])
     };
     if (chat !== null) fetchmessages();
   }, [chat]);
+  function convertTimestampToFormattedDateTime(timestamp) {
+    const date = new Date(timestamp);
+  
+    const day = String(date.getDate()).padStart(2, '0');
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const month = monthNames[date.getMonth()];
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+  
+    const formattedDateTime = `${day}-${month} ${hours}:${minutes}:${seconds} ${ampm}`;
+  
+    return formattedDateTime;
+  }
+  
+  const timestamp = "2023-07-20T10:14:23.024+00:00";
+  const formattedDateTime = convertTimestampToFormattedDateTime(timestamp);
+  console.log(formattedDateTime);
+  
   const handleSend=async (e)=>{
     e.preventDefault()
     const messag={
@@ -88,7 +108,7 @@ setMessages([...messages,recievedMessage])
                         {message.text}
                       </span>
                       <span className="text-sm">
-                        {format(message.createdAt)}
+                        {message.createdAt && convertTimestampToFormattedDateTime(message.createdAt)}
                       </span>
                     </div>
                   </div>
@@ -99,7 +119,7 @@ setMessages([...messages,recievedMessage])
                         {message.text}
                       </span>
                       <span className="text-sm">
-                        {format(message.createdAt)}
+                        {message.createdAt && convertTimestampToFormattedDateTime(message.createdAt)}
                       </span>
                     </div>
                   </div>

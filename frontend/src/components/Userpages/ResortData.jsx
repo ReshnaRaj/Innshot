@@ -149,33 +149,8 @@ const ResortData = () => {
             </div>
           </div>
         </div>
-        {/* <div className="flex flex-col items-start  lg:flex-col ">
-          <div className="max-w-[768px]">
-            <div className="mb-8">
-              {images &&
-                images.map((image, index) => (
-                  <figure key={image.id}>
-                    <img  src={image.src} alt={`Image ${image.id}`} className="flex flex-col"/>
-                  </figure>
-                ))}
-            </div>
-            <div>
-              <div>
-                <div className="flex gap-x-6">
-                <FaBed className="text-2xl"/>
-                <div>
-                {resortdata.number_room}
-                </div>
-                </div>
-                <div>
-                  Services: {resortdata.service ? resortdata.service.join(', ') : ''}</div>
-                <div>{resortdata.description}</div>
-                
-                
-              </div>
-            </div>
-          </div>
-        </div> */}
+         
+            
         <div className="flex flex-col items-start lg:flex-row">
           <div className="max-w-full">
             <div className="carousel">
@@ -185,7 +160,7 @@ const ResortData = () => {
                   key={image?.id}
                   className="carousel-item relative w-full"
                 >
-                  <img src={image?.src} className="w-96 h-60 mx-auto" />
+                  <img src={image?.src} className="w-96 h-60 mx-auto" alt=""/>
                   <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
                     <a
                       href={`#slide${

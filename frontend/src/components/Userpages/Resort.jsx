@@ -5,7 +5,7 @@ import { MdPlace } from "react-icons/md";
 import { FaBed } from "react-icons/fa";
 import { BiHomeAlt } from "react-icons/bi";
 import DatePicker from "react-datepicker";
-import Page from "./Layout/Page";
+ 
 // import { useSelector } from "react-redux";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -14,26 +14,47 @@ import { useNavigate } from "react-router-dom";
 
 const Resort = () => {
   const [resortbooked, setResortbooked] = useState([]);
+
   const [resort, setuserresort] = useState([]);
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState("");
   const [filteredResorts, setFilteredResorts] = useState([]);
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // const currentUser = useSelector((state) => state.user);
-
-  // console.log(currentUser, "user detaiks...");
-  // Replace "user" with the appropriate Redux slice name
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     setIsLoggedIn(true);
-  //   } else {
-  //     setIsLoggedIn(false);
-  //   }
-  // }, [currentUser]);
+  // pagination code works..
+  const [currentpage, setCurrentpage] = useState(1);
+  console.log(currentpage, "current page");
+  const recordpage = 3;
+  const lastIndex = currentpage * recordpage;
+  const firstIndex = lastIndex - recordpage;
+  const records = resort.slice(firstIndex, lastIndex);
+  console.log(records, "record count in user side...");
+  const npage = Math.ceil(resort.length / recordpage);
+  console.log(npage, "npage of count...");
+  const numbers = [...Array(npage + 1).keys()].slice(1);
+  
+ 
 
   const navigate = useNavigate();
+  function changePage(id){
+ 
+    setCurrentpage(id)
+    }
+    
+    function prePage()
+    
+    {
+      if(currentpage!==firstIndex)
+      {
+        setCurrentpage(currentpage-1)
+      }
+    }
+    function nextPage()
+    {
+      if(currentpage!==lastIndex){
+        setCurrentpage(currentpage+1)
+      }
+    
+    }
 
   useEffect(() => {
     userresort();
@@ -62,14 +83,11 @@ const Resort = () => {
   };
 
   const handleCheckOutDateChange = (date) => {
-    if(date<checkInDate){
+    if (date < checkInDate) {
       setCheckOutDate(checkInDate);
-    }
-    else{
+    } else {
       setCheckOutDate(date);
     }
-
-    
   };
   useEffect(() => {
     if (checkInDate) {
@@ -157,6 +175,7 @@ const Resort = () => {
       setFilteredResorts(filterResorts);
     }
   };
+
 
   // console.log(resort, "all resort datas...");
 
@@ -267,7 +286,7 @@ const Resort = () => {
             </div>
           )
         ) : (
-          resort.map((item) => (
+          records.map((item) => (
             <div
               className="bg-white shadow-1 p-5 rounded-tl-[20px] w-full max-w-[352px] mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105"
               key={item.resortname}
@@ -308,11 +327,23 @@ const Resort = () => {
           ))
         )}
       </div>
-      <Page />
+      <div className="join flex  justify-center ">
+        <button className="join-item btn btn-outline  btn-info"  onClick={prePage}>
+          Prev
+        </button>
+        {numbers.map((n, i) => (
+          <div className={`join ${currentpage===n  ? 'active' : ''}`} key={i}>
+            <button className="join-item btn btn-outline btn-info"     onClick={()=>changePage(n)}>{n}</button>
+             
+          </div>
+        ))}
+        <button className="join-item btn btn-outline btn-info"    onClick={nextPage}>Next</button>
+      </div>
 
       <Footer />
     </div>
   );
 };
+
 
 export default Resort;
