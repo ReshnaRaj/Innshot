@@ -11,12 +11,12 @@ const crypto = require("crypto");
 const StaffModel = require("../Model/StaffModel");
 const key_id =process.env.KEY_ID;
 const key_secret =process.env.KEY_SECRET
-console.log(key_id,"2222222")
-console.log(key_secret,"3333")
+
 module.exports.UserResort = async (req, res, next) => {
   try {
+    console.log("user resort listing...")
     const resortt = await ResortModel.find({ verify: 'verified' });
-    // console.log(resort,"resort showing working.....")
+    console.log(resortt,"resort showing working.....")
     res.status(200).json({ resortt, success: true });
   } catch (error) {
     console.log(error, "error consoling...");

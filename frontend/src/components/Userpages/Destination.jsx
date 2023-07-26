@@ -31,7 +31,7 @@ userdestination()
     }
     console.log(destination)
   return (
-    <div>
+    <div className='container mx-auto'>
         <Header/>
         <div className="flex flex-wrap">
         {destination.map((item)=>(

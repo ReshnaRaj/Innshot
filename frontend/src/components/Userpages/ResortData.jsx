@@ -107,7 +107,7 @@ const ResortData = () => {
   // console.log(rooms,"count of user entered resort")
   // console.log(price, "price of resort");
   return (
-    <div>
+    <div className="container mx-auto">
       <Header />
       <div className="container mx-auto min-h-[800px] mb-14">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">

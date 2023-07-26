@@ -8,6 +8,7 @@ import { baseUrl } from "../../files/file";
 const AdventureData = () => {
   const [adventdata, setAdventdata] = useState([]);
   let { id } = useParams();
+  
   // const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const AdventureData = () => {
   }));
   // console.log(adventdata,"advneture data")
   return (
-    <div>
+    <div className="container mx-auto">
       <Header />
       <div className="container mx-auto min-h-[800px] mb-14">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">

@@ -35,12 +35,12 @@ module.exports.register = async (req, res, next) => {
       res.json({ error: "Email is already registered", created: false });
     } else {
       const user = await UserModel.create({ name, email, phone, password });
-
+      const verificationLink = `${process.env.BASE_URL}/verifyemail/${user._id}`;
       // console.log(req.body)
       sendmail(
         email,
         "please Activate your account",
-        `${process.env.BASE_URL}/verifyemail/${user._id}`
+        `Click the link below to verify your email:<br><a href="${verificationLink}">${verificationLink}</a>`
       );
 
       res.status(201).json({ user, created: true });
@@ -149,13 +149,15 @@ module.exports.staffreg = async (req, res, next) => {
     // console.log("staff register page is working..");
     const { name, email, phone, password } = req.body;
     const staffuser = await StaffModel.create({ name, email, phone, password });
+    const verificationLink = `${process.env.BASE_URL}/staff/verifystaffemail/${staffuser._id}`
     // const staff = await StaffModel.findOne({ email });
     // const phones = await StaffModel.findOne({ phone });
     // console.log(staffuser,"new staff registration.")
     sendmail(
       email,
       "please Activate your account As a resort owner",
-      `${process.env.BASE_URL}/staff/verifystaffemail/${staffuser._id}`
+      `Click the link below to verify your email:<br><a href="${verificationLink}">${verificationLink}</a>`
+       
     );
 
     // console.log(staffuser,"staffff")
