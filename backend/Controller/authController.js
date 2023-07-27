@@ -148,11 +148,15 @@ module.exports.staffreg = async (req, res, next) => {
   try {
     // console.log("staff register page is working..");
     const { name, email, phone, password } = req.body;
+    const existingemail = await StaffModel.findOne({ email });
+    console.log(existingemail,"exist ")
+    if(existingemail){
+      res.json({error:"email is already existed"})
+    }
+    else {
     const staffuser = await StaffModel.create({ name, email, phone, password });
     const verificationLink = `${process.env.BASE_URL}/staff/verifystaffemail/${staffuser._id}`
-    // const staff = await StaffModel.findOne({ email });
-    // const phones = await StaffModel.findOne({ phone });
-    // console.log(staffuser,"new staff registration.")
+ 
     sendmail(
       email,
       "please Activate your account As a resort owner",
@@ -160,8 +164,9 @@ module.exports.staffreg = async (req, res, next) => {
        
     );
 
-    // console.log(staffuser,"staffff")
+    console.log(staffuser,"staffff")
     res.status(201).json({ staffuser, created: true });
+    }
   } catch (error) {
     console.log(error);
     // const errors=handleErrors(error)
