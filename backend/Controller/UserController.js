@@ -57,7 +57,7 @@ module.exports.getsimilarstay = async (req, res, next) => {
 
 module.exports.UserAdventure = async (req, res, next) => {
   try {
-    const adventure = await AdventureModel.find({ verify: 'approve' });
+    const adventure = await AdventureModel.find({ verify: true });
     // console.log(resort,"resort showing working.....")
     res.status(200).json({ adventure, success: true });
   } catch (error) {
