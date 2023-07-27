@@ -57,15 +57,13 @@ const StaffReg = () => {
           password:staffpassword
         })
         console.log(data,"data staff")
-        if (data.created) {
+        if (data) {
           console.log(data,"data of staff")
           if (data.errors) {
-            const { name, email, phone, password } = data.errors;
-            if (name) generateError(name);
-            else if (email) generateError(email);
-            else if (password) generateError(password);
-            else if (phone) generateError(phone);
-          } else {
+            console.log(data.errors,"gggg")
+             generateError(data.error);
+    
+           } else {
             setMessage('Account will  be activate please wait and check your email');
             // navigate('/emailverify');
           }
