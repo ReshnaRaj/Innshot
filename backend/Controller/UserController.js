@@ -72,7 +72,9 @@ module.exports.getoneAdv = async (req, res) => {
       "resortowner"
     );
     res.status(200).json({ oneadvdata, success: true });
-  } catch (error) {}
+  } catch (error) {
+    
+  }
 };
 module.exports.UserDestinations = async (req, res, next) => {
   try {

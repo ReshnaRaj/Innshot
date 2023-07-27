@@ -1,17 +1,48 @@
 import React, { useEffect,useState } from 'react'
 import {getuseradventure} from '../../services/Userapi'
 import Header from './Layout/Header';
-import Footer from "./Layout/Footer";
+ 
 import { MdPlace } from "react-icons/md";
 import { baseUrl } from "../../files/file";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
-import Page from './Layout/Page'
+ 
+import Footer from './Layout/Footer';
 
 const Adventure = () => {
   const users = useSelector((state) => state.user);
   console.log(users,"zcc")
     const [adventure,setAdventure]=useState([])
+    const [currentpage, setCurrentpage] = useState(1);
+    console.log(currentpage, "current page");
+    const recordpage = 1;
+    const lastIndex = currentpage * recordpage;
+    const firstIndex = lastIndex - recordpage;
+    const records = adventure.slice(firstIndex, lastIndex);
+    console.log(records, "record count in user side...");
+    const npage = Math.ceil(adventure.length / recordpage);
+    console.log(npage, "npage of count...");
+    const numbers = [...Array(npage + 1).keys()].slice(1);
+    function changePage(id){
+ 
+      setCurrentpage(id)
+      }
+      
+      function prePage()
+      
+      {
+        if(currentpage!==firstIndex)
+        {
+          setCurrentpage(currentpage-1)
+        }
+      }
+      function nextPage()
+      {
+        if(currentpage!==lastIndex){
+          setCurrentpage(currentpage+1)
+        }
+      
+      }
     useEffect(()=>{
         useradventure()
     },[])
@@ -39,7 +70,7 @@ const Adventure = () => {
     <div className='mx-auto max-w-screen-2xl'>
         <Header/>
         <div className="flex flex-wrap">
-        {adventure.map((item)=>(
+        {records.map((item)=>(
              <div className="bg-white shadow-1 p-5 rounded-tl-[20px] w-full max-w-[352px] mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105 ">
              <figure><img src={`${baseUrl}${item?.image[0]}`}  className="rounded-tl-[20px] mb-8" alt="Movie"/></figure>
              <div className="mb-4 flex flex-col">
@@ -69,8 +100,20 @@ const Adventure = () => {
 
         ))}
         </div>
-        <Page/>
-        <Footer />
+        <div className="join flex  justify-center ">
+        <button className="join-item btn btn-outline  btn-info"  onClick={prePage}>
+          Prev
+        </button>
+        {numbers.map((n, i) => (
+          <div className={`join ${currentpage===n  ? 'active' : ''}`} key={i}>
+            <button className="join-item btn btn-outline btn-info"     onClick={()=>changePage(n)}>{n}</button>
+             
+          </div>
+        ))}
+        <button className="join-item btn btn-outline btn-info"    onClick={nextPage}>Next</button>
+      </div>
+        <Footer/>
+      
 
     </div>
        
