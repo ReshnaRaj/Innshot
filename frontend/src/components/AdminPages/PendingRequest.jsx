@@ -179,6 +179,7 @@ const PendingRequest = () => {
                       View
                     </button>
                     {item.verify === "new" ? (
+                      <>
                       <button
                         onClick={() => handleapprove(item._id)}
                         className="btn btn-xs btn-success"
@@ -186,6 +187,48 @@ const PendingRequest = () => {
                       >
                         Approve
                       </button>
+                      <label
+                          htmlFor="my_modal_6"
+                          className="btn btn-xs btn-error"
+                          onClick={(e) => {
+                            handleReject(item._id);
+                          }}
+                        >
+                          Reject
+                        </label>
+
+                        <input
+                          type="checkbox"
+                          id="my_modal_6"
+                          className="modal-toggle"
+                        />
+                        <div className="modal">
+                          <div className="modal-box">
+                            <h3 className="font-bold text-lg">
+                              Reason for Rejection
+                            </h3>
+                            <textarea
+                              id="reasonInput"
+                              value={rejectionreason}
+                              className="form-input w-auto h-auto"
+                              placeholder="Enter reason for rejection"
+                              onChange={(e) => {
+                                setRejectionreason(e.target.value);
+                              }}
+                            ></textarea>
+                            <div className="modal-action">
+                              <label
+                                htmlFor="my_modal_6"
+                                onClick={handleRejectreasonsubmitt}
+                                className="btn btn-xs btn-success"
+                              >
+                                Send
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        </>
+
                     ) : item.verify === "verified" ? (
                       <>
                         <label

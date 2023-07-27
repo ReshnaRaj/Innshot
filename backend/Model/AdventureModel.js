@@ -34,14 +34,14 @@ const adventureSchema=new mongoose.Schema({
         type:Number,
         required:[true]
     },
-    // verify:{
-    //     type:Boolean,
-    //     default:false
-    // }
     verify:{
-        type:String,
-        default:'pending'
+        type:Boolean,
+        default:false
     }
+    // verify:{
+    //     type:String,
+    //     default:'pending'
+    // }
     
 })
 module.exports=mongoose.model('Adventure',adventureSchema)

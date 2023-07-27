@@ -49,7 +49,7 @@ const AllAdventure = () => {
             
         }
     }
-    // console.log(advdata,"000008888")
+    console.log(advdata,"000008888")
   return (
     <div className='flex'>
         <Navbars/>
@@ -91,7 +91,7 @@ const AllAdventure = () => {
                   <td>{item?.activity}</td>
                   <td>{item?.resortowner?.name}</td>
                   <td>{item?.place}</td>
-                  <td>{item?.verify}</td>
+                  <td>{item?.verify ? "approved" : "rejected"}</td>
 
                   <button
                      onClick={() => {
@@ -103,7 +103,7 @@ const AllAdventure = () => {
                   >
                     View
                   </button>
-                  {item.verify === 'pending' ? (
+                  {item.verify === false ? (
                     <button
                       onClick={() => handleapprove(item._id)}
                       className="btn btn-xs btn-success"
@@ -111,7 +111,7 @@ const AllAdventure = () => {
                     >
                       Approve
                     </button>
-                  ) : item.verify==='approve' ? (
+                  ) : (
                     <button
                       onClick={() => handleapprove(item._id)}
                       className="btn btn-xs btn-error"
@@ -119,15 +119,6 @@ const AllAdventure = () => {
                     >
                       Reject
                     </button>
-                  ) :(
-                    <button
-                    onClick={() => handleapprove(item._id)}
-                    className="btn btn-xs btn-success"
-                    style={{ marginRight: "10px" }}
-                  >
-                    Approve
-                  </button>
-
                   )}
                 </tr>
               ))}
