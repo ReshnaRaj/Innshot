@@ -34,9 +34,13 @@ const adventureSchema=new mongoose.Schema({
         type:Number,
         required:[true]
     },
+    // verify:{
+    //     type:Boolean,
+    //     default:false
+    // }
     verify:{
-        type:Boolean,
-        default:false
+        type:String,
+        default:'pending'
     }
     
 })
