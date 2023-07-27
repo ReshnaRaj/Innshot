@@ -105,42 +105,7 @@ module.exports.approvedresort=async(req,res)=>{
   }
 }
  
-//     try {
-//       let resortId = req.params.id;
-//       let approve = await ResortModel.findById(resortId).populate('resortowner');
-//       console.log(approve,"approving checking....")
-//       let info=await sendMail(approve)
-//       console.log(approve,"d")
-//       const newStatus = approve.verify === false ? true : false;
-  
-//       if (newStatus) {
-//         // Resort is approved
-//         sendMail(
-//           approve.resortowner.email,
-//           "Innshot Approved",
-//           "Congrats! Your resort is approved.",
-//           true
-//         );
-//       } else {
-//         // Resort is rejected
-//         sendMail(
-//           approve.resortowner.email,
-//           "Innshot Rejected",
-//           "We regret to inform you that your resort is rejected.",
-//           false
-//         );
-//       }
-  
-//       ResortModel.findOneAndUpdate({ _id: resortId }, { $set: { verify: newStatus } }).then((response) => {
-//         res.status(200).json({
-//             message:'Message Sented to resort owner email',
-//           success: true
-//         });
-//       });
-//     } catch (error) {
-//       res.json({ message: 'Error', success: false });
-//     }
-//   };
+ 
 
 module.exports.getuniqueresortdata=async(req,res,next)=>{
     try {
