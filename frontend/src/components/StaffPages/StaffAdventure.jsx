@@ -361,7 +361,7 @@ const StaffAdventure = () => {
                     <td>{item.place}</td>
                     <td>{item.price}</td>
                     <td>{item.resortName}</td>
-                    <td>{item?.verify}</td>
+                    <td>{item?.verify ? "approved":"rejected"}</td>
                     <label
                       htmlFor="my_modal_7"
                       className="btn btn-info"
