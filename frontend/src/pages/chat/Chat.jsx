@@ -78,7 +78,7 @@ const Chat = () => {
               </div>
             </div>
           </div>
-          <div className=" flex flex-col  bg-orange-500 w-2/3 p-2 rounded-3xl">
+          <div className=" flex flex-col  bg-sky-300 w-2/3 p-2 rounded-3xl">
             {/* right side chat component */}
             <Chatbox
               chat={currentChat}
