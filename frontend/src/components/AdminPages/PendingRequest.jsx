@@ -13,7 +13,7 @@ import { ToastContainer, toast } from "react-toastify";
 const PendingRequest = () => {
   const [data, setdata] = useState([]);
   const [currentpage, setCurrentpage] = useState(1);
-  const recordpage = 5;
+  const recordpage = 10;
   const lastIndex = currentpage * recordpage;
   const firstIndex = lastIndex - recordpage;
   const records = data.slice(firstIndex, lastIndex);

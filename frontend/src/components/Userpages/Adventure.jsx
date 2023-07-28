@@ -15,7 +15,7 @@ const Adventure = () => {
     const [adventure,setAdventure]=useState([])
     const [currentpage, setCurrentpage] = useState(1);
     console.log(currentpage, "current page");
-    const recordpage = 1;
+    const recordpage = 3;
     const lastIndex = currentpage * recordpage;
     const firstIndex = lastIndex - recordpage;
     const records = adventure.slice(firstIndex, lastIndex);

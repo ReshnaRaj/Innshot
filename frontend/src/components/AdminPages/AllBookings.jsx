@@ -2,10 +2,31 @@ import React, { useEffect, useState } from "react";
 import Navbars from "./layout/Navbars";
 import Headers from "./layout/Headers";
 import { getall_bookings } from "../../services/Adminapi";
-import Footer from "./layout/Footer";
+ 
 
 const AllBookings = () => {
   const [allbooking, setAllbooking] = useState([]);
+  const [currentpage, setCurrentpage] = useState(1);
+  const recordpage = 10;
+  const lastIndex = currentpage * recordpage;
+  const firstIndex = lastIndex - recordpage;
+  const records = allbooking.slice(firstIndex, lastIndex);
+  const npage = Math.ceil(allbooking.length / recordpage);
+  const numbers = [...Array(npage + 1).keys()].slice(1);
+  function changePage(id) {
+    setCurrentpage(id);
+  }
+
+  function prePage() {
+    if (currentpage !== firstIndex) {
+      setCurrentpage(currentpage - 1);
+    }
+  }
+  function nextPage() {
+    if (currentpage !== lastIndex) {
+      setCurrentpage(currentpage + 1);
+    }
+  }
   useEffect(() => {
     getallbooking();
   }, []);
@@ -41,7 +62,7 @@ const AllBookings = () => {
               </tr>
             </thead>
             <tbody>
-              {allbooking.map((item, index) => (
+              {records.map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item.resortId.resortname}</td>
@@ -53,7 +74,33 @@ const AllBookings = () => {
               ))}
             </tbody>
           </table>
-          <Footer />
+          <div className="join flex  justify-center ">
+            <button
+              className="join-item btn btn-outline  btn-info"
+              onClick={prePage}
+            >
+              Prev
+            </button>
+            {numbers.map((n, i) => (
+              <div
+                className={`join ${currentpage === n ? "active" : ""}`}
+                key={i}
+              >
+                <button
+                  className="join-item btn btn-outline btn-info"
+                  onClick={() => changePage(n)}
+                >
+                  {n}
+                </button>
+              </div>
+            ))}
+            <button
+              className="join-item btn btn-outline btn-info"
+              onClick={nextPage}
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>

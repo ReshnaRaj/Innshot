@@ -1,61 +1,74 @@
-import React, { useEffect,useState } from 'react'
-import Navbars from './layout/Navbars'
-import Headers from './layout/Headers'
+import React, { useEffect, useState } from "react";
+import Navbars from "./layout/Navbars";
+import Headers from "./layout/Headers";
 import { useNavigate } from "react-router-dom";
-import {getalldestData,approvedest} from '../../services/Adminapi'
+import { getalldestData, approvedest } from "../../services/Adminapi";
 import { ToastContainer, toast } from "react-toastify";
-import Footer from './layout/Footer'
+ 
 
 const AllDestination = () => {
-  const [destdata,setDestdata]=useState([])
+  const [destdata, setDestdata] = useState([]);
+  const [currentpage, setCurrentpage] = useState(1);
+  const recordpage = 10;
+  const lastIndex = currentpage * recordpage;
+  const firstIndex = lastIndex - recordpage;
+  const records = destdata.slice(firstIndex, lastIndex);
+  const npage = Math.ceil(destdata.length / recordpage);
+  const numbers = [...Array(npage + 1).keys()].slice(1);
+ 
   const navigate = useNavigate();
-  useEffect(()=>{
-   getdestdata()
-  },[])
-  const getdestdata=async()=>{
-    try {
-      let data=await getalldestData()
-      if(data.data.destination){
-        setDestdata(data.data.destination)
-      }
-    } catch (error) {
-      
-    }
-  }
-  const handleView=async(item)=>{
-    try {
-      console.log(item,"******++++++")
-      navigate(`/admin/viewdestination/${item}`,{state:{item}})
-    } catch (error) {
-      
-    }
-  }
-  const handleapprove=async(DestId)=>{
-    try {
-      let {data}=await approvedest(DestId)
-      if(data){
-        // console.log(data.data.message,"destination mesg")
-        const message = data.message
-        console.log(message,"message approve or reject")
-        toast.success(message,{
-          position:'top-center'
-        })
-        getdestdata();
-      }
-      
-     
-    } catch (error) {
-      
-    }
+  function changePage(id) {
+    setCurrentpage(id);
   }
 
-  
+  function prePage() {
+    if (currentpage !== firstIndex) {
+      setCurrentpage(currentpage - 1);
+    }
+  }
+  function nextPage() {
+    if (currentpage !== lastIndex) {
+      setCurrentpage(currentpage + 1);
+    }
+  }
+  useEffect(() => {
+    getdestdata();
+  }, []);
+  const getdestdata = async () => {
+    try {
+      let data = await getalldestData();
+      if (data.data.destination) {
+        setDestdata(data.data.destination);
+      }
+    } catch (error) {}
+  };
+  const handleView = async (item) => {
+    try {
+      console.log(item, "******++++++");
+      navigate(`/admin/viewdestination/${item}`, { state: { item } });
+    } catch (error) {}
+  };
+  const handleapprove = async (DestId) => {
+    try {
+      let { data } = await approvedest(DestId);
+      if (data) {
+        // console.log(data.data.message,"destination mesg")
+        const message = data.message;
+        console.log(message, "message approve or reject");
+        toast.success(message, {
+          position: "top-center",
+        });
+        getdestdata();
+      }
+    } catch (error) {}
+  };
+
   return (
-    <div className='flex'>
-        <Navbars/>
-        <div className='flex-1'>
-            <Headers name={"List of Destination"} />
-            <div className="overflow-x-auto inline">
+    <div className="flex">
+      <Navbars />
+      <div className="flex-1">
+        <Headers name={"List of Destination"} />
+        <div className="overflow-x-auto inline">
           <table className="table table-compact w-full">
             <thead>
               <tr>
@@ -68,7 +81,7 @@ const AllDestination = () => {
               </tr>
             </thead>
             <tbody>
-              {destdata.map((item, index) => (
+              {records.map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item?.dest_name}</td>
@@ -77,7 +90,7 @@ const AllDestination = () => {
                   <td>{item?.verify ? "approved" : "rejected"}</td>
 
                   <button
-                     onClick={() => {
+                    onClick={() => {
                       console.log(item, "item is coming....");
                       handleView(item._id);
                     }}
@@ -107,12 +120,38 @@ const AllDestination = () => {
               ))}
             </tbody>
           </table>
-          <Footer/>
+          <div className="join flex  justify-center ">
+            <button
+              className="join-item btn btn-outline  btn-info"
+              onClick={prePage}
+            >
+              Prev
+            </button>
+            {numbers.map((n, i) => (
+              <div
+                className={`join ${currentpage === n ? "active" : ""}`}
+                key={i}
+              >
+                <button
+                  className="join-item btn btn-outline btn-info"
+                  onClick={() => changePage(n)}
+                >
+                  {n}
+                </button>
+              </div>
+            ))}
+            <button
+              className="join-item btn btn-outline btn-info"
+              onClick={nextPage}
+            >
+              Next
+            </button>
           </div>
         </div>
-        <ToastContainer />  
+      </div>
+      <ToastContainer />
     </div>
-  )
-}
+  );
+};
 
-export default AllDestination
+export default AllDestination;
