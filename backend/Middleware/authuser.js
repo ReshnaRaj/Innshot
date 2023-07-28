@@ -12,6 +12,7 @@ module.exports.checkUser = (req, res, next) => {
       res.send({ status: false, message: "failed  no token present" });
     } else {
       jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decodedToken) => {
+        console.log(decodedToken,"token getting....")
         if (err) {
           
           res.json({ status: false, message: "failes" });

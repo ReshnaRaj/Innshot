@@ -25,7 +25,7 @@ const StaffDest = () => {
   }
   const handleEdit=async(item)=>{
     try {
-      navigate('/staff/editdest',{state:{item}})
+      navigate('/staff/editDest',{state:{item}})
       
     } catch (error) {
       

@@ -72,7 +72,7 @@ const Resort = () => {
 
   const handleView = async (item) => {
     try {
-      navigate(`/viewdata/${item}`, { state: { item } });
+      navigate(`/viewData/${item}`, { state: { item } });
     } catch (error) {
       console.log(error);
     }

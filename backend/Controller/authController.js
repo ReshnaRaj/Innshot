@@ -67,7 +67,7 @@ module.exports.login = async (req, res, next) => {
             expiresIn: "1d",
           });
 
-          console.log(token, "tyuy");
+        
           res
             .status(200)
             .json({

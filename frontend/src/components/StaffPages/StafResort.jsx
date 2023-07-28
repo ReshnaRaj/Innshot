@@ -30,7 +30,7 @@ const StafResort = () => {
     try {
       // console.log(item, "resort full coming...");
 
-      navigate("/staff/editresort/", { state: { item } });
+      navigate("/staff/editResort/", { state: { item } });
     } catch (error) {}
   };
   const handledisable = async (resortId) => {

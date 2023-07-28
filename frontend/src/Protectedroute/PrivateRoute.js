@@ -58,7 +58,7 @@ function PrivateRoute({role,route}) {
       .catch(respo=>{
         setAuth(respo.data?.auth)
         // console.log(respo.data.auth,"authentication.........")
-        navigate('/admin/adlogin')
+        navigate('/admin/adLogin')
         // console.log("aaaaaa")
       })
     }else if(role==='staff'){
@@ -73,7 +73,7 @@ function PrivateRoute({role,route}) {
       setAuth(respon.data.auth)
     }).catch(respon=>{
       setAuth(respon.data?.auth)
-      navigate('/staff/stafflogin')
+      navigate('/staff/staffLogin')
     })
     }
   },[])

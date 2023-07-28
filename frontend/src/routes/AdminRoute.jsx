@@ -18,24 +18,24 @@ const AdminRoute = () => {
     <>
       <Routes>
         
-        <Route  path='/adlogin' element={<AdminLogin />} />
+        <Route  path='/adLogin' element={<AdminLogin />} />
         <Route
-          element={<PrivateRoute role={"admin"} route={'/admin/adlogin'} />}
+          element={<PrivateRoute role={"admin"} route={'/admin/adLogin'} />}
         >
-          <Route  path="/adminhome" element={<Adminhome />} />
-          <Route  path="/adminallresort" element={<ResortList />} />
-          <Route  path="/pendingrequest" element={<PendingRequest />} />
-          <Route  path="/viewresort/:id" element={<ViewResort />} />
-          <Route  path="/adminadventure" element={<AllAdventure />} />
-          <Route  path="/viewactivity/:id" element={<ViewAdventure />} />
-          <Route  path="/admindestination" element={<AllDestination />} />
+          <Route  path="/adminHome" element={<Adminhome />} />
+          <Route  path="/adminAllResort" element={<ResortList />} />
+          <Route  path="/pendingRequest" element={<PendingRequest />} />
+          <Route  path="/viewResort/:id" element={<ViewResort />} />
+          <Route  path="/adminAdventure" element={<AllAdventure />} />
+          <Route  path="/viewActivity/:id" element={<ViewAdventure />} />
+          <Route  path="/adminDestination" element={<AllDestination />} />
           <Route
             
-            path="/viewdestination/:id"
+            path="/viewDestination/:id"
             element={<ViewDestination />}
           />
-          <Route  path="/allstaff" element={<AllResorters />} />
-          <Route path="/allbookings" element={<AllBookings />} />
+          <Route  path="/allStaff" element={<AllResorters />} />
+          <Route path="/allBookings" element={<AllBookings />} />
           {/* <Route exact path='/allresort' element={<Resort/>}/> */}
         </Route>
         <Route   path='/*' element={<Error/>}/>

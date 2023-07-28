@@ -21,21 +21,21 @@ const StaffRoute = () => {
     <>
     <Routes>
     <Route path='/*' element={<Error/>}/>
-    <Route  path='/stafflogin' element={<StaffLogin/>}/>
-    <Route  path='/staffregister' element={<StaffRegister/>}/>
-    <Route  path="/verifystaffemail/:id" element={<EmailVerifystaff/>} />
-    <Route element={<PrivateRoute role={'staff'} route={'/staff/stafflogin'}/>}>
-    <Route  path='/staffhome' element={<StaffHome/>}/>
-    <Route  path='/staffresorts' element={<StaffResort/>}/>
+    <Route  path='/staffLogin' element={<StaffLogin/>}/>
+    <Route  path='/staffRegister' element={<StaffRegister/>}/>
+    <Route  path="/verifyStaffemail/:id" element={<EmailVerifystaff/>} />
+    <Route element={<PrivateRoute role={'staff'} route={'/staff/staffLogin'}/>}>
+    <Route  path='/staffHome' element={<StaffHome/>}/>
+    <Route  path='/staffResorts' element={<StaffResort/>}/>
     <Route  path='/add-resort' element={<AdResort/>}/>
-    <Route  path='/editresort' element={<EditResort/>}/>
-    <Route  path='/staffadventure' element={<StafAdventure/>}/>
-    <Route  path='/staffdestination' element={<StaffDest/>}/>
+    <Route  path='/editResort' element={<EditResort/>}/>
+    <Route  path='/staffAdventure' element={<StafAdventure/>}/>
+    <Route  path='/staffDestination' element={<StaffDest/>}/>
     <Route  path='/add-dest' element={<AddDestination/>}/>
-    <Route  path='/editdest' element={<EditDest/>}/>
-    <Route  path='/bookings' element={<Booking/>}/>
+    <Route  path='/editDest' element={<EditDest/>}/>
+    <Route  path='/hotelBookings' element={<Booking/>}/>
   
-    <Route path='/chatwithuser' element={<Chatwithuser/>}/>
+    <Route path='/chatWithUser' element={<Chatwithuser/>}/>
     
     </Route>
     </Routes>

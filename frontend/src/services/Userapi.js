@@ -8,36 +8,36 @@ const userlogin = (data) => {
   return userAxiosInstance.post("/login", data);
 };
 const userverify = (data) => {
-  return userAxiosInstance.post(`/verifyemail/${data}`);
+  return userAxiosInstance.post(`/verifyEmail/${data}`);
 };
 const getuserresort = () => {
   console.log("user resort page working...");
-  return userAxiosInstance.get("/resortlist");
+  return userAxiosInstance.get("/resortList");
 };
 const authUser = () => {
   // console.log("private root user root is going to backend...")
   return userAxiosInstance.get("/isUserAuth");
 };
 const getresortdata = (id) => {
-  return userAxiosInstance.get(`/oneresort/${id}`);
+  return userAxiosInstance.get(`/oneResort/${id}`);
 };
 const getsimiliarstay = (data) => {
   return userAxiosInstance.get(`/getsimiliarstay/${data}`);
 };
 const getuseradventure = () => {
   console.log("user resort page working...");
-  return userAxiosInstance.get("/adventurelist");
+  return userAxiosInstance.get("/adventureList");
 };
 const getuserdestination = () => {
   return userAxiosInstance.get("/destinations");
 };
 const getadvData = (id) => {
   // console.log(id,"id getting...")
-  return userAxiosInstance.get(`/oneadv/${id}`);
+  return userAxiosInstance.get(`/oneAdv/${id}`);
 };
 const getDestinationData = (id) => {
   console.log(id, "getting..");
-  return userAxiosInstance.get(`/onedest/${id}`);
+  return userAxiosInstance.get(`/oneDest/${id}`);
 };
 // const resort_book=(data)=>{
 //     console.log(data,"hhhhhh")
@@ -45,19 +45,19 @@ const getDestinationData = (id) => {
 // }
 const booked_resort = (data) => {
   console.log(data,"going to book the resort")
-  return userAxiosInstance.post("/bookedresort", data);
+  return userAxiosInstance.post("/bookedResort", data);
 };
 const verifyrazorpay = (data) => {
   console.log(data,"verifying the payment data")
-  return userAxiosInstance.post("/verifypayment", data);
+  return userAxiosInstance.post("/verifyPayment", data);
 };
 const get_booked_data = () => {
   console.log("getiinhhhh");
-  return userAxiosInstance.get("/getbookeddata");
+  return userAxiosInstance.get("/getBookeddata");
 };
 const CancelBook = (BookingId) => {
   console.log("cancel api call working..");
-  return userAxiosInstance.post(`/cancelbooking/${BookingId}`);
+  return userAxiosInstance.post(`/cancelBooking/${BookingId}`);
 };
 const updatePassword = (data) => {
   console.log(data, "data getting...");
@@ -65,7 +65,7 @@ const updatePassword = (data) => {
   return userAxiosInstance.post("/updatePassword", data);
 };
 const SendId=(sentid,receiveid)=>{
-  return userAxiosInstance.post('/createchat',{
+  return userAxiosInstance.post('/createChat',{
     senderId: sentid,
     receiverId: receiveid,
   })
@@ -73,19 +73,19 @@ const SendId=(sentid,receiveid)=>{
 const userChats = (id) => {
   // shows user msgd resortowners
   console.log(id, "java");
-  return userAxiosInstance.get(`/getuserchat/${id}`);
+  return userAxiosInstance.get(`/getUserChat/${id}`);
 };
 const getUser=(id)=>{
   console.log(id,"api call ")
-  return userAxiosInstance.get(`/getstaffdata/${id}`)
+  return userAxiosInstance.get(`/getStaffData/${id}`)
 }
 const getMessages=(id)=>{
   console.log(id,"id getting..")
-  return userAxiosInstance.get(`/getmsg/${id}`)
+  return userAxiosInstance.get(`/getMsg/${id}`)
 }
 const adMessage=(data)=>{
   console.log(data,"addmessage")
-  return userAxiosInstance.post('/addmsg',data)
+  return userAxiosInstance.post('/addMsg',data)
 }
 export {
   userregister,

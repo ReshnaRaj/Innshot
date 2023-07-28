@@ -44,7 +44,7 @@ const Header = () => {
               <Link to="/">Home</Link>
             </li>
             <li tabIndex={0}>
-              <Link to="/resortlist">Resort</Link>
+              <Link to="/resortList">Resort</Link>
             </li>
             <li>
               <Link to="/adventure">Adventure</Link>
@@ -66,7 +66,7 @@ const Header = () => {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/resortlist">Resort</Link>
+            <Link to="/resortList">Resort</Link>
           </li>
           <li>
             <Link to="/adventure">Adventure</Link>
@@ -105,7 +105,7 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link to='/mybooking'>
+              <Link to='/myBooking'>
               <a>My Booking</a>
               </Link>
             </li>

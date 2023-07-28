@@ -59,7 +59,7 @@ const Adventure = () => {
     const navigate = useNavigate();
     const handleView=async(item)=>{
       try {
-        navigate(`/viewadventure/${item}`,{state:{item}})
+        navigate(`/viewAdventure/${item}`,{state:{item}})
       } catch (error) {
         
       }

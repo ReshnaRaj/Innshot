@@ -20,18 +20,18 @@ const Navbar = () => {
         </div>
         {/* Navigation */}
         <nav className="flex flex-col p-4">
-          <Link to="/staff/staffhome" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDashboard/></span>Dashboard</Link>
-          <Link to="/staff/staffresorts" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdHomeWork /></span> Resort</Link>
-          <Link to="/staff/staffadventure" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDataThresholding/></span>Adventure</Link>
-          <Link to="/staff/staffdestination" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDataThresholding/></span>Destination</Link>
-          <Link to="/staff/bookings" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdBookmarkAdded/></span>Booking</Link>
+          <Link to="/staff/staffHome" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDashboard/></span>Dashboard</Link>
+          <Link to="/staff/staffResorts" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdHomeWork /></span> Resort</Link>
+          <Link to="/staff/staffAdventure" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDataThresholding/></span>Adventure</Link>
+          <Link to="/staff/staffDestination" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdDataThresholding/></span>Destination</Link>
+          <Link to="/staff/hotelBookings" className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdBookmarkAdded/></span>Booking</Link>
           {staffs.name &&(
             <>
             <div className='dropdown dropdown-hover'>
             <label tabIndex={0} className="py-2 px-4"><span className='hover:text-white-300'>{staffs.name}</span></label>
             <ul tabIndex={0} className="dropdown-content menu shadow w-22 bg-slate-900">
             {/* <li className=''><a>Profile</a></li> */}
-            <Link to='/staff/stafflogin'><a onClick={handleLogout} className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdLogout /></span>Logout</a></Link>
+            <Link to='/staff/staffLogin'><a onClick={handleLogout} className="py-2 px-4 text-gray-400 hover:text-white hover:bg-gray-700"><span className='inline-block'><MdLogout /></span>Logout</a></Link>
               </ul>
             </div>
             </>

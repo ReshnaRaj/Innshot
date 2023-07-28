@@ -101,11 +101,16 @@ const ResortData = () => {
     console.log(updatedPrice);
     setPrice(updatedPrice);
   };
+  const checkInDateFromStorage = localStorage.getItem("checkinDate");
+  
+  const checkOutDateFromStorage = localStorage.getItem("checkoutDate");
+  console.log(checkInDateFromStorage,checkOutDateFromStorage,"ppppppp")
   // console.log(similarStays,"ooooooo")
   // console.log(users, "user id checking...");
   // console.log(resortdata, "resort details...");
   // console.log(rooms,"count of user entered resort")
   // console.log(price, "price of resort");
+ 
   return (
     <div className="mx-auto max-w-screen-2xl">
       <Header />
@@ -136,7 +141,7 @@ const ResortData = () => {
 
               <button
                 className="btn btn-info ml-4 text-black"
-                disabled={resortdata.number_room===0}
+                disabled={resortdata.number_room===0 || checkInDateFromStorage ===null && checkOutDateFromStorage===null} 
                 onClick={(e) => {
                   
                   handleBookView(resortdata,price);

@@ -54,19 +54,19 @@ const Home = () => {
   };
   const handleView = async (item) => {
     try {
-      navigate(`/viewdata/${item}`, { state: { item } });
+      navigate(`/viewData/${item}`, { state: { item } });
     } catch (error) {
       console.log(error);
     }
   };
   const handleClick = async (item) => {
     try {
-      navigate(`/viewadventure/${item}`, { state: { item } });
+      navigate(`/viewAdventure/${item}`, { state: { item } });
     } catch (error) {}
   };
   const handleSee = async (item) => {
     try {
-      navigate(`/viewdestination/${item}`, { state: { item } });
+      navigate(`/viewDestination/${item}`, { state: { item } });
     } catch (error) {}
   };
   useEffect(() => {

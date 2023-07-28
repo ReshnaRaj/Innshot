@@ -30,20 +30,20 @@ const UserRoute = () => {
     <Route  path='/' element={<UserHome/>}/>
     <Route  path='/register' element={<RegisterPage/>}/>
     <Route  path='/login' element={<LoginPage/>}/>
-    <Route  path="/verifyemail/:id" element={<EmailVerify/>} />
-    <Route  path='/resortlist' element={<ResortList/>}/>
-    <Route  path='/viewdata/:id' element={<ResortData/>}/>
+    <Route  path="/verifyEmail/:id" element={<EmailVerify/>} />
+    <Route  path='/resortList' element={<ResortList/>}/>
+    <Route  path='/viewData/:id' element={<ResortData/>}/>
     <Route  path='/adventure' element={<Adventure/>}/>
-    <Route  path='/viewadventure/:id' element={<AdventureData/>}/>
+    <Route  path='/viewAdventure/:id' element={<AdventureData/>}/>
     <Route  path='/destinations' element={<Destination/>}/>
-    <Route  path='/viewdestination/:id' element={<DestinationData/>}/>
+    <Route  path='/viewDestination/:id' element={<DestinationData/>}/>
    
     <Route element={<PrivateRoute role={'user'} route={'/login'} />}>
     
-    <Route  path='/viewbook' element={<ResortBooking/>}/>
-    <Route  path='/hotelbooking' element={<Hotelpaying/>}/>
+    <Route  path='/viewBook' element={<ResortBooking/>}/>
+    <Route  path='/hotelBooking' element={<Hotelpaying/>}/>
     <Route  path='/profile' element={<Profile/>}/>
-    <Route  path='/mybooking' element={<Booking/>}/>
+    <Route  path='/myBooking' element={<Booking/>}/>
     <Route  path='/chat' element= {<Chat/>}/>
     
     </Route>

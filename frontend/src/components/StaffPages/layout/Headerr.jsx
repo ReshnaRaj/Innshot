@@ -8,7 +8,7 @@ const Headerr = ({ name }) => {
   const navigate = useNavigate();
   const handleGetchat=()=>{
     console.log("navigate working...")
-    navigate('/staff/chatwithuser')
+    navigate('/staff/chatWithUser')
     
   }
   return (

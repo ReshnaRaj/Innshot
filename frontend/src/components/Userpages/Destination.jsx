@@ -38,7 +38,7 @@ const Destination = () => {
   const navigate = useNavigate();
   const handleView = async (item) => {
     try {
-      navigate(`/viewdestination/${item}`, { state: { item } });
+      navigate(`/viewDestination/${item}`, { state: { item } });
     } catch (error) {}
   };
   const userdestination = async () => {

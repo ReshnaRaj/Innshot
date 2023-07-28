@@ -2,11 +2,11 @@ import { adminAxiosInstance } from "../axios/instance";
 
 
 const adminlogin=(data)=>{
-    return adminAxiosInstance.post('/adlogin',data)
+    return adminAxiosInstance.post('/adLogin',data)
 }
 const getAllData=()=>{
     console.log('getting')
-    return adminAxiosInstance.get('/getallresortdata')
+    return adminAxiosInstance.get('/getallResortData')
 }
 const approveresort=(id)=>{
     console.log("approve or reject")
@@ -14,7 +14,7 @@ const approveresort=(id)=>{
 }
 const getuniqueresort=(id)=>{
     console.log('resort view page working')
-    return adminAxiosInstance.get(`/getuniqueresort/${id}`)
+    return adminAxiosInstance.get(`/getUniqueResort/${id}`)
 }
 const authAdmin=()=>{
     // console.log('privete root of admin is going to backend ')
@@ -22,46 +22,46 @@ const authAdmin=()=>{
 }
 const getalladvData=()=>{
     // console.log("get all adv data")
-    return adminAxiosInstance.get("/getalladvdata")
+    return adminAxiosInstance.get("/getAllAdvData")
 }
 const getuniqadv=(id)=>{
     console.log(id,"uniqqqq")
-    return adminAxiosInstance.get(`/getuniqadv/${id}`)
+    return adminAxiosInstance.get(`/getUniqAdv/${id}`)
 }
 const approveadvent=(id)=>{
     // console.log("approve or reject")
-    return adminAxiosInstance.post(`/approveadvent/${id}`)
+    return adminAxiosInstance.post(`/approveAdvent/${id}`)
 }
 const getalldestData=()=>{
     // console.log("get all adv data")
-    return adminAxiosInstance.get("/getalldestdata")
+    return adminAxiosInstance.get("/getAllDestData")
 }
 const getuniqdest=(id)=>{
     console.log(id,"uniqqqq")
-    return adminAxiosInstance.get(`/getuniqdest/${id}`)
+    return adminAxiosInstance.get(`/getUniqDest/${id}`)
 }
 const approvedest=(id)=>{
     // console.log("approve or reject")
-    return adminAxiosInstance.post(`/approvedest/${id}`)
+    return adminAxiosInstance.post(`/approveDest/${id}`)
 }
 const getAllstaff=()=>{
 console.log("getting data....")
-    return adminAxiosInstance.get("/getallstaff")
+    return adminAxiosInstance.get("/getAllstaff")
 }
 const blockstaff=(id)=>{
     console.log(id,"blocking working...")
-    return adminAxiosInstance.post(`/blockstaff/${id}`)
+    return adminAxiosInstance.post(`/blockStaff/${id}`)
 }
 const rejectresort=(id,data)=>{
     console.log(id,"ffffff")
     console.log(data,"rejection reason getting in services...")
-    return adminAxiosInstance.post(`/rejectresort/${id}`,{data})
+    return adminAxiosInstance.post(`/rejectResort/${id}`,{data})
 }
 const approveresortt=(id)=>{
-    return adminAxiosInstance.post(`/approvedresort/${id}`)
+    return adminAxiosInstance.post(`/approvedResort/${id}`)
 }
 const getall_bookings=()=>{
     console.log("something going ")
-    return adminAxiosInstance.get('/getallbookings')
+    return adminAxiosInstance.get('/getAllBookings')
 }
 export {adminlogin,getAllData,approveresort,authAdmin,getuniqueresort,getalladvData,getuniqadv,approveadvent,getalldestData,getuniqdest,approvedest,getAllstaff,blockstaff,rejectresort,approveresortt,getall_bookings}

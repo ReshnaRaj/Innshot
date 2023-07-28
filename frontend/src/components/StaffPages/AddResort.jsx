@@ -281,8 +281,30 @@ const AddResort = () => {
                 <input
                   type="file"
                   onChange={(e) => {
-                    setResortData({ ...resortData, image: e.target.files });
+                    const files = e.target.files;
+                    const allowFormats = ['image/jpeg', 'image/jpg', 'image/png'];
+                  
+                    // Initialize an array to store valid image files
+                    const validImages = [];
+                  
+                    for (let i = 0; i < files.length; i++) {
+                      const file = files[i];
+                      if (allowFormats.includes(file.type)) {
+                        // Add the valid image file to the array
+                        validImages.push(file);
+                        setResortData({...resortData,image:file})
+                      } else {
+                        setResortData({ ...resortData, image: null });
+                        alert(`File ${file.name} is not a valid image. Only jpeg, jpg, png images are allowed.`);
+                        e.target.type = "text";
+                        e.target.type = "file";
+                      }
+                    }
+                  
+                    // Do something with the validImages array, such as updating state or performing other actions
+                    // setResortData({ ...resortData, images: validImages });
                   }}
+                  
                   className="file-input w-full max-w-xs"
                   multiple
                 />

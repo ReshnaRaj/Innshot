@@ -18,21 +18,21 @@ const {
   getallbookings,
 } = require("../Controller/AdminController.js");
 
-router.post("/adlogin", adminlogin);
-router.get("/getallresortdata", getallresortdata);
-router.get("/getuniqueresort/:id", getuniqueresortdata);
+router.post("/adLogin", adminlogin);
+router.get("/getAllResortData", getallresortdata);
+router.get("/getUniqueResort/:id", getuniqueresortdata);
  
 router.get("/isAdminauth", checkAdmin, isAdminAuth);
-router.get("/getalladvdata", checkAdmin, getalladvdata);
-router.get("/getuniqadv/:id", checkAdmin, getuniqadvdata);
-router.post("/approveadvent/:id", checkAdmin, approveAdvent);
-router.get("/getalldestdata", checkAdmin, getalldestdata);
-router.get("/getuniqdest/:id", checkAdmin, getuniquedest);
-router.post("/approvedest/:id", checkAdmin, approveDestination);
+router.get("/getAllAdvData", checkAdmin, getalladvdata);
+router.get("/getUniqAdv/:id", checkAdmin, getuniqadvdata);
+router.post("/approveAdvent/:id", checkAdmin, approveAdvent);
+router.get("/getAllDestData", checkAdmin, getalldestdata);
+router.get("/getUniqDest/:id", checkAdmin, getuniquedest);
+router.post("/approveDest/:id", checkAdmin, approveDestination);
 router.get("/getAllstaff", checkAdmin, getAllstaffData);
-router.post("/blockstaff/:id", checkAdmin, blockStaff);
-router.post("/rejectresort/:id", checkAdmin, rejectResort);
-router.post("/approvedresort/:id", checkAdmin, approvedresort);
-router.get("/getallbookings", checkAdmin, getallbookings);
+router.post("/blockStaff/:id", checkAdmin, blockStaff);
+router.post("/rejectResort/:id", checkAdmin, rejectResort);
+router.post("/approvedResort/:id", checkAdmin, approvedresort);
+router.get("/getAllBookings", checkAdmin, getallbookings);
 
 module.exports = router;
