@@ -17,9 +17,15 @@ module.exports.checkUser = (req, res, next) => {
           
           res.json({ status: false, message: "failes" });
         } else {
+
           req.userId = decodedToken.userId;
+          if(decodedToken.role=='user'){
           
           next();
+          }
+          else{
+            res.json({ message:"Role not verified"})
+          }
         }
       });
     }
@@ -39,7 +45,13 @@ module.exports.checkStaff = (req, res, next) => {
           res.json({ status: false, message: "failed at verifying" });
         } else {
           req.staffId = decodedToken.staffId;
-          next()
+          if(decodedToken.role=='staff'){
+          
+            next();
+            }
+            else{
+              res.json({ message:"Role not verified"})
+            }
  
          
         }
@@ -59,10 +71,13 @@ module.exports.checkAdmin = (req, res, next) => {
           res.json({ status: false, message: "token expired" });
         } else {
           req.adminId = decodedToken.adminId;
-          // console.log(req.adminId, "admin Id getting...");
-          // const admin=await Admin.findById({_id:decodedToken._id})
-          // req.admin=admin._id
-          next();
+          if(decodedToken.role=='admin'){
+          
+            next();
+            }
+            else{
+              res.json({ message:"Role not verified"})
+            }
         }
       });
     } else res.json({ status: false, message: "didn't get token" });

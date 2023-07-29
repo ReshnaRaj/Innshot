@@ -30,12 +30,12 @@ module.exports.register = async (req, res, next) => {
   try {
     const { name, email, phone, password } = req.body;
     const existingemail = await UserModel.findOne({ email });
-    console.log(existingemail,"exist ")
+    // console.log(existingemail,"exist ")
     if (existingemail) {
       res.json({ error: "Email is already registered", created: false });
     } else {
       const user = await UserModel.create({ name, email, phone, password });
-      const verificationLink = `${process.env.BASE_URL}/verifyemail/${user._id}`;
+      const verificationLink = `${process.env.BASE_URL}/verifyEmail/${user._id}`;
       // console.log(req.body)
       sendmail(
         email,
@@ -46,14 +46,14 @@ module.exports.register = async (req, res, next) => {
       res.status(201).json({ user, created: true });
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     // const errors=handleErrors(error)
     res.json({ error, created: false });
   }
 };
 module.exports.login = async (req, res, next) => {
   try {
-    console.log("login page");
+    // console.log("login page");
     const { email, password } = req.body;
     const user = await UserModel.findOne({ email });
 
@@ -63,11 +63,11 @@ module.exports.login = async (req, res, next) => {
         const validpassword = await bcrypt.compare(password, user.password);
         if (validpassword) {
           const userId = user._id;
-          const token = jwt.sign({ userId }, process.env.JWT_SECRET_KEY, {
+          const token = jwt.sign({ userId,role:'user' }, process.env.JWT_SECRET_KEY, {
             expiresIn: "1d",
           });
 
-        
+        console.log(token,"user token getting")
           res
             .status(200)
             .json({
@@ -89,16 +89,16 @@ module.exports.login = async (req, res, next) => {
       res.json({ errors, created: false });
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     // const errors=handleErrors(error)
     res.json({ error, created: false });
   }
 };
 module.exports.verifyuser = async (req, res) => {
   try {
-    console.log("verify user is working...");
+    // console.log("verify user is working...");
     const { id } = req.params;
-    console.log(req.params, "rrrrr");
+    // console.log(req.params, "rrrrr");
     const result = await verifyLink(id);
     if (!result) {
       throw new Error("cannot verify the user");
@@ -110,9 +110,9 @@ module.exports.verifyuser = async (req, res) => {
 };
 module.exports.isUserAuth = async (req, res, next) => {
   try {
-    console.log(req.userId, "userID getting...");
+    // console.log(req.userId, "userID getting...");
     let userDetials = await UserModel.findById(req.userId);
-    console.log(userDetials, "user detaills consoling...");
+    // console.log(userDetials, "user detaills consoling...");
     // userDetials.auth=true
     res.json({
       auth: true,
@@ -149,13 +149,13 @@ module.exports.staffreg = async (req, res, next) => {
     // console.log("staff register page is working..");
     const { name, email, phone, password } = req.body;
     const existingemail = await StaffModel.findOne({ email });
-    console.log(existingemail,"exist ")
+    // console.log(existingemail,"exist ")
     if(existingemail){
       res.json({error:"email is already existed"})
     }
     else {
     const staffuser = await StaffModel.create({ name, email, phone, password });
-    const verificationLink = `${process.env.BASE_URL}/staff/verifystaffemail/${staffuser._id}`
+    const verificationLink = `${process.env.BASE_URL}/staff/verifyStaffEmail/${staffuser._id}`
  
     sendmail(
       email,
@@ -164,34 +164,34 @@ module.exports.staffreg = async (req, res, next) => {
        
     );
 
-    console.log(staffuser,"staffff")
+    // console.log(staffuser,"staffff")
     res.status(201).json({ staffuser, created: true });
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     // const errors=handleErrors(error)
     res.json({ error, created: false });
   }
 };
 module.exports.stafflogin = async (req, res, next) => {
   try {
-    console.log("staff login page");
+    // console.log("staff login page");
     const { email, password } = req.body;
     const staff = await StaffModel.findOne({ email });
 
     if (staff) {
       if (staff.verified) {
         if (staff.admin_approval === "Unblock") {
-          console.log("staff verified working");
+          // console.log("staff verified working");
           const auth = await bcrypt.compare(password, staff.password);
-          console.log(auth, "authentication working");
+          // console.log(auth, "authentication working");
           if (auth) {
             const staffId = staff._id;
-            console.log(staff._id, "staff id");
-            const token = jwt.sign({ staffId }, process.env.JWT_SECRET_KEY, {
+            // console.log(staff._id, "staff id");
+            const token = jwt.sign({ staffId,role:'staff' }, process.env.JWT_SECRET_KEY, {
               expiresIn: 30000,
             });
-            console.log(token, "token coming.....");
+            console.log(token, " staff token coming.....");
 
             res.status(200).json({ staff, token, created: true });
           } else {
@@ -211,20 +211,20 @@ module.exports.stafflogin = async (req, res, next) => {
       res.json({ errors, created: false });
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     // const errors = handleErrors(error);
     res.json({ error, created: false });
   }
 };
 
 module.exports.verifystaff = async (req, res) => {
-  console.log("verify staff ");
+  // console.log("verify staff ");
   try {
-    console.log("verify userstaff is working...");
+    // console.log("verify userstaff is working...");
     const { id } = req.params;
-    console.log(req.params, "rrrdcfvgbhnjrr");
+    // console.log(req.params, "rrrdcfvgbhnjrr");
     const result = await verifystaffLink(id);
-    console.log(result, "result of verify staff");
+    // console.log(result, "result of verify staff");
     if (!result) {
       throw new Error("cannot verify the user");
     }
@@ -235,7 +235,7 @@ module.exports.verifystaff = async (req, res) => {
   }
 };
 module.exports.adminlogin = async (req, res) => {
-  console.log("admin login page working");
+  // console.log("admin login page working");
   try {
     const { email, password } = req.body;
     const admin = await AdminModel.findOne({ email });
@@ -244,9 +244,10 @@ module.exports.adminlogin = async (req, res) => {
       if (validatePassword) {
         const adminId = admin._id;
         // console.log(adminId,"adminId getting...")
-        const token = jwt.sign({ adminId }, process.env.JWT_SECRET_KEY, {
+        const token = jwt.sign({ adminId ,role:'admin'}, process.env.JWT_SECRET_KEY, {
           expiresIn: 30000,
         });
+        console.log(token,"admin token getting...")
         // const token=jwt.sign({adminId},process.env.JWT_SECRET_KEY,{
         //     expiresIn:30000
         // })
@@ -267,12 +268,12 @@ module.exports.adminlogin = async (req, res) => {
 };
 module.exports.isAdminAuth = async (req, res) => {
   try {
-    console.log(req.adminId, "tttt");
+    // console.log(req.adminId, "tttt");
     let admin = await AdminModel.findById(req.adminId);
     const admindetails = {
       email: admin.email,
     };
-    console.log(admindetails, "tttt");
+    // console.log(admindetails, "tttt");
     res.json({
       auth: true,
       result: admindetails,
