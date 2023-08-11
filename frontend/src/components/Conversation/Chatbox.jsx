@@ -74,6 +74,7 @@ setMessages([...messages,recievedMessage])
      const {data}=await adMessage(messag)
      setMessages([...messages,data])
      setNewMessage("")
+     
     } catch (error) {
       console.log(error)
     }
@@ -115,10 +116,10 @@ setMessages([...messages,recievedMessage])
                 ) : (
                   <div  ref={scroll} className="msg justify-start flex mb-2">
                     <div className="msg-content bg-gray-200 p-3 rounded-lg">
-                      <span className="text-lg font-semibold">
+                      <span className="text-lg font-semibold ">
                         {message.text}
                       </span>
-                      <span className="text-sm">
+                      <span className="text-sm ">
                         {message.createdAt && convertTimestampToFormattedDateTime(message.createdAt)}
                       </span>
                     </div>
@@ -128,7 +129,7 @@ setMessages([...messages,recievedMessage])
             ))}
           </div>
           <div>
-            <div className="chat-sender flex items-center">
+            <div className="flex items-center">
               <div>+</div>
               <InputEmoji
                 value={newMessage}

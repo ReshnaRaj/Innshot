@@ -5,6 +5,7 @@ import { MdPlace } from "react-icons/md";
 import { FaBed } from "react-icons/fa";
 import { BiHomeAlt } from "react-icons/bi";
 import DatePicker from "react-datepicker";
+import { ToastContainer, toast } from 'react-toastify';
  
 // import { useSelector } from "react-redux";
 
@@ -22,15 +23,20 @@ const Resort = () => {
   const [filteredResorts, setFilteredResorts] = useState([]);
   // pagination code works..
   const [currentpage, setCurrentpage] = useState(1);
-  console.log(currentpage, "current page");
+  // console.log(currentpage, "current page");
   const recordpage = 3;
   const lastIndex = currentpage * recordpage;
   const firstIndex = lastIndex - recordpage;
   const records = resort.slice(firstIndex, lastIndex);
-  console.log(records, "record count in user side...");
+  // console.log(records, "record count in user side...");
   const npage = Math.ceil(resort.length / recordpage);
-  console.log(npage, "npage of count...");
+  // console.log(npage, "npage of count...");
   const numbers = [...Array(npage + 1).keys()].slice(1);
+  const generateError = (err) => {
+    toast.error(err, {
+      position: 'top-center'
+    });
+  };
   
  
 
@@ -66,7 +72,7 @@ const Resort = () => {
       let data = await get_booked_data();
       setResortbooked(data.data.result);
     } catch (error) {
-      console.log(error, "error getting booked resorts");
+      // console.log(error, "error getting booked resorts");
     }
   };
 
@@ -116,6 +122,12 @@ const Resort = () => {
     }
   };
   const handleSearch = () => {
+    console.log("seraching button clicked....")
+    if (!selectedPlace || !checkInDate || !checkOutDate) {
+      generateError("Please enter valid credentials to search the data.");
+      setFilteredResorts([]); // Clear previous search results
+      return;
+    }
     if (selectedPlace && checkInDate && checkOutDate) {
       // Formatting the date into the correct format
       const new_checkin = checkInDate;
@@ -135,8 +147,8 @@ const Resort = () => {
         const hasOverlappingBooking = resortbooked?.some((bookedItem) => {
           const bookedFrom = bookedItem.fromDate;
           const bookedTo = bookedItem.toDate;
-          console.log(bookedTo, bookedFrom, "gigigigi");
-          console.log(formatted_InDate, formatted_outDate, "ooooo");
+          // console.log(bookedTo, bookedFrom, "gigigigi");
+          // console.log(formatted_InDate, formatted_outDate, "ooooo");
 
           // Check for overlapping bookings
           const isOverlapping =
@@ -144,7 +156,7 @@ const Resort = () => {
               bookedFrom <= formatted_outDate) || // Overlapping start date
             (formatted_InDate <= bookedTo && bookedTo <= formatted_outDate) || // Overlapping end date
             (bookedFrom <= formatted_InDate && formatted_outDate <= bookedTo); // Booking covers the entire search range
-          console.log(isOverlapping, "udemy...");
+          // console.log(isOverlapping, "udemy...");
 
           return (
             bookedItem.resortId._id === item._id &&
@@ -171,7 +183,7 @@ const Resort = () => {
         return isPlaceMatched && !hasOverlappingBooking && !isUserBooked;
       });
 
-      console.log(filterResorts, "Filtered Resorts");
+      // console.log(filterResorts, "Filtered Resorts");
       setFilteredResorts(filterResorts);
     }
   };
@@ -327,6 +339,7 @@ const Resort = () => {
           ))
         )}
       </div>
+      <ToastContainer />
       <div className="join flex  justify-center ">
         <button className="join-item btn btn-outline  btn-info"  onClick={prePage}>
           Prev
