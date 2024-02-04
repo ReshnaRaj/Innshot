@@ -4,9 +4,9 @@ function checkFileType(file, cb) {
   const filetypes = /jpeg|jpg|png|pdf|doc|webp/;
 
   const mimetype = filetypes.test(file.mimetype);
-
+  console.log(mimetype,"iiii")
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-
+  console.log(extname,"ooopp")
   if (mimetype && extname) {
     return cb(null, true);
   } else {

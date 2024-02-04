@@ -117,6 +117,7 @@ const StaffAdventure = () => {
       console.log(error, "Error in update");
     }
   };
+  console.log(list,"resort listing")
 
   return (
     <div>

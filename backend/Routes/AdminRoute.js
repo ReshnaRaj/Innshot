@@ -18,11 +18,11 @@ const {
   getallbookings,
 } = require("../Controller/AdminController.js");
 
-router.post("/adLogin", adminlogin);
+router.post("/adLogin",adminlogin);
 router.get("/getAllResortData", getallresortdata);
 router.get("/getUniqueResort/:id", getuniqueresortdata);
  
-router.get("/isAdminauth", checkAdmin, isAdminAuth);
+router.get("/isAdminauth",checkAdmin,isAdminAuth);
 router.get("/getAllAdvData", checkAdmin, getalladvdata);
 router.get("/getUniqAdv/:id", checkAdmin, getuniqadvdata);
 router.post("/approveAdvent/:id", checkAdmin, approveAdvent);

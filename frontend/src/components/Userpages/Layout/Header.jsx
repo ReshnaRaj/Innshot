@@ -15,9 +15,15 @@ const Header = () => {
   };
 
   // console.log(users, "user");
+  const handleLogoClick = () => {
+    console.log("Logo clicked! Showing alert...");
+    // Show alert message in the console when the logo is clicked
+    // You can add additional actions here if needed
+  };
 
   return (
     <div className="navbar bg-sky-300 flex justify-between">
+    
       <div>
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -27,6 +33,7 @@ const Header = () => {
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
+            
             >
               <path
                 strokeLinecap="round"
@@ -56,7 +63,9 @@ const Header = () => {
         </div>
         
         <Link to="/" className="btn btn-ghost normal-case text-3xl text-white">
-          <TbButterfly/>
+          <TbButterfly onClick={()=>
+           
+            alert("hello world")}/>
           Innshot
         </Link>
       </div>

@@ -63,6 +63,11 @@ module.exports.login = async (req, res, next) => {
         const validpassword = await bcrypt.compare(password, user.password);
         if (validpassword) {
           const userId = user._id;
+          console.log(userId,"user id")
+
+//           If the user is verified and the password is valid, generates a JSON Web Token (JWT) using jwt.sign().
+// The token contains the userId and a role (in this case, 'user') and is signed with a secret key (process.env.JWT_SECRET_KEY).
+// The token has an expiration time of 1 day (expiresIn: "1d").
           const token = jwt.sign({ userId,role:'user' }, process.env.JWT_SECRET_KEY, {
             expiresIn: "1d",
           });
@@ -259,7 +264,7 @@ module.exports.adminlogin = async (req, res) => {
       }
     } else {
       const errors = { email: "No Admin with this mail id" };
-      res.json({ errors, created: false });
+      res.status(401).json({ errors, created: false });
     }
   } catch (error) {
     const errors = { email: "something gone wrong" };
@@ -281,6 +286,6 @@ module.exports.isAdminAuth = async (req, res) => {
       message: "signin success",
     });
   } catch (error) {
-    res.status(400).json({ auth: false, message: `something went wrong` });
+    res.status(400).json({ auth: false, message: 'something went wrong' });
   }
 };

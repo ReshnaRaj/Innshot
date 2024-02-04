@@ -341,7 +341,7 @@ const Resort = () => {
       </div>
       <ToastContainer />
       <div className="join flex  justify-center ">
-        <button className="join-item btn btn-outline  btn-info"  onClick={prePage}>
+        <button className="join-item btn btn-outline   btn-info"  onClick={prePage}>
           Prev
         </button>
         {numbers.map((n, i) => (

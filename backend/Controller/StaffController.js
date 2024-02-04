@@ -13,7 +13,7 @@ module.exports.addresort = async (req, res, next) => {
     console.log(req.staffId,"staff Id")
  
       let files = Object.values(req.files).flatMap((val) => val);
-
+      console.log(files,"files in resort")
     let docpath = files.pop().path;
     //  console.log(docpath,"docpath ....")
     //  files=files.slice(0,files.length-1)
@@ -154,56 +154,8 @@ module.exports.posteditresort = async (req, res, next) => {
     console.log(error, "error");
   }
 };
-// module.exports.posteditresort = async (req, res, next) => {
-//   try {
-//     console.log("possss");
-//     const files = Object.values(req.files).flatMap((val) => val);
-//     console.log(files, "files are coming....");
-//     let imagePaths = [];
-
-//     const id = req.params.id;
-//     for (let i = 0; i < files.length - 1; i++) {
-//       imagePaths.push(files[i].path);
-//     }
-//     for (let i = 0; i < imagePaths.length; i++) {
-//       imagePaths[i] = imagePaths[i].replace('public', '');
-//     }
-//     let docpath = files[files.length - 1].path;
-//     let newdocpath = await docpath.replace('public', '');
-
-//     let {
-//       resortname,
-//       place,
-//       number_room,
-//       address,
-//       description,
-//       price,
-//       phone,
-//     } = req.body;
-
-//     const resort = await ResortModel.findByIdAndUpdate(
-//       id,
-//       {
-//         resortname,
-//         place,
-//         number_room,
-//         address,
-//         description,
-//         price,
-//         phone,
-//         image: imagePaths,
-//         document: newdocpath,
-//       },
-//       { new: true }
-//     );
-
-//     console.log(resort, "resort data fetched from the backend");
-//     res.json({ message: 'Resort updated successfully', success: true });
-//   } catch (error) {
-//     console.log(error, "error");
-//     res.status(500).json({ message: 'Internal Server Error', success: false });
-//   }
-// };
+ 
+ 
 
 module.exports.disableResort = async (req, res, next) => {
   try {

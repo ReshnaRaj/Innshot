@@ -1,9 +1,6 @@
 import axios from "axios";
 import {baseUrl,staffUrl,adminUrl} from '../files/file'
 
-
-
-
 const createAxiosClient = (baseURL) => {
     const client = axios.create({
       baseURL,
@@ -29,7 +26,7 @@ staffAxiosInstance.interceptors.request.use(async (req) => {
   return modifiedReq
 })
 const userAxiosInstance = createAxiosClient(baseUrl)
-
+console.log(userAxiosInstance,"oooo")
 userAxiosInstance.interceptors.request.use(async (req) => {
   const modifiedReq = attachToken(req, "usertoken")
   return modifiedReq
