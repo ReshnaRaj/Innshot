@@ -16,13 +16,7 @@ const socket = require("socket.io");
 dbConnection();
 app.use("/", express.static(path.join(__dirname, "public")));
 
-app.use(
-  cors({
-    origin:"*",
-    method: ["GET", "POST", "DELETE", "PUT"],
-    credentials: true,
-  })
-);
+app.use(cors());
  
 
 app.use(express.json());
