@@ -23,7 +23,7 @@ const UserRegister = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
+    const strongPasswordRegex = /^(?=.*[a-zA-Z])(?=.*[\W_]).{6,}$/;
     if(name===""||email===""||phone===""||password===""){
       generateError('Please fill all are required')
     }
