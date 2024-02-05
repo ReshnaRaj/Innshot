@@ -18,7 +18,7 @@ app.use("/", express.static(path.join(__dirname, "public")));
 
 app.use(
   cors({
-    origin: process.env.BASE_URL,
+    origin:"*",
     method: ["GET", "POST", "DELETE", "PUT"],
     credentials: true,
   })
