@@ -16,7 +16,7 @@ module.exports.UserResort = async (req, res, next) => {
   try {
     console.log("user resort listing...")
     const resortt = await ResortModel.find({ verify: 'verified' });
-    // console.log(resortt,"resort showing working.....")
+    console.log(resortt,"resort showing working.....")
     res.status(200).json({ resortt, success: true });
   } catch (error) {
     console.log(error, "error consoling...");

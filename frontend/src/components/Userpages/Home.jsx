@@ -36,7 +36,7 @@ const Home = () => {
   const userresort = async () => {
     try {
       let { data } = await getuserresort();
-      // console.log(data, "data from user side...");
+      console.log(data, "data from user side...");
       if (data.success) {
         setuserresort(data.resortt.slice(0, 3));
       }
