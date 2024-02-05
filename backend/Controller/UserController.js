@@ -14,9 +14,9 @@ const key_secret =process.env.KEY_SECRET
 
 module.exports.UserResort = async (req, res, next) => {
   try {
-    console.log("user resort listing...")
+    // console.log("user resort listing...")
     const resortt = await ResortModel.find({ verify: 'verified' });
-    console.log(resortt,"resort showing working.....")
+    // console.log(resortt,"resort showing working.....")
     res.status(200).json({ resortt, success: true });
   } catch (error) {
     console.log(error, "error consoling...");
@@ -58,7 +58,7 @@ module.exports.getsimilarstay = async (req, res, next) => {
 module.exports.UserAdventure = async (req, res, next) => {
   try {
     const adventure = await AdventureModel.find({ verify: true });
-    // console.log(resort,"resort showing working.....")
+    console.log(adventure," adventure.....")
     res.status(200).json({ adventure, success: true });
   } catch (error) {
     console.log(error, "error consoling...");
@@ -66,7 +66,7 @@ module.exports.UserAdventure = async (req, res, next) => {
 };
 module.exports.getoneAdv = async (req, res) => {
   try {
-    console.log("getting...");
+    // console.log("getting...");
     let advId = req.params.id;
     let oneadvdata = await AdventureModel.findById(advId).populate(
       "resortowner"
@@ -79,7 +79,7 @@ module.exports.getoneAdv = async (req, res) => {
 module.exports.UserDestinations = async (req, res, next) => {
   try {
     const destination = await DestinationModel.find({ verify: true });
-    // console.log(resort,"resort showing working.....")
+    console.log(destination,"destination.......")
     res.status(200).json({ destination, success: true });
   } catch (error) {
     console.log(error, "error consoling...");

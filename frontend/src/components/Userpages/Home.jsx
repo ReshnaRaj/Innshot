@@ -28,6 +28,7 @@ const Home = () => {
   const useradventure = async () => {
     try {
       let { data } = await getuseradventure();
+      console.log(data,"adventure data...")
       if (data.success) {
         setAdventure(data.adventure.slice(0, 3));
       }
@@ -47,6 +48,8 @@ const Home = () => {
   const userdestination = async () => {
     try {
       let { data } = await getuserdestination();
+      console.log(data,"destination...")
+      console.log(data)
       if (data.success) {
         setDestination(data.destination.slice(0, 3));
       }
@@ -91,7 +94,7 @@ const Home = () => {
       src: "https://res.cloudinary.com/dsyln8j3g/image/upload/v1686677184/4_izdg7c.jpg",
     },
   ];
-  console.log(users, "updated");
+  // console.log(users, "updated");
   return (
     <div className="mx-auto max-w-screen-2xl">
       <Header />
