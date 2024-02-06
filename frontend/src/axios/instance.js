@@ -4,7 +4,7 @@ import {baseUrl,staffUrl,adminUrl} from '../files/file'
 const createAxiosClient = (baseURL) => {
     const client = axios.create({
       baseURL,
-      timeout: 5000,
+      timeout: 10000,
       timeoutErrorMessage: "Request timeout... Please Try Again!!!"
     })
     return client
