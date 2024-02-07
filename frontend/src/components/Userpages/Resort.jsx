@@ -10,7 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 // import { useSelector } from "react-redux";
 
 import "react-datepicker/dist/react-datepicker.css";
-import { getuserresort1, get_booked_data } from "../../services/Userapi";
+import { getuserresort, get_booked_data } from "../../services/Userapi";
 import { useNavigate } from "react-router-dom";
 
 const Resort = () => {
@@ -113,7 +113,7 @@ const Resort = () => {
 
   const userresort = async () => {
     try {
-      let { data } = await getuserresort1();
+      let { data } = await getuserresort();
       if (data.success) {
         setuserresort(data.resortt);
       }
