@@ -14,6 +14,10 @@ const getuserresort = () => {
   console.log("user resort page working...");
   return userAxiosInstance.get("/resortList");
 };
+const getuserresort1 = () => {
+  console.log("user resort page working...");
+  return userAxiosInstance.get("/resortListmain");
+};
 const authUser = () => {
   // console.log("private root user root is going to backend...")
   return userAxiosInstance.get("/isUserAuth");
@@ -92,6 +96,7 @@ export {
   userlogin,
   userverify,
   getuserresort,
+  getuserresort1,
   authUser,
   getresortdata,
   getsimiliarstay,

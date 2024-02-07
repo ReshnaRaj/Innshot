@@ -15,6 +15,16 @@ const key_secret =process.env.KEY_SECRET
 module.exports.UserResort = async (req, res, next) => {
   try {
     // console.log("user resort listing...")
+    const resortt = await ResortModel.find({ verify: 'verified' }).limit(3);;
+    // console.log(resortt,"resort showing working.....")
+    res.status(200).json({ resortt, success: true });
+  } catch (error) {
+    console.log(error, "error consoling...");
+  }
+};
+module.exports.UserResortMain = async (req, res, next) => {
+  try {
+    // console.log("user resort listing...")
     const resortt = await ResortModel.find({ verify: 'verified' });
     // console.log(resortt,"resort showing working.....")
     res.status(200).json({ resortt, success: true });
