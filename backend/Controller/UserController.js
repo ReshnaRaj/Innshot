@@ -58,7 +58,7 @@ module.exports.getsimilarstay = async (req, res, next) => {
 module.exports.UserAdventure = async (req, res, next) => {
   try {
     const adventure = await AdventureModel.find({ verify: true });
-    console.log(adventure," adventure.....")
+    // console.log(adventure," adventure.....")
     res.status(200).json({ adventure, success: true });
   } catch (error) {
     console.log(error, "error consoling...");
@@ -79,14 +79,14 @@ module.exports.getoneAdv = async (req, res) => {
 module.exports.UserDestinations = async (req, res, next) => {
   try {
     const destination = await DestinationModel.find({ verify: true });
-    console.log(destination,"destination.......")
+    // console.log(destination,"destination.......")
     res.status(200).json({ destination, success: true });
   } catch (error) {
     console.log(error, "error consoling...");
   }
 };
 module.exports.getonedest = async (req, res) => {
-  console.log("one destination data");
+  // console.log("one destination data");
   try {
     console.log("getting...");
     let destId = req.params.id;
@@ -98,7 +98,7 @@ module.exports.getonedest = async (req, res) => {
 };
 module.exports.resort_book = async (req, res) => {
   try {
-    console.log("working of resort booking...");
+    // console.log("working of resort booking...");
     const { resortId, traveler, fromDate, toDate, payment ,pricee,count_rooms} = req.body;
     // console.log(req.body,"request body....")
     console.log(pricee,"updated price..")

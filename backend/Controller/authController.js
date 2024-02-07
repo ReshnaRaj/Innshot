@@ -55,6 +55,7 @@ module.exports.login = async (req, res, next) => {
   try {
     // console.log("login page");
     const { email, password } = req.body;
+    console.log(req.body,"login data")
     const user = await UserModel.findOne({ email });
 
     if (user) {
