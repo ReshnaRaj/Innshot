@@ -31,7 +31,7 @@ const ResortData = () => {
   const getResortData = async () => {
     try {
       let { data } = await getresortdata(id);
-      // console.log(data, "resort one data get");
+      console.log(data, "resort one data get");
       if (data.success) {
         setResortdata(data.oneresortdata);
         setPrice(data.oneresortdata.price);
@@ -65,10 +65,10 @@ const ResortData = () => {
     }
   };
   const handleSendIds = async (sender, reciever) => {
-    console.log(sender, reciever, "ttttttt");
+    console.log(sender,"senderid", reciever,"reciever",resortdata, "ttttttt");
     const ids = await SendId(sender, reciever);
     navigate("/chat");
-    console.log(ids);
+    console.log(ids,"chat");
   };
   // const fetchSimilarStays = async () => {
   //   try {
