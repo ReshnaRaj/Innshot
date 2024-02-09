@@ -34,7 +34,7 @@ const Home = () => {
       setIsLoading(true);
 
       // Simulate data fetching delay with setTimeout
-      setTimeout(async () => {
+      
         let { data } = await getuseradventure();
         console.log(data, "adventure data...");
 
@@ -42,7 +42,7 @@ const Home = () => {
           setAdventure(data.adventure.slice(0, 3));
           setIsLoading(false); // Set loading state to false after data is fetched
         }
-      }, 1000); // Simulate 2 seconds delay (adjust as needed)
+       // Simulate 2 seconds delay (adjust as needed)
     } catch (error) {
       setIsLoading(false); // Set loading state to false in case of error
     }
@@ -51,7 +51,8 @@ const Home = () => {
   const userresort = async () => {
     try {
       setIsLoading2(true);
-      
+
+
       let { data } = await getuserresort();
       console.log(data, "data from user side...");
       if (data.success) {
