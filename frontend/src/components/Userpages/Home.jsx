@@ -34,15 +34,15 @@ const Home = () => {
       setIsLoading(true);
 
       // Simulate data fetching delay with setTimeout
+      setTimeout(async () => {
+        let { data } = await getuseradventure();
+        console.log(data, "adventure data...");
 
-      let { data } = await getuseradventure();
-      console.log(data, "adventure data...");
-
-      if (data.success) {
-        setAdventure(data.adventure.slice(0, 3));
-        setIsLoading(false); // Set loading state to false after data is fetched
-      }
-      // Simulate 2 seconds delay (adjust as needed)
+        if (data.success) {
+          setAdventure(data.adventure.slice(0, 3));
+          setIsLoading(false); // Set loading state to false after data is fetched
+        }
+      }, 1000); // Simulate 2 seconds delay (adjust as needed)
     } catch (error) {
       setIsLoading(false); // Set loading state to false in case of error
     }
@@ -51,6 +51,7 @@ const Home = () => {
   const userresort = async () => {
     try {
       setIsLoading2(true);
+      
       let { data } = await getuserresort();
       console.log(data, "data from user side...");
       if (data.success) {
@@ -185,8 +186,8 @@ const Home = () => {
           <div className="flex flex-wrap">
             {isLoading2 ? ( // Render loading icon if isLoading is true
               <div className="text-center w-full">
-                <span className="loading loading-lg"></span>
-                <p>Loading...</p>
+                <span className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></span>
+                {/* <p>Loading...</p> */}
               </div>
             ) : (
               // Render resort items once loading is complete
@@ -237,8 +238,9 @@ const Home = () => {
           <div className="flex flex-wrap">
             {isLoading ? ( // Render loading icon if isLoading is true
               <div className="text-center w-full">
-                <span className="loading  loading-ring loading-lg"></span>
-                <p>Loading...</p>
+                <span className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></span>
+
+                {/* <p className="text-sky-400 text-2xl">Loading...</p> */}
               </div>
             ) : (
               adventure.map((item) => (
@@ -284,12 +286,11 @@ const Home = () => {
           </h1>
           <div className="flex flex-wrap">
             {isLoading3 ? (
-
-<div className="text-center w-full">
-<span className="loading  loading-ring loading-lg"></span>
-<p>Loading...</p>
-</div>
-            ) :(
+              <div className="text-center w-full">
+                <span className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></span>
+                <p>Loading...</p>
+              </div>
+            ) : (
               destination.map((item) => (
                 <div className="bg-white shadow-2xl p-4  w-full max-w-[352px]  mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105 border-sky-300">
                   <figure>
@@ -314,7 +315,7 @@ const Home = () => {
                       <div className="text-lg mr-2" />
                       <div className="text-black">{item.resortName}</div>
                     </div> */}
-  
+
                     <button
                       className="btn btn-primary"
                       onClick={() => {
@@ -326,9 +327,7 @@ const Home = () => {
                   </div>
                 </div>
               ))
-
             )}
-            
           </div>
         </div>
       </div>
