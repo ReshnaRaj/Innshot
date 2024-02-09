@@ -7,7 +7,7 @@ const createAxiosClient = (baseURL) => {
       timeout: 10000,
       timeoutErrorMessage: "Request timeout... Please Try Again!!!"
     })
-    console.log(client,"instance data...");
+    // console.log(client,"instance data...");
     return client
   }
   const attachToken = (req, tokenName = "usertoken") => {
@@ -36,7 +36,7 @@ const userAxiosInstance = createAxiosClient(baseUrl)
 userAxiosInstance.interceptors.request.use(async (req) => {
   // console.log(req,"hhhhh")
   const modifiedReq = attachToken(req, "usertoken")
-  console.log(modifiedReq,"tokendooo")
+  // console.log(modifiedReq,"tokendooo")
   return modifiedReq
 })
 

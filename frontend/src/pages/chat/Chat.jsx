@@ -26,7 +26,7 @@ const Chat = () => {
 
   useEffect(()=>{
   socket.current=io(process.env.REACT_APP_BASE_URL)
-  // subscribing the socket
+  // subscribing the socket or the user is connected with socket server
   socket.current.emit("new-user-add",users.id)
   // getting the emitted data
   socket.current.on("get-users",(users)=>{

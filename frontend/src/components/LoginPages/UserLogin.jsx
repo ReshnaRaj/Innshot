@@ -43,7 +43,7 @@ const UserLogin = () => {
       email:useremail,
       password:userpass
      })
-     console.log(data,"data of user...")
+    //  console.log(data,"data of user...")
       // if (data.data){
       if(data) {
         // console.log(data);
@@ -62,14 +62,19 @@ const UserLogin = () => {
             // token: data.data.token
           }));
           
-          if(data.data.user.verifiyd){
-            localStorage.setItem('usertoken',data.data.token)
-            console.log(data.data.message,"toast working..")
+          if (data.data.user.verifiyd) {
+            localStorage.setItem('usertoken', data.data.token);
+            console.log(data.data.message, "toast working..");
             toast.success(data.data.message, {
               position: "top-center",
             });
-            navigate('/');
+            
+            // Delay navigation using setTimeout
+            setTimeout(() => {
+              navigate('/');
+            }, 2000); // Adjust the delay time as needed (in milliseconds)
           }
+          
           else{
             navigate('/login')
           }

@@ -17,6 +17,9 @@ const Home = () => {
   const [resort, setuserresort] = useState([]);
   const [adventure, setAdventure] = useState([]);
   const [destination, setDestination] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading2, setIsLoading2] = useState(true);
+  const [isLoading3, setIsLoading3] = useState(true);
   const navigate = useNavigate();
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
@@ -27,33 +30,51 @@ const Home = () => {
   }, []);
   const useradventure = async () => {
     try {
+      // Set loading state to true before initiating the API call
+      setIsLoading(true);
+
+      // Simulate data fetching delay with setTimeout
+
       let { data } = await getuseradventure();
-      console.log(data,"adventure data...")
+      console.log(data, "adventure data...");
+
       if (data.success) {
         setAdventure(data.adventure.slice(0, 3));
+        setIsLoading(false); // Set loading state to false after data is fetched
       }
-    } catch (error) {}
+      // Simulate 2 seconds delay (adjust as needed)
+    } catch (error) {
+      setIsLoading(false); // Set loading state to false in case of error
+    }
   };
+
   const userresort = async () => {
     try {
+      setIsLoading2(true);
       let { data } = await getuserresort();
       console.log(data, "data from user side...");
       if (data.success) {
         setuserresort(data.resortt.slice(0, 3));
+        setIsLoading2(false);
       }
     } catch (error) {
+      setIsLoading2(false);
       console.log(error, "Error");
     }
   };
   const userdestination = async () => {
     try {
+      setIsLoading3(true);
       let { data } = await getuserdestination();
-      console.log(data,"destination...")
-      console.log(data)
+      console.log(data, "destination...");
+      console.log(data);
       if (data.success) {
         setDestination(data.destination.slice(0, 3));
+        setIsLoading3(false);
       }
-    } catch (error) {}
+    } catch (error) {
+      setIsLoading3(false);
+    }
   };
   const handleView = async (item) => {
     try {
@@ -162,45 +183,51 @@ const Home = () => {
             Our Featured Resorts
           </h1>
           <div className="flex flex-wrap">
-            {resort.map((item) => (
-              <div
-                className="bg-white shadow-2xl p-4  w-full max-w-[352px]  mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105 border-sky-300 "
-                key={item.resortname}
-              >
-                <figure>
-                  <img
-                    src={`${item.image[0]}`}
-                    alt="resort image"
-                    className="mb-1"
-                  />
-                </figure>
-                <div className="flex flex-col">
-                  <div className="flex items-center ">
-                    <div className="text-lg font-semibold">
-                      {item.resortname} 
-                    </div>
-                  </div>
-
-                  <div className="flex items-center">
-                    <MdPlace className="text-lg mr-2" />
-                    <div className="text-black">{item.place}</div>
-                  </div>
-                  <div className="flex items-center">
-                    <FaRupeeSign className="text-sm" />
-                    <div className="text-black">{item.price} per room</div>
-                  </div>
-
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => {
-                      handleView(item._id);
-                    }}
-                  >
-                    View Details
-                  </button>
-                </div>
+            {isLoading2 ? ( // Render loading icon if isLoading is true
+              <div className="text-center w-full">
+                <span className="loading loading-lg"></span>
+                <p>Loading...</p>
               </div>
-            ))}
+            ) : (
+              // Render resort items once loading is complete
+              resort.map((item) => (
+                <div
+                  key={item.resortname}
+                  className="bg-white shadow-2xl p-4 w-full max-w-[352px] mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105 border-sky-300"
+                >
+                  <figure>
+                    <img
+                      src={`${item.image[0]}`}
+                      alt="resort image"
+                      className="mb-1"
+                    />
+                  </figure>
+                  <div className="flex flex-col">
+                    <div className="flex items-center">
+                      <div className="text-lg font-semibold">
+                        {item.resortname}
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <MdPlace className="text-lg mr-2" />
+                      <div className="text-black">{item.place}</div>
+                    </div>
+                    <div className="flex items-center">
+                      <FaRupeeSign className="text-sm" />
+                      <div className="text-black">{item.price} per room</div>
+                    </div>
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        handleView(item._id);
+                      }}
+                    >
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
         <div className="card-body">
@@ -208,36 +235,47 @@ const Home = () => {
             Enjoy your favourite Activities with Innshot
           </h1>
           <div className="flex flex-wrap">
-            {adventure.map((item) => (
-              <div className="bg-white shadow-2xl p-4  w-full max-w-[352px]  mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105 border-sky-300">
-                <figure>
-                  <img
-                    src={`${baseUrl}${item?.image[0]}`}
-                    className="mb-1"
-                    alt="Movie"
-                  />
-                </figure>
-                <div className="flex flex-col">
-                  <div className="flex items-center">
-                    <div className="text-lg font-semibold">{item.activity}</div>
-                  </div>
-                  <div className="flex items-center">
-                    <MdPlace className="text-lg mr-2" />
-                    <div className="text-lg font-semibold">{item.place}</div>
-                  </div>
-
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => {
-                      console.log("advrihdb working...");
-                      handleClick(item._id);
-                    }}
-                  >
-                    View Details
-                  </button>
-                </div>
+            {isLoading ? ( // Render loading icon if isLoading is true
+              <div className="text-center w-full">
+                <span className="loading  loading-ring loading-lg"></span>
+                <p>Loading...</p>
               </div>
-            ))}
+            ) : (
+              adventure.map((item) => (
+                <div
+                  key={item._id}
+                  className="bg-white shadow-2xl p-4 w-full max-w-[352px] mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105 border-sky-300"
+                >
+                  <figure>
+                    <img
+                      src={`${baseUrl}${item?.image[0]}`}
+                      className="mb-1"
+                      alt="Movie"
+                    />
+                  </figure>
+                  <div className="flex flex-col">
+                    <div className="flex items-center">
+                      <div className="text-lg font-semibold">
+                        {item.activity}
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <MdPlace className="text-lg mr-2" />
+                      <div className="text-lg font-semibold">{item.place}</div>
+                    </div>
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        console.log("advrihdb working...");
+                        handleClick(item._id);
+                      }}
+                    >
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
         <div className="card-body">
@@ -245,42 +283,52 @@ const Home = () => {
             Keep calm and travel on....
           </h1>
           <div className="flex flex-wrap">
-            {destination.map((item) => (
-              <div className="bg-white shadow-2xl p-4  w-full max-w-[352px]  mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105 border-sky-300">
-                <figure>
-                  <img
-                    src={`${baseUrl}${item?.dest_img[0]}`}
-                    className="mb-1"
-                    alt="Movie"
-                  />
-                </figure>
-                <div className="flex flex-col">
-                  <div className="flex items-center mb-2">
-                    <div className="text-lg mr-2" />
-                    <div className="text-lg font-semibold">
-                      {item.dest_name}
-                    </div>
-                  </div>
-                  <div className="flex items-center">
-                    <MdPlace className="text-lg mr-2" />
-                    <div className="text-black">{item.place}</div>
-                  </div>
-                  {/* <div className="flex items-center">
-                    <div className="text-lg mr-2" />
-                    <div className="text-black">{item.resortName}</div>
-                  </div> */}
+            {isLoading3 ? (
 
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => {
-                      handleSee(item._id);
-                    }}
-                  >
-                    View Details
-                  </button>
+<div className="text-center w-full">
+<span className="loading  loading-ring loading-lg"></span>
+<p>Loading...</p>
+</div>
+            ) :(
+              destination.map((item) => (
+                <div className="bg-white shadow-2xl p-4  w-full max-w-[352px]  mx-auto cursor-pointer hover:shadow-2xl transition hover:scale-105 border-sky-300">
+                  <figure>
+                    <img
+                      src={`${baseUrl}${item?.dest_img[0]}`}
+                      className="mb-1"
+                      alt="Movie"
+                    />
+                  </figure>
+                  <div className="flex flex-col">
+                    <div className="flex items-center mb-2">
+                      <div className="text-lg mr-2" />
+                      <div className="text-lg font-semibold">
+                        {item.dest_name}
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <MdPlace className="text-lg mr-2" />
+                      <div className="text-black">{item.place}</div>
+                    </div>
+                    {/* <div className="flex items-center">
+                      <div className="text-lg mr-2" />
+                      <div className="text-black">{item.resortName}</div>
+                    </div> */}
+  
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        handleSee(item._id);
+                      }}
+                    >
+                      View Details
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+
+            )}
+            
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ const userregister = (data) => {
   return userAxiosInstance.post("/register", data);
 };
 const userlogin = (data) => {
-  console.log(data,"data of the userapi")
+  // console.log(data,"data of the userapi")
   return userAxiosInstance.post("/login", data);
 };
 const userverify = (data) => {
